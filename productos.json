@@ -1,0 +1,1082 @@
+{
+  "categorias": [
+    {
+      "id": "frutos-secos",
+      "nombre": "Frutos Secos & Mixes",
+      "emoji": "🥜",
+      "productos": [
+        {
+          "nombre": "Almendras Guara x 1kg",
+          "precio": 26500,
+          "imagen": "assets/productos/Almendras_guara.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Arándanos Rojos en Pasas x 500gr",
+          "precio": 9500
+        },
+        {
+          "nombre": "Castañas de Cajú x 500gr",
+          "precio": 10500
+        },
+        {
+          "nombre": "Ciruela Agen x 1kg",
+          "precio": 12500
+        },
+        {
+          "nombre": "Ciruela Presidente s/carozo x 1kg",
+          "precio": 15200
+        },
+        {
+          "nombre": "Dátiles c/Carozo x 1kg",
+          "precio": 9500
+        },
+        {
+          "nombre": "Dátiles s/carozo x 1kg",
+          "precio": 11500
+        },
+        {
+          "nombre": "Granola Mix de semillas x 1kg",
+          "precio": 13500,
+          "marca": "ARFUR"
+        },
+        {
+          "nombre": "Granola con Banana x 1kg",
+          "precio": 13500,
+          "marca": "ARFUR"
+        },
+        {
+          "nombre": "Granola con Coco x 1kg",
+          "precio": 13500,
+          "marca": "ARFUR"
+        },
+        {
+          "nombre": "Granola con Cacao x 1kg",
+          "precio": 14000,
+          "marca": "ARFUR"
+        },
+        {
+          "nombre": "Granola con Arándanos x 1kg",
+          "precio": 14000,
+          "marca": "ARFUR"
+        },
+        {
+          "nombre": "Granola KETO x 300 gr doypack",
+          "precio": 16000,
+          "marca": "YAKA MUSH"
+        },
+        {
+          "nombre": "Higos Negros x 1kg",
+          "precio": 12500
+        },
+        {
+          "nombre": "Mix Cereales Azucarados x 1kg",
+          "precio": 9500
+        },
+        {
+          "nombre": "Mix Cereales Naturales x 1kg",
+          "precio": 9500
+        },
+        {
+          "nombre": "Mix Cervecero x 1kg",
+          "precio": 10500
+        },
+        {
+          "nombre": "Mix Europeo c/Maní x 1kg",
+          "precio": 20000
+        },
+        {
+          "nombre": "Mix Europeo s/Maní x 1kg",
+          "precio": 20000
+        },
+        {
+          "nombre": "Mix Frutos Secos s/Maní s/Pasas x 1kg",
+          "precio": 26500
+        },
+        {
+          "nombre": "Mix Frutos Secos s/Pasas x 1kg",
+          "precio": 24000,
+          "imagen": "assets/productos/Mix_frutos_secos_sin_pasas.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Mix Tropical c/Maní x 1kg",
+          "precio": 18000
+        },
+        {
+          "nombre": "Mix Tropical s/Maní x 1kg",
+          "precio": 16000
+        },
+        {
+          "nombre": "Nuez Cuarto x 1kg",
+          "precio": 24000
+        },
+        {
+          "nombre": "Nuez Mariposa x 1kg",
+          "precio": 26500
+        },
+        {
+          "nombre": "Nuez c/Cáscara x 1kg",
+          "precio": 10700
+        },
+        {
+          "nombre": "Pasas Jumbo s/Semillas x 1kg",
+          "precio": 7500
+        }
+      ]
+    },
+    {
+      "id": "aceites",
+      "nombre": "Coco, Aceites & Vinagres",
+      "emoji": "🥥",
+      "productos": [
+        {
+          "nombre": "Aceite de Palta Extra Virgen x 250cc",
+          "precio": 17200,
+          "marca": "Ganofi"
+        },
+        {
+          "nombre": "Aceite de Palta Extra Virgen x 500cc",
+          "precio": 25500,
+          "marca": "Ganofi"
+        },
+        {
+          "nombre": "Aceite de Coco Neutro x 360cc",
+          "precio": 9200,
+          "marca": "Entrenuts — Sin TACC",
+          "imagen": "assets/productos/Aceite_de_coco_Entrenuts.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Aceite de Coco Neutro x 500cc",
+          "precio": 12500,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Aceite de Coco Virgen x 360cc",
+          "precio": 17500,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Aceite de Coco Virgen x 500cc",
+          "precio": 19900,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Aceite de Oliva Extra Virgen Prensado x 500ml",
+          "precio": 16500,
+          "marca": "Areco — Prensado en frío"
+        },
+        {
+          "nombre": "Aceite de Oliva Extra Virgen x 500ml",
+          "precio": 12500,
+          "marca": "Areco"
+        },
+        {
+          "nombre": "Aceite de Oliva Grisari x 1000ml",
+          "precio": 9000
+        },
+        {
+          "nombre": "Azúcar de Coco x 1kg",
+          "precio": 15300
+        },
+        {
+          "nombre": "Coco Rallado x 1kg",
+          "precio": 10500
+        },
+        {
+          "nombre": "Coco en Escama x 500gr",
+          "precio": 17300
+        },
+        {
+          "nombre": "Ghee Manteca Clarificada x 300gr",
+          "precio": 11800,
+          "marca": "Entrenuts — Sin TACC",
+          "imagen": "assets/productos/Ghee_Manteca_Clarificada.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Leche en Polvo de Coco x 500gr",
+          "precio": 13200
+        },
+        {
+          "nombre": "Vinagre de Arroz x 250ml",
+          "precio": 7500
+        },
+        {
+          "nombre": "Vinagre de Sidra de Manzana Org. x 250ml",
+          "precio": 7900,
+          "marca": "Pampagourmet"
+        },
+        {
+          "nombre": "Vinagre de Sidra de Manzana Org. x 500ml",
+          "precio": 13000,
+          "marca": "Pampagourmet"
+        },
+        {
+          "nombre": "Vinagre de Vino Orgánico x 250ml (Malbec)",
+          "precio": 7900
+        }
+      ]
+    },
+    {
+      "id": "harinas",
+      "nombre": "Harinas & Almidones",
+      "emoji": "🌾",
+      "productos": [
+        {
+          "nombre": "Avena Arrollada x 1kg",
+          "precio": 3900
+        },
+        {
+          "nombre": "Fariña de Mandioca x 1kg",
+          "precio": 5800
+        },
+        {
+          "nombre": "Fécula de Mandioca x 1kg",
+          "precio": 4200
+        },
+        {
+          "nombre": "Fécula de Maíz x 1kg",
+          "precio": 3900
+        },
+        {
+          "nombre": "Harina Algarroba x 1kg",
+          "precio": 6800
+        },
+        {
+          "nombre": "Harina Arroz x 1kg",
+          "precio": 3500
+        },
+        {
+          "nombre": "Harina Avena x 1kg",
+          "precio": 4300
+        },
+        {
+          "nombre": "Harina Centeno x 1kg",
+          "precio": 3800
+        },
+        {
+          "nombre": "Harina Garbanzos x 1kg",
+          "precio": 3500
+        },
+        {
+          "nombre": "Harina Integral x 1kg",
+          "precio": 3500
+        },
+        {
+          "nombre": "Harina Quinoa x 1kg",
+          "precio": 7600
+        },
+        {
+          "nombre": "Harina de Almendras s/piel x 1kg",
+          "precio": 7500
+        },
+        {
+          "nombre": "Harina de Coco Importada x 1kg",
+          "precio": 6600
+        }
+      ]
+    },
+    {
+      "id": "mani",
+      "nombre": "Pasta de Maní",
+      "emoji": "🥜",
+      "productos": [
+        {
+          "nombre": "Pasta de Maní x 400gr",
+          "precio": 4900,
+          "marca": "Ganofi — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní con Chocolate x 400gr",
+          "precio": 5200,
+          "marca": "Ganofi — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní con Coco x 400gr",
+          "precio": 5200,
+          "marca": "Ganofi — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní Natural x 370gr",
+          "precio": 4200,
+          "marca": "Entrenuts — Sin TACC",
+          "imagen": "assets/productos/Pasta_de_mani_Entrenuts.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Pasta de Maní Cacao x 370gr",
+          "precio": 4500,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní Crocante x 370gr",
+          "precio": 4500,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní de Coco x 370gr",
+          "precio": 4200,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní Stevia x 370gr",
+          "precio": 4200,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní SAL MARINA x 370gr",
+          "precio": 4200,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní Mix Semillas x 370gr",
+          "precio": 4200,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní PROTEIN Cookies & Cream x 370gr",
+          "precio": 5100,
+          "marca": "Entrenuts — Sin TACC"
+        },
+        {
+          "nombre": "Pasta de Maní PROTEIN Salted Caramel x 370gr",
+          "precio": 5100,
+          "marca": "Entrenuts — Sin TACC"
+        }
+      ]
+    },
+    {
+      "id": "semillas",
+      "nombre": "Semillas",
+      "emoji": "🌱",
+      "productos": [
+        {
+          "nombre": "Mix de Semillas x 1kg",
+          "precio": 6500
+        },
+        {
+          "nombre": "Semillas Sésamo Integral x 1kg",
+          "precio": 5000
+        },
+        {
+          "nombre": "Semillas de Chía x 1kg",
+          "precio": 8500
+        },
+        {
+          "nombre": "Semillas de Cous Cous x 500gr",
+          "precio": 6700
+        },
+        {
+          "nombre": "Semillas de Fenogreco x 1kg",
+          "precio": 10800
+        },
+        {
+          "nombre": "Semillas de Lino x 1kg",
+          "precio": 4500
+        },
+        {
+          "nombre": "Semillas de Quinoa x 1kg",
+          "precio": 11500
+        },
+        {
+          "nombre": "Semillas de Sésamo Blanco x 1kg",
+          "precio": 8500
+        },
+        {
+          "nombre": "Semillas de Zapallo Importado x 500gr",
+          "precio": 9900
+        }
+      ]
+    },
+    {
+      "id": "especias",
+      "nombre": "Especias",
+      "emoji": "🧂",
+      "productos": [
+        {
+          "nombre": "Especias Premium x 1kg",
+          "precio": 12500,
+          "marca": "Ajo, Jengibre, Nuez Moscada, Pimienta"
+        },
+        {
+          "nombre": "Especias Surtidas x 1kg",
+          "precio": 8500,
+          "marca": "Ají, Ajo, Cebolla, Chimichurri, Cúrcuma, Orégano..."
+        },
+        {
+          "nombre": "Finas Hierbas x 500gr",
+          "precio": 10500
+        },
+        {
+          "nombre": "Hongos Secos de Pino x 500gr",
+          "precio": 19900
+        }
+      ]
+    },
+    {
+      "id": "yerbas",
+      "nombre": "Yerbas & Infusiones",
+      "emoji": "🍵",
+      "productos": [
+        {
+          "nombre": "Yerba Orgánica Ajedrez Molida",
+          "precio": 6000
+        },
+        {
+          "nombre": "Yerba Orgánica Ajedrez c/Hojas",
+          "precio": 6000
+        },
+        {
+          "nombre": "Yerba Orgánica Ajedrez c/Palo",
+          "precio": 6000
+        },
+        {
+          "nombre": "Hibisco x 500gr (Flor de Jamaica)",
+          "precio": 11900,
+          "imagen": "assets/productos/Flor_de_Jamaica.png",
+          "destacado": true
+        }
+      ]
+    },
+    {
+      "id": "chocolates",
+      "nombre": "Chocolates & Repostería",
+      "emoji": "🍫",
+      "productos": [
+        {
+          "nombre": "Chocolate Colonial Orgánico al 70%",
+          "precio": 6500,
+          "marca": "Barra 100gr c/stevia"
+        },
+        {
+          "nombre": "Mapsa Bombón Marroc x 500gr",
+          "precio": 8900
+        },
+        {
+          "nombre": "Mapsa Cuber Gotitas Blancas x 500gr",
+          "precio": 7500
+        },
+        {
+          "nombre": "Mapsa Cuber Gotitas Negras x 500gr",
+          "precio": 7500
+        },
+        {
+          "nombre": "Mapsa Cuber para baños blanco x 500gr",
+          "precio": 8500
+        },
+        {
+          "nombre": "Mapsa Cuber para baños c/stevia x 500gr",
+          "precio": 15200,
+          "marca": "Sin Azúcar"
+        },
+        {
+          "nombre": "Mapsa Cuber para baños celeste x 500gr",
+          "precio": 8500
+        },
+        {
+          "nombre": "Mapsa Cuber para baños con leche x 500gr",
+          "precio": 8500
+        },
+        {
+          "nombre": "Mapsa Cuber para baños frutilla x 500gr",
+          "precio": 8500
+        },
+        {
+          "nombre": "Mapsa Cuber para baños semiamargo x 500gr",
+          "precio": 8500
+        }
+      ]
+    },
+    {
+      "id": "panes",
+      "nombre": "Panes",
+      "emoji": "🍞",
+      "productos": [
+        {
+          "nombre": "Pan DOBLE INTEGRAL de campo x 560gr",
+          "precio": 6900,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pan DOBLE SALVADO de campo x 560gr",
+          "precio": 6900,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pan integral ARTESANAL de campo x 560gr",
+          "precio": 6900,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pan integral CALABAZA de campo x 560gr",
+          "precio": 6900,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pan integral MULTICEREAL de campo x 560gr",
+          "precio": 6900,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pan integral SIN SAL de campo x 560gr",
+          "precio": 6900,
+          "marca": "La Francia"
+        }
+      ]
+    },
+    {
+      "id": "suplementos",
+      "nombre": "Suplementos",
+      "emoji": "💊",
+      "productos": [
+        {
+          "nombre": "ASHWAGANDHA Extracto Premium x 50ml",
+          "precio": 24000
+        },
+        {
+          "nombre": "Aceite de Orégano x 30ml 70% Carvacrol",
+          "precio": 17400,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Aceite de Pescado x 30 caps",
+          "precio": 12000,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Aceite de Pescado x 60 caps",
+          "precio": 21000,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Betacaroteno x 30 compri",
+          "precio": 9200,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Colágeno 500 x 60 compri",
+          "precio": 11500,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Colágeno Antiage x 60 compri",
+          "precio": 11800,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Colágeno Clear Natural x 250gr",
+          "precio": 25000,
+          "marca": "Granger"
+        },
+        {
+          "nombre": "Colágeno Regen Flex x 40 sobres x 4gr",
+          "precio": 52000,
+          "marca": "Regen Flex"
+        },
+        {
+          "nombre": "Creatina Monohidratada Micronizada 300gr",
+          "precio": 20200,
+          "marca": "Aker",
+          "imagen": "assets/productos/Creatina_Aker.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Cúrcuma Plus x 30 compri",
+          "precio": 10500,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Ginkgo Biloba 80 x 30 compri",
+          "precio": 6500,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Lecitina de Soja x 30 caps",
+          "precio": 9500,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Levadura de Cerveza x 100 compri",
+          "precio": 8500,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Magnesio 400 x 30 compri",
+          "precio": 7500,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Magnesio energy x 30 caps",
+          "precio": 8500,
+          "marca": "PGN"
+        },
+        {
+          "nombre": "Magnesio relax x 30 caps",
+          "precio": 8500,
+          "marca": "PGN"
+        },
+        {
+          "nombre": "Maka x 90 caps",
+          "precio": 11500,
+          "marca": "Prodenza"
+        },
+        {
+          "nombre": "Moringa x 90 caps",
+          "precio": 12500,
+          "marca": "Prodenza"
+        },
+        {
+          "nombre": "Pancakes Proteicos chocolate x 400gr",
+          "precio": 17000,
+          "marca": "Granger",
+          "imagen": "assets/productos/Pancakes_Granger.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Pancakes Proteicos vainilla x 400gr",
+          "precio": 17000,
+          "marca": "Granger"
+        },
+        {
+          "nombre": "Pancakes Proteicos queso x 300 gr",
+          "precio": 15600,
+          "marca": "Granger"
+        },
+        {
+          "nombre": "Pancakes Proteicos Chocolate x 400gr",
+          "precio": 15500,
+          "marca": "Aker — S/Azúcar"
+        },
+        {
+          "nombre": "Pancakes Proteicos Original x 400gr",
+          "precio": 15500,
+          "marca": "Aker — S/Azúcar"
+        },
+        {
+          "nombre": "Proteína de Huevo Hidrolizada Chocolate x 500gr",
+          "precio": 41000,
+          "marca": "Aker"
+        },
+        {
+          "nombre": "Proteína de Huevo Hidrolizada Frutos Rojos x 500gr",
+          "precio": 41000,
+          "marca": "Aker"
+        },
+        {
+          "nombre": "Proteína de Huevo Hidrolizada Vainilla x 500gr",
+          "precio": 41000,
+          "marca": "Aker"
+        },
+        {
+          "nombre": "Resveratrol x 30 compri",
+          "precio": 17200,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Valeriana x 90 caps",
+          "precio": 12500,
+          "marca": "Prodenza"
+        },
+        {
+          "nombre": "Vitamina C Triple Acción x 30 compri",
+          "precio": 10200,
+          "marca": "Geonat"
+        },
+        {
+          "nombre": "Maka Blanca x 500gr",
+          "precio": 4000
+        },
+        {
+          "nombre": "Maka Negra x 500gr",
+          "precio": 4000
+        },
+        {
+          "nombre": "Maka Roja x 500gr",
+          "precio": 4000
+        }
+      ]
+    },
+    {
+      "id": "galletitas-crackers",
+      "nombre": "Galletitas y Crackers",
+      "emoji": "🍪",
+      "productos": [
+        {
+          "nombre": "Angiola Alfajor Mousse de Limón x 12u",
+          "precio": 15200,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Budín con Frutas x 200gr",
+          "precio": 3800,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Crackers Clásicas x 150gr",
+          "precio": 4500,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Crackers con 5 semillas x 150gr",
+          "precio": 4500,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Crackers sabor JAMÓN x 150gr",
+          "precio": 4500,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Crackers sabor QUESO x 150gr",
+          "precio": 4500,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas Chocolate x 130gr",
+          "precio": 4150,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas Limón x 130gr",
+          "precio": 4150,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas Naranja x 130gr",
+          "precio": 4150,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas S/Azúcar Chocolate x 120gr",
+          "precio": 3250,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas S/Azúcar Limón x 120gr",
+          "precio": 3250,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas S/Azúcar Naranja x 120gr",
+          "precio": 3250,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas S/Azúcar Vainilla x 120gr",
+          "precio": 3250,
+          "marca": "Sin TACC"
+        },
+        {
+          "nombre": "Angiola Galletas Vainilla x 130gr",
+          "precio": 2450,
+          "marca": "Sin TACC"
+        }
+      ]
+    },
+    {
+      "id": "barritas",
+      "nombre": "Barritas y Snacks Proteicos",
+      "emoji": "⚡",
+      "productos": [
+        {
+          "nombre": "Barra Proteíca Choco-mani x 10",
+          "precio": 17500,
+          "marca": "Entrenuts",
+          "imagen": "assets/productos/Barritas_proteicas_Entrenuts.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Barra Proteíca Lemon Pie x 10",
+          "precio": 17500,
+          "marca": "Entrenuts"
+        },
+        {
+          "nombre": "Barra Proteíca Naranja x 10",
+          "precio": 17500,
+          "marca": "Entrenuts"
+        },
+        {
+          "nombre": "Barra Proteíca Frutilla Delli x 10",
+          "precio": 17500,
+          "marca": "Entrenuts"
+        },
+        {
+          "nombre": "Barrita Almendra y Arándanos x 10",
+          "precio": 14200,
+          "marca": "VITALGY"
+        },
+        {
+          "nombre": "Barrita Arándano y Cajú x 10",
+          "precio": 15000,
+          "marca": "VITALGY — Sin Azúcar"
+        },
+        {
+          "nombre": "Barrita Cacao y Almendras x 10",
+          "precio": 14200,
+          "marca": "VITALGY",
+          "imagen": "assets/productos/Barritas_Vitalgy.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Barrita Cajú y Chocolate x 10",
+          "precio": 14200,
+          "marca": "VITALGY"
+        },
+        {
+          "nombre": "Barritas Almendra - Sal Marina x 12u",
+          "precio": 17500,
+          "marca": "Zanna's — Sin TACC"
+        },
+        {
+          "nombre": "Barritas Arándanos x 12u",
+          "precio": 17500,
+          "marca": "Zanna's — Sin TACC"
+        },
+        {
+          "nombre": "Barritas Coco - Cacao x 12u",
+          "precio": 17500,
+          "marca": "Zanna's — Sin TACC"
+        }
+      ]
+    },
+    {
+      "id": "conservas",
+      "nombre": "Conservas y Aceitunas",
+      "emoji": "🫒",
+      "productos": [
+        {
+          "nombre": "Aceitunas verdes Descarozada x 1 kg",
+          "precio": 16500,
+          "marca": "DON ILMO"
+        },
+        {
+          "nombre": "Aceitunas verdes entera 0 x 2 kg",
+          "precio": 21500,
+          "marca": "DON ILMO"
+        },
+        {
+          "nombre": "Aceitunas Negras entera 0 x 1 kg",
+          "precio": 15200,
+          "marca": "DON ILMO"
+        },
+        {
+          "nombre": "Aceitunas Negras entera 0 x 2 kg",
+          "precio": 25600,
+          "marca": "DON ILMO"
+        },
+        {
+          "nombre": "Agua de Mar x 5 litros",
+          "precio": 14500,
+          "marca": "Pramar"
+        }
+      ]
+    },
+    {
+      "id": "cereales-legumbres",
+      "nombre": "Cereales y Legumbres",
+      "emoji": "🍚",
+      "productos": [
+        {
+          "nombre": "Arroz Integral",
+          "precio": 3500
+        },
+        {
+          "nombre": "Arroz Yamani Integral",
+          "precio": 4200
+        },
+        {
+          "nombre": "Avena Instantánea x 300gr",
+          "precio": 3500,
+          "marca": "Ganofi Sin TACC"
+        },
+        {
+          "nombre": "Garbanzos Nacionales x 1kg",
+          "precio": 3400
+        },
+        {
+          "nombre": "Lentejas Nacionales x 1kg",
+          "precio": 4500
+        }
+      ]
+    },
+    {
+      "id": "fideos",
+      "nombre": "Fideos y Pastas",
+      "emoji": "🍝",
+      "productos": [
+        {
+          "nombre": "Fideos Caseritos al huevo x 400gr",
+          "precio": 6400,
+          "marca": "Doña Rosa — Sin TACC"
+        },
+        {
+          "nombre": "Fideos Caseritos de espinaca x 400gr",
+          "precio": 6400,
+          "marca": "Doña Rosa — Sin TACC"
+        },
+        {
+          "nombre": "Fideos Caseritos de morrón x 400gr",
+          "precio": 6400,
+          "marca": "Doña Rosa — Sin TACC"
+        },
+        {
+          "nombre": "Fideos de Arroz Mostachon al huevo x 500gr",
+          "precio": 5000,
+          "marca": "Padoan"
+        },
+        {
+          "nombre": "Fideos de Arroz Mostachon clásico x 500gr",
+          "precio": 5000,
+          "marca": "Padoan"
+        },
+        {
+          "nombre": "Fideos de Arroz Mostachon espinaca x 500gr",
+          "precio": 5000,
+          "marca": "Padoan"
+        },
+        {
+          "nombre": "Fideos de Arroz Mostachon morrón x 500gr",
+          "precio": 5000,
+          "marca": "Padoan"
+        }
+      ]
+    },
+    {
+      "id": "dulces-mermeladas",
+      "nombre": "Dulces, Mermeladas y Miel",
+      "emoji": "🍯",
+      "productos": [
+        {
+          "nombre": "Dulce de Leche c/stevia x 400gr",
+          "precio": 6500,
+          "marca": "Ganofi — Sin TACC",
+          "imagen": "assets/productos/Dulce_de_leche_ganofi.png",
+          "destacado": true
+        },
+        {
+          "nombre": "Dulce de Leche c/stevia x 440gr",
+          "precio": 8200,
+          "marca": "Kony — Sin TACC"
+        },
+        {
+          "nombre": "Mermelada c/stevia Arándano x 360gr",
+          "precio": 6500,
+          "marca": "GANOFI"
+        },
+        {
+          "nombre": "Mermelada c/stevia de Durazno x 360gr",
+          "precio": 5400,
+          "marca": "GANOFI"
+        },
+        {
+          "nombre": "Mermelada c/stevia de Frutilla x 360gr",
+          "precio": 5900,
+          "marca": "GANOFI"
+        },
+        {
+          "nombre": "Mermelada c/stevia de Higo x 360gr",
+          "precio": 5400,
+          "marca": "GANOFI"
+        },
+        {
+          "nombre": "Mermelada c/stevia de Naranja x 360gr",
+          "precio": 5400,
+          "marca": "GANOFI"
+        },
+        {
+          "nombre": "Mermelada s/azúcar arándano x 380gr",
+          "precio": 6500,
+          "marca": "BRUCOR"
+        },
+        {
+          "nombre": "Mermelada s/azúcar durazno x 380gr",
+          "precio": 6350,
+          "marca": "BRUCOR"
+        },
+        {
+          "nombre": "Mermelada s/azúcar frutilla x 380gr",
+          "precio": 5700,
+          "marca": "BRUCOR"
+        },
+        {
+          "nombre": "Mermelada s/azúcar frutos rojos x 380gr",
+          "precio": 6500,
+          "marca": "BRUCOR"
+        },
+        {
+          "nombre": "Mermelada s/azúcar higo x 380gr",
+          "precio": 5600,
+          "marca": "BRUCOR"
+        },
+        {
+          "nombre": "Mermelada s/azúcar naranja x 380gr",
+          "precio": 5300,
+          "marca": "BRUCOR"
+        },
+        {
+          "nombre": "Miel Pura 100% Natural x 1kg",
+          "precio": 7000,
+          "marca": "Sin Agregado de Azúcar"
+        },
+        {
+          "nombre": "Pepas de algarroba con membrillo x 1kg",
+          "precio": 14500,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pepas de batata con chia x 1kg",
+          "precio": 14500,
+          "marca": "La Francia"
+        },
+        {
+          "nombre": "Pepas de membrillo con chia x 1kg",
+          "precio": 14500,
+          "marca": "La Francia"
+        }
+      ]
+    },
+    {
+      "id": "condimentos-auxiliares",
+      "nombre": "Condimentos y Auxiliares de Cocina",
+      "emoji": "🥣",
+      "productos": [
+        {
+          "nombre": "Azúcar Mascabo x 1kg",
+          "precio": 5500
+        },
+        {
+          "nombre": "Bicarbonato",
+          "precio": 4300,
+          "marca": "Ganofi Sin TACC"
+        },
+        {
+          "nombre": "Cacao Amargo x 1kg",
+          "precio": 13700
+        },
+        {
+          "nombre": "Gelatina sin Sabor x 500gr",
+          "precio": 15600
+        },
+        {
+          "nombre": "Polvo de Hornear",
+          "precio": 7300,
+          "marca": "Ganofi Sin TACC"
+        },
+        {
+          "nombre": "Sal Marina Entrefina x 500gr",
+          "precio": 3900
+        },
+        {
+          "nombre": "Sal Marina Fina x 500gr",
+          "precio": 3900
+        },
+        {
+          "nombre": "Sal de Himalaya x 500gr",
+          "precio": 4000
+        }
+      ]
+    }
+  ]
+}

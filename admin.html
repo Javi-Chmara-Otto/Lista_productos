@@ -1,0 +1,2492 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Más Vale Natural</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a1a;
+      font-size: 14px;
+    }
+
+    /* LOGIN */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      background: #f5f5f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .login-box {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 40px;
+      width: 340px;
+      text-align: center;
+    }
+
+    .login-box h1 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .login-box p {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .login-box input:focus {
+      border-color: #aaa;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 10px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background: #333;
+    }
+
+    .login-error {
+      color: #c0392b;
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* LAYOUT */
+    #app {
+      display: none;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .btn-logout {
+      font-size: 12px;
+      color: #888;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .btn-logout:hover {
+      background: #f0f0f0;
+    }
+
+    /* TABS */
+    .tabs {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 24px;
+      display: flex;
+      gap: 0;
+    }
+
+    .tab-btn {
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #888;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: #1a1a1a;
+    }
+
+    .tab-btn.activo {
+      color: #1a1a1a;
+      border-bottom-color: #1a1a1a;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.activo {
+      display: block;
+    }
+
+    /* STATS */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 16px 24px;
+      background: #f5f5f3;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 10px;
+      padding: 16px 20px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .stat-valor {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .stat-sub {
+      font-size: 11px;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    /* TOOLBAR */
+    .toolbar {
+      background: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar input[type="text"] {
+      flex: 1;
+      min-width: 160px;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .toolbar input:focus {
+      border-color: #aaa;
+    }
+
+    .toolbar select {
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      background: #fff;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: #f5f5f5;
+    }
+
+    .btn-primary {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .btn-primary:hover {
+      background: #333;
+    }
+
+    .btn-green {
+      background: #1a5c2a;
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .btn-green:hover {
+      background: #145222;
+    }
+
+    /* TABLA */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 500;
+      color: #888;
+      padding: 10px 20px;
+      border-bottom: 1px solid #e8e8e8;
+      background: #fafafa;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: #fafafa;
+    }
+
+    .prod-nombre {
+      font-weight: 500;
+    }
+
+    .prod-marca {
+      font-size: 11px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .tag-on {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .tag-off {
+      background: #fce4e4;
+      color: #c0392b;
+    }
+
+    .tag-pendiente {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    .tag-pagado {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .tag-entregado {
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .tag-envio {
+      background: #f3e5f5;
+      color: #6a1b9a;
+    }
+
+    .tag-retiro {
+      background: #e0f2f1;
+      color: #00695c;
+    }
+
+    .acciones {
+      display: flex;
+      gap: 6px;
+    }
+
+    .ico-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid #e8e8e8;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 15px;
+      color: #555;
+      transition: background 0.15s;
+    }
+
+    .ico-btn:hover {
+      background: #f0f0f0;
+    }
+
+    .ico-btn.danger {
+      color: #c0392b;
+    }
+
+    .ico-btn.danger:hover {
+      background: #fce4e4;
+    }
+
+    /* PEDIDO ITEMS */
+    .pedido-items {
+      font-size: 12px;
+      color: #666;
+      max-width: 260px;
+    }
+
+    .pedido-items-list {
+      margin-top: 4px;
+    }
+
+    /* TABLA FOOTER */
+    .table-footer {
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #888;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal-overlay.visible {
+      display: flex;
+    }
+
+    .modal {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px;
+      width: 520px;
+      max-width: 95vw;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      background: #fff;
+      color: #1a1a1a;
+      font-family: system-ui;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #aaa;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .checkbox-row label {
+      font-size: 13px;
+      color: #444;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* BUSCADOR PRODUCTO EN PEDIDO */
+    .producto-search-wrap {
+      position: relative;
+    }
+
+    .producto-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 50;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .producto-suggestions.visible {
+      display: block;
+    }
+
+    .sugg-item {
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sugg-item:hover {
+      background: #f5f5f5;
+    }
+
+    .sugg-precio {
+      color: #888;
+      font-size: 12px;
+    }
+
+    /* ITEMS DEL PEDIDO */
+    .items-pedido {
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .item-pedido-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+
+    .item-pedido-row:last-child {
+      border-bottom: none;
+    }
+
+    .item-pedido-nombre {
+      flex: 1;
+    }
+
+    .item-pedido-qty {
+      width: 50px;
+      padding: 4px 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: center;
+      outline: none;
+    }
+
+    .item-pedido-precio {
+      width: 80px;
+      text-align: right;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .item-pedido-quitar {
+      background: none;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 4px;
+      line-height: 1;
+    }
+
+    .item-pedido-quitar:hover {
+      color: #c0392b;
+    }
+
+    .items-vacio {
+      padding: 16px;
+      text-align: center;
+      color: #bbb;
+      font-size: 13px;
+    }
+
+    .items-total {
+      padding: 10px 12px;
+      background: #fafafa;
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    /* CLIENTE HISTORIAL */
+    .cliente-nombre-link {
+      font-weight: 500;
+      color: #1a1a1a;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-color: #ddd;
+    }
+
+    .cliente-nombre-link:hover {
+      text-decoration-color: #1a1a1a;
+    }
+
+    /* LOADING / EMPTY */
+    .estado {
+      text-align: center;
+      padding: 48px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.25s;
+      z-index: 200;
+    }
+
+    .toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.error {
+      background: #c0392b;
+    }
+
+    /* SEPARADOR SECCION MODAL */
+    .modal-section {
+      font-size: 11px;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 20px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .ranking-pos {
+      font-size: 11px;
+      font-weight: 700;
+      color: #aaa;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .ranking-nombre {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .ranking-valor {
+      font-size: 12px;
+      color: #888;
+      white-space: nowrap;
+    }
+
+    .semanas-tabla {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .semanas-tabla th {
+      text-align: left;
+      font-size: 11px;
+      color: #888;
+      padding: 10px 16px;
+      background: #fafafa;
+      border-bottom: 1px solid #e8e8e8;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .semanas-tabla td {
+      padding: 10px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+
+    .semanas-tabla tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGIN -->
+  <div id="login-screen">
+    <div class="login-box">
+      <h1>🌿 Más Vale Natural</h1>
+      <p>Panel de administración</p>
+      <input type="password" id="pass-input" placeholder="Contraseña" />
+      <button onclick="intentarLogin()">Ingresar</button>
+      <div class="login-error" id="login-error">Contraseña incorrecta</div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app">
+    <header>
+      <div class="header-left">
+        <span class="header-logo">🌿 Más Vale Natural — Admin</span>
+      </div>
+      <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
+    </header>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn activo" onclick="cambiarTab('productos')">📦 Productos</button>
+      <button class="tab-btn" onclick="cambiarTab('pedidos')">🛒 Pedidos</button>
+      <button class="tab-btn" onclick="cambiarTab('clientes')">👥 Clientes</button>
+      <button class="tab-btn" onclick="cambiarTab('semana')">📊 Esta semana</button>
+      <button class="tab-btn" onclick="cambiarTab('historico')">📈 Histórico</button>
+      <button class="tab-btn" onclick="cambiarTab('importar')">📥 Importar</button>
+    </div>
+
+    <!-- ── TAB PRODUCTOS ── -->
+    <div class="tab-content activo" id="tab-productos">
+      <div class="toolbar">
+        <input type="text" id="buscador-prod" placeholder="Buscar producto o marca..." oninput="renderProductos()">
+        <select id="filtro-cat" onchange="renderProductos()">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="filtro-estado" onchange="renderProductos()">
+          <option value="">Todos</option>
+          <option value="true">Activos</option>
+          <option value="false">Inactivos</option>
+        </select>
+        <button class="btn btn-primary" onclick="abrirModalProductoNuevo()">+ Agregar producto</button>
+        <button class="btn" onclick="abrirModalNuevaCategoria()">+ Nueva categoría</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Costo</th>
+              <th>Ganancia</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-prod"></tbody>
+        </table>
+        <div id="estado-prod" class="estado">Cargando productos...</div>
+      </div>
+      <div class="table-footer"></div>
+      <span id="footer-prod">—</span>
+    </div>
+  </div>
+
+  <!-- ── TAB PEDIDOS ── -->
+  <div class="tab-content" id="tab-pedidos">
+    <div class="stats-bar" id="stats-pedidos"></div>
+    <div class="toolbar">
+      <input type="text" id="buscador-ped" placeholder="Buscar por cliente..." oninput="renderPedidos()">
+      <select id="filtro-pago" onchange="renderPedidos()">
+        <option value="">Todos los pagos</option>
+        <option value="pendiente">Pago pendiente</option>
+        <option value="pagado">Pagado</option>
+      </select>
+      <select id="filtro-entrega" onchange="renderPedidos()">
+        <option value="">Todas las entregas</option>
+        <option value="pendiente">Entrega pendiente</option>
+        <option value="entregado">Entregado</option>
+      </select>
+      <input type="date" id="filtro-desde" onchange="renderPedidos()">
+      <input type="date" id="filtro-hasta" onchange="renderPedidos()">
+      <button class="btn" onclick="filtrarSemanaActual()">Esta semana</button>
+      <button class="btn" onclick="filtrarSemanaPasada()">Semana pasada</button>
+      <button class="btn" onclick="limpiarFiltroFechas()">✕ Fechas</button>
+      <button class="btn btn-green" onclick="abrirModalPedidoNuevo()">+ Nuevo pedido</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Total</th>
+            <th>Ganancia</th>
+            <th>Entrega</th>
+            <th>Pago</th>
+            <th>Entrega</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-ped"></tbody>
+      </table>
+      <div id="estado-ped" class="estado">Cargando pedidos...</div>
+    </div>
+    <div class="table-footer">
+      <span id="footer-ped">—</span>
+    </div>
+  </div>
+
+  <!-- ── TAB CLIENTES ── -->
+  <div class="tab-content" id="tab-clientes">
+    <div class="toolbar">
+      <input type="text" id="buscador-cli" placeholder="Buscar cliente..." oninput="renderClientes()">
+      <button class="btn btn-primary" onclick="abrirModalClienteNuevo()">+ Nuevo cliente</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Pedidos</th>
+            <th>Total gastado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-cli"></tbody>
+      </table>
+      <div id="estado-cli" class="estado">Cargando clientes...</div>
+    </div>
+    <div class="table-footer">
+      <span id="footer-cli">—</span>
+    </div>
+  </div>
+
+  <!-- ── TAB ESTA SEMANA ── -->
+  <div class="tab-content" id="tab-semana">
+    <div class="stats-bar" id="stats-semana"></div>
+    <div
+      style="padding:16px 24px 8px;font-size:12px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:0.05em"
+      id="semana-label"></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Total</th>
+            <th>Entrega</th>
+            <th>Pago</th>
+            <th>Entrega</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-semana"></tbody>
+      </table>
+      <div id="estado-semana" class="estado" style="display:none">No hay pedidos esta semana.</div>
+    </div>
+  </div>
+
+  <!-- ── TAB HISTÓRICO ── -->
+  <div class="tab-content" id="tab-historico">
+    <div class="stats-bar" id="stats-historico"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 24px">
+      <div>
+        <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">Top
+          productos más pedidos</div>
+        <div id="top-productos"></div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">
+          Clientes que más compran</div>
+        <div id="top-clientes"></div>
+      </div>
+    </div>
+    <div style="padding:0 24px 24px">
+      <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">Últimas
+        semanas</div>
+      <div id="tabla-semanas"></div>
+    </div>
+  </div>
+
+  <!-- ── TAB IMPORTAR ── -->
+  <div class="tab-content" id="tab-importar">
+    <div class="toolbar">
+      <h2 style="margin:0">📥 Importar productos desde CSV</h2>
+    </div>
+
+    <div style="padding: 24px; max-width: 700px;">
+      <p style="color:#666; margin-bottom: 20px;">
+        Subí el CSV generado por GPT con las columnas:
+        <code>codigo, nombre, precio, marca, categoria_id, categoria_nombre, categoria_emoji, activo</code>
+      </p>
+
+      <input type="file" id="csv-input" accept=".csv" style="margin-bottom: 16px;" onchange="procesarCSV()">
+
+      <div id="importar-preview" style="display:none">
+        <div id="importar-resumen"
+          style="margin-bottom: 16px; padding: 12px; background: #f0f7f0; border-radius: 8px; border: 1px solid #c3e6c3;">
+        </div>
+        <div class="table-wrap" style="margin-bottom: 16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Marca</th>
+                <th>Categoría</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="importar-tbody"></tbody>
+          </table>
+        </div>
+        <button class="btn btn-primary" onclick="confirmarImport()">✅ Confirmar importación</button>
+        <button class="btn" onclick="cancelarImport()" style="margin-left: 8px;">Cancelar</button>
+      </div>
+
+      <div id="importar-resultado" style="display:none; padding: 16px; border-radius: 8px;"></div>
+    </div>
+
+    <!-- IMPORTAR COSTOS -->
+    <div
+      style="margin-top: 40px; border-top: 1px solid #e8e8e8; padding-top: 24px; padding-left: 24px; max-width: 700px;">
+      <h3 style="font-size:15px;font-weight:500;margin-bottom:8px">💰 Actualizar precios de costo desde CSV</h3>
+      <p style="color:#666; margin-bottom: 16px; font-size:13px;">
+        Subí un CSV con las columnas: <code>id, costo_proveedor</code><br>
+        El <code>id</code> es el número de Supabase que aparece en la tabla de productos.
+      </p>
+      <input type="file" id="csv-costos-input" accept=".csv" style="margin-bottom: 16px;"
+        onchange="procesarCSVCostos()">
+      <div id="costos-preview" style="display:none">
+        <div id="costos-resumen"
+          style="margin-bottom:16px;padding:12px;background:#f0f7f0;border-radius:8px;border:1px solid #c3e6c3"></div>
+        <div class="table-wrap" style="margin-bottom:16px">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Costo anterior</th>
+                <th>Costo nuevo</th>
+                <th>Ganancia nueva</th>
+              </tr>
+            </thead>
+            <tbody id="costos-tbody"></tbody>
+          </table>
+        </div>
+        <button class="btn btn-green" onclick="confirmarImportCostos()">✅ Actualizar costos</button>
+        <button class="btn" onclick="cancelarImportCostos()" style="margin-left:8px">Cancelar</button>
+      </div>
+      <div id="costos-resultado" style="display:none;padding:16px;border-radius:8px"></div>
+    </div>
+  </div>
+  </div>
+
+  <!-- MODAL PRODUCTO -->
+  <div class="modal-overlay" id="modal-prod-overlay" onclick="cerrarModalProd(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2 id="modal-prod-titulo">Editar producto</h2>
+      <input type="hidden" id="modal-prod-id">
+      <div class="form-group">
+        <label>Nombre del producto</label>
+        <input type="text" id="modal-prod-nombre" placeholder="Ej: Almendras x 1kg">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Precio de venta ($)</label>
+          <input type="number" id="modal-prod-precio" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Precio de costo ($)</label>
+          <input type="number" id="modal-prod-costo" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Marca (opcional)</label>
+          <input type="text" id="modal-prod-marca" placeholder="Ej: Ganofi">
+        </div>
+        <div class="form-group">
+          <label>Código del proveedor (opcional)</label>
+          <input type="text" id="modal-prod-codigo" placeholder="Ej: 1374">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="modal-prod-categoria"></select>
+      </div>
+      <div class="form-group">
+        <label>Imagen (ruta, opcional)</label>
+        <input type="text" id="modal-prod-imagen" placeholder="assets/productos/nombre.png">
+      </div>
+      <div class="form-group">
+        <div class="checkbox-row">
+          <input type="checkbox" id="modal-prod-destacado">
+          <label for="modal-prod-destacado">Mostrar en destacados</label>
+        </div>
+        <div class="checkbox-row" style="margin-top:8px">
+          <input type="checkbox" id="modal-prod-activo" checked>
+          <label for="modal-prod-activo">Producto activo (visible en el catálogo)</label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="cerrarModalProdBtn()">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarProducto()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PEDIDO -->
+  <div class="modal-overlay" id="modal-ped-overlay" onclick="cerrarModalPed(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2 id="modal-ped-titulo">Nuevo pedido</h2>
+      <input type="hidden" id="modal-ped-id">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre del cliente</label>
+          <input type="text" id="modal-ped-cliente" placeholder="Nombre y apellido">
+        </div>
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="text" id="modal-ped-telefono" placeholder="Ej: 3492-123456">
+        </div>
+      </div>
+      <div class="form-group" id="campo-ped-direccion">
+        <label>Dirección de entrega</label>
+        <input type="text" id="modal-ped-direccion" placeholder="Calle, altura y barrio">
+      </div>
+
+      <div class="modal-section">Productos del pedido</div>
+      <div class="form-group">
+        <label>Buscar y agregar producto</label>
+        <div class="producto-search-wrap">
+          <input type="text" id="prod-search" placeholder="Escribí el nombre del producto..." autocomplete="off"
+            oninput="buscarProductoParaPedido()">
+          <div class="producto-suggestions" id="prod-suggestions"></div>
+        </div>
+      </div>
+      <div class="items-pedido" id="items-pedido">
+        <div class="items-vacio">Todavía no agregaste productos</div>
+      </div>
+
+      <div class="modal-section">Entrega y pago</div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="modal-ped-fecha">
+        </div>
+        <div class="form-group">
+          <label>Tipo de entrega</label>
+          <select id="modal-ped-entrega">
+            <option value="envio">🚚 Envío</option>
+            <option value="retiro">🏃 Retiro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado del pago</label>
+          <select id="modal-ped-pago">
+            <option value="pendiente">Pendiente</option>
+            <option value="pagado">Pagado</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notas (opcional)</label>
+        <textarea id="modal-ped-notas" placeholder="Ej: Entregar después de las 18hs"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn" onclick="cerrarModalPedBtn()">Cancelar</button>
+        <button class="btn btn-green" onclick="guardarPedido()">Guardar pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CLIENTE -->
+  <div class="modal-overlay" id="modal-cli-overlay" onclick="cerrarModalCli(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2 id="modal-cli-titulo">Nuevo cliente</h2>
+      <input type="hidden" id="modal-cli-id">
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="modal-cli-nombre" placeholder="Nombre y apellido">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="text" id="modal-cli-tel" placeholder="Ej: 3492-123456">
+        </div>
+        <div class="form-group">
+          <label>Dirección</label>
+          <input type="text" id="modal-cli-dir" placeholder="Calle y número">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notas</label>
+        <textarea id="modal-cli-notas" placeholder="Ej: Prefiere que la llamen antes de entregar"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="cerrarModalCliBtn()">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarCliente()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL NUEVA CATEGORÍA -->
+  <div class="modal-overlay" id="modal-cat-overlay" onclick="cerrarModalCat(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h2>Nueva categoría</h2>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" id="modal-cat-nombre" placeholder="Ej: Infusiones">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Emoji</label>
+          <input type="text" id="modal-cat-emoji" placeholder="Ej: 🌿" maxlength="4">
+        </div>
+        <div class="form-group">
+          <label>ID (sin espacios, en minúscula)</label>
+          <input type="text" id="modal-cat-id" placeholder="Ej: infusiones">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="cerrarModalCatBtn()">Cancelar</button>
+        <button class="btn btn-primary" onclick="confirmarNuevaCategoria()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const SUPABASE_URL = "https://eaxdcdsgurlgotlwcqvf.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_cojsw7ukcsKrdXG1oAvB7g_5xEO85wi";
+    const PASSWORD = "Tienda1926";
+
+    const CATEGORIAS = [
+      { id: "frutos-secos", nombre: "Frutos Secos & Mixes", emoji: "🥜" },
+      { id: "aceites", nombre: "Coco, Aceites & Vinagres", emoji: "🥥" },
+      { id: "harinas", nombre: "Harinas & Almidones", emoji: "🌾" },
+      { id: "mani", nombre: "Pasta de Maní", emoji: "🥜" },
+      { id: "semillas", nombre: "Semillas", emoji: "🌱" },
+      { id: "especias", nombre: "Especias", emoji: "🧂" },
+      { id: "yerbas", nombre: "Yerbas & Infusiones", emoji: "🍵" },
+      { id: "chocolates", nombre: "Chocolates & Repostería", emoji: "🍫" },
+      { id: "panes", nombre: "Panes", emoji: "🍞" },
+      { id: "suplementos", nombre: "Suplementos", emoji: "💊" },
+      { id: "galletitas-crackers", nombre: "Galletitas y Crackers", emoji: "🍪" },
+      { id: "barritas", nombre: "Barritas y Snacks Proteicos", emoji: "⚡" },
+      { id: "conservas", nombre: "Conservas y Aceitunas", emoji: "🫒" },
+      { id: "cereales-legumbres", nombre: "Cereales y Legumbres", emoji: "🍚" },
+      { id: "fideos", nombre: "Fideos y Pastas", emoji: "🍝" },
+      { id: "dulces-mermeladas", nombre: "Dulces, Mermeladas y Miel", emoji: "🍯" },
+      { id: "condimentos-auxiliares", nombre: "Condimentos y Auxiliares de Cocina", emoji: "🥣" },
+    ];
+
+    let productos = [];
+    let pedidos = [];
+    let clientes = [];
+    let itemsPedidoActual = [];
+
+    // ── LOGIN ──
+    function intentarLogin() {
+      const val = document.getElementById("pass-input").value;
+      if (val === PASSWORD) {
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("app").style.display = "block";
+        iniciar();
+      } else {
+        document.getElementById("login-error").style.display = "block";
+      }
+    }
+    document.getElementById("pass-input").addEventListener("keydown", e => {
+      if (e.key === "Enter") intentarLogin();
+    });
+    function cerrarSesion() {
+      document.getElementById("login-screen").style.display = "flex";
+      document.getElementById("app").style.display = "none";
+      document.getElementById("pass-input").value = "";
+    }
+
+    // ── TABS ──
+    function cambiarTab(tab) {
+      document.querySelectorAll(".tab-btn").forEach((b, i) => {
+        const tabs = ["productos", "pedidos", "clientes", "semana", "historico", "importar"];
+        b.classList.toggle("activo", tabs[i] === tab);
+      });
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("activo"));
+      document.getElementById("tab-" + tab).classList.add("activo");
+      if (tab === "semana") renderSemana();
+      if (tab === "historico") renderHistorico();
+    }
+
+    // ── API ──
+    async function apiFetch(path, options = {}) {
+      const res = await fetch(SUPABASE_URL + path, {
+        ...options,
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": "Bearer " + SUPABASE_KEY,
+          "Content-Type": "application/json",
+          "Prefer": options.prefer || "",
+          ...options.headers
+        }
+      });
+      if (!res.ok) throw new Error(await res.text());
+      if (res.status === 204) return null;
+      return res.json();
+    }
+
+    async function iniciar() {
+      poblarFiltroCategoria();
+      poblarModalCategorias();
+      await Promise.all([cargarProductos(), cargarPedidos(), cargarClientes()]);
+    }
+
+    function poblarFiltroCategoria() {
+      const sel = document.getElementById("filtro-cat");
+      CATEGORIAS.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.emoji + " " + c.nombre;
+        sel.appendChild(opt);
+      });
+    }
+
+    // Cerrar modal de producto
+    function cerrarModalProd(e) {
+      if (e.target === document.getElementById("modal-prod-overlay")) {
+        cerrarModalProdBtn();
+      }
+    }
+    function cerrarModalProdBtn() {
+      document.getElementById("modal-prod-overlay").classList.remove("visible");
+    }
+
+    function poblarModalCategorias() {
+      const sel = document.getElementById("modal-prod-categoria");
+      CATEGORIAS.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.emoji + " " + c.nombre;
+        sel.appendChild(opt);
+      });
+    }
+
+    // Helper para obtener el costo de un item cruzando con la base de productos activos en caso de que sea $0 en el pedido histórico
+    function obtenerCostoItem(item) {
+      if (item.costo && item.costo > 0) return item.costo;
+      // Si el costo in el pedido guardado es 0 (pedido histórico viejo), buscamos si hoy el producto tiene costo cargado
+      const prod = productos.find(p => p.id === item.id);
+      return prod ? (prod.precio_costo || 0) : 0;
+    }
+
+    // ── PRODUCTOS ──
+    async function cargarProductos() {
+      try {
+        productos = await apiFetch("/rest/v1/productos?select=*&order=categoria_id,nombre&limit=500");
+        renderProductos();
+      } catch (e) {
+        document.getElementById("estado-prod").textContent = "Error al cargar productos.";
+      }
+    }
+
+    function renderProductos() {
+      const q = normalizar(document.getElementById("buscador-prod").value);
+      const cat = document.getElementById("filtro-cat").value;
+      const estado = document.getElementById("filtro-estado").value;
+
+      let filtrados = productos.filter(p => {
+        const matchQ = !q || normalizar(p.nombre).includes(q) || normalizar(p.marca || "").includes(q);
+        const matchCat = !cat || p.categoria_id === cat;
+        const matchEstado = estado === "" || String(p.activo) === estado;
+        return matchQ && matchCat && matchEstado;
+      });
+
+      const tbody = document.getElementById("tbody-prod");
+      const estadoEl = document.getElementById("estado-prod");
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = "";
+        estadoEl.style.display = "block";
+        estadoEl.textContent = "No hay productos que coincidan.";
+      } else {
+        estadoEl.style.display = "none";
+        tbody.innerHTML = filtrados.map(p => {
+          const costo = p.precio_costo || 0;
+          const ganancia = p.precio - costo;
+          const margen = p.precio ? Math.round(ganancia / p.precio * 100) : 0;
+          return `
+      <tr>
+        <td><div class="prod-codigo">${p.codigo ? esc(p.codigo) : '<span style="color:#ccc">—</span>'}</div></td>
+        <td>
+          <div class="prod-nombre">${esc(p.nombre)}</div>
+          ${p.marca ? `<div class="prod-marca">${esc(p.marca)}</div>` : ""}
+        </td>
+        <td>${catNombre(p.categoria_id)}</td>
+        <td>$ ${p.precio.toLocaleString("es-AR")}</td>
+        <td>${costo > 0 ? `$ ${costo.toLocaleString("es-AR")}` : '<span style="color:#ccc">—</span>'}</td>
+        <td>${costo > 0
+              ? `<div style="font-weight:600;color:#2e7d32">$ ${ganancia.toLocaleString("es-AR")}</div>
+             <div style="font-size:11px;color:#aaa">${margen}%</div>`
+              : '<span style="color:#ccc">—</span>'}</td>
+        <td><span class="tag ${p.activo ? "tag-on" : "tag-off"}">${p.activo ? "Activo" : "Inactivo"}</span></td>
+        <td>
+          <div class="acciones">
+            <button class="ico-btn" title="Editar" onclick="abrirModalProductoEditar(${p.id})">✏️</button>
+            <button class="ico-btn" title="${p.activo ? "Desactivar" : "Activar"}" onclick="toggleActivo(${p.id}, ${p.activo})">${p.activo ? "🙈" : "👁️"}</button>
+            <button class="ico-btn danger" title="Eliminar" onclick="eliminarProducto(${p.id}, '${esc(p.nombre)}')">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `}).join("");
+      }
+
+      document.getElementById("footer-prod").textContent =
+        `Mostrando ${filtrados.length} de ${productos.length} productos`;
+    }
+
+    function catNombre(id) {
+      const c = CATEGORIAS.find(x => x.id === id);
+      return c ? c.emoji + " " + c.nombre : id;
+    }
+
+    function abrirModalProductoNuevo() {
+      document.getElementById("modal-prod-titulo").textContent = "Agregar producto";
+      document.getElementById("modal-prod-id").value = "";
+      document.getElementById("modal-prod-nombre").value = "";
+      document.getElementById("modal-prod-precio").value = "";
+      document.getElementById("modal-prod-marca").value = "";
+      document.getElementById("modal-prod-codigo").value = "";
+      document.getElementById("modal-prod-imagen").value = "";
+      document.getElementById("modal-prod-destacado").checked = false;
+      document.getElementById("modal-prod-activo").checked = true;
+      document.getElementById("modal-prod-categoria").value = "frutos-secos";
+      document.getElementById("modal-prod-costo").value = "";
+      document.getElementById("modal-prod-overlay").classList.add("visible");
+    }
+
+    function abrirModalProductoEditar(id) {
+      const p = productos.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById("modal-prod-titulo").textContent = "Editar producto";
+      document.getElementById("modal-prod-id").value = p.id;
+      document.getElementById("modal-prod-nombre").value = p.nombre;
+      document.getElementById("modal-prod-precio").value = p.precio;
+      document.getElementById("modal-prod-marca").value = p.marca || "";
+      document.getElementById("modal-prod-imagen").value = p.imagen || "";
+      document.getElementById("modal-prod-destacado").checked = p.destacado;
+      document.getElementById("modal-prod-activo").checked = p.activo;
+      document.getElementById("modal-prod-categoria").value = p.categoria_id;
+      document.getElementById("modal-prod-codigo").value = p.codigo || "";
+      document.getElementById("modal-prod-costo").value = p.precio_costo || "";
+      document.getElementById("modal-prod-overlay").classList.add("visible");
+    }
+
+    async function guardarProducto() {
+      try {
+        const id = document.getElementById("modal-prod-id").value;
+        const catId = document.getElementById("modal-prod-categoria").value;
+        const cat = CATEGORIAS.find(c => c.id === catId) || { nombre: "Sin categoría", emoji: "📦" };
+
+        // Limpiamos el costo para evitar enviar NaN a la base de datos
+        const costoInput = document.getElementById("modal-prod-costo").value.trim();
+        let precio_costo = null;
+        if (costoInput !== "") {
+          const parsedCosto = parseInt(costoInput);
+          precio_costo = isNaN(parsedCosto) ? null : parsedCosto;
+        }
+
+        const datos = {
+          nombre: document.getElementById("modal-prod-nombre").value.trim(),
+          precio: parseInt(document.getElementById("modal-prod-precio").value) || 0,
+          marca: document.getElementById("modal-prod-marca").value.trim() || null,
+          codigo: document.getElementById("modal-prod-codigo").value.trim() || null,
+          imagen: document.getElementById("modal-prod-imagen").value.trim() || null,
+          destacado: document.getElementById("modal-prod-destacado").checked,
+          activo: document.getElementById("modal-prod-activo").checked,
+          precio_costo: precio_costo,
+          categoria_id: catId,
+          categoria_nombre: cat.nombre,
+          categoria_emoji: cat.emoji,
+        };
+
+        if (!datos.nombre) {
+          mostrarToast("Completá el nombre del producto", true);
+          return;
+        }
+        if (isNaN(datos.precio) || datos.precio <= 0) {
+          mostrarToast("Ingresá un precio de venta válido", true);
+          return;
+        }
+
+        if (id) {
+          await apiFetch(`/rest/v1/productos?id=eq.${id}`, { method: "PATCH", body: JSON.stringify(datos) });
+          const idx = productos.findIndex(p => p.id == id);
+          if (idx !== -1) productos[idx] = { ...productos[idx], ...datos };
+          mostrarToast("Producto actualizado");
+        } else {
+          const nuevo = await apiFetch("/rest/v1/productos", { method: "POST", body: JSON.stringify(datos), prefer: "return=representation" });
+          if (nuevo && nuevo[0]) productos.push(nuevo[0]);
+          mostrarToast("Producto agregado");
+        }
+        cerrarModalProdBtn();
+        renderProductos();
+      } catch (e) {
+        console.error("Error al guardar producto:", e);
+        mostrarToast("Error al guardar: " + e.message, true);
+      }
+    }
+
+    async function toggleActivo(id, actual) {
+      try {
+        await apiFetch(`/rest/v1/productos?id=eq.${id}`, { method: "PATCH", body: JSON.stringify({ activo: !actual }) });
+        const p = productos.find(x => x.id === id);
+        if (p) p.activo = !actual;
+        renderProductos();
+        mostrarToast(actual ? "Producto desactivado" : "Producto activado");
+      } catch (e) { mostrarToast("Error al actualizar", true); }
+    }
+
+    async function eliminarProducto(id, nombre) {
+      if (!confirm(`¿Eliminar "${nombre}"?\nEsta acción no se puede deshacer.`)) return;
+      try {
+        await apiFetch(`/rest/v1/productos?id=eq.${id}`, { method: "DELETE" });
+        productos = productos.filter(p => p.id !== id);
+        renderProductos();
+        mostrarToast("Producto eliminado");
+      } catch (e) { mostrarToast("Error al eliminar", true); }
+    }
+
+    // ── PEDIDOS ──
+    async function cargarPedidos() {
+      try {
+        pedidos = await apiFetch("/rest/v1/pedidos?order=created_at.desc&limit=500");
+        renderPedidos();
+        renderStatsPedidos();
+      } catch (e) {
+        document.getElementById("estado-ped").textContent = "Error al cargar pedidos.";
+      }
+    }
+
+    function renderStatsPedidos() {
+      const hoy = new Date().toISOString().slice(0, 10);
+      const semana = pedidos.filter(p => {
+        const d = new Date(p.created_at);
+        const hace7 = new Date(); hace7.setDate(hace7.getDate() - 7);
+        return d >= hace7;
+      });
+      const pendientesPago = pedidos.filter(p => p.estado_pago === "pendiente").length;
+      const pendientesEntrega = pedidos.filter(p => p.estado_entrega === "pendiente").length;
+      const totalSemana = semana.reduce((s, p) => s + (p.total || 0), 0);
+
+      // Calculamos la ganancia de los pedidos de los últimos 7 días basándonos en los costos de cada item (cruzando costos históricos y actuales)
+      const gananciaSemana = semana.reduce((s, p) => {
+        const items = Array.isArray(p.items) ? p.items : [];
+        return s + items.reduce((si, i) => si + ((i.precio - obtenerCostoItem(i)) * i.cantidad), 0);
+      }, 0);
+
+      document.getElementById("stats-pedidos").innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Total pedidos</div>
+      <div class="stat-valor">${pedidos.length}</div>
+      <div class="stat-sub">${semana.length} esta semana</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Cobros pendientes</div>
+      <div class="stat-valor" style="color:#e65100">${pendientesPago}</div>
+      <div class="stat-sub">pedidos sin cobrar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Entregas pendientes</div>
+      <div class="stat-valor" style="color:#1565c0">${pendientesEntrega}</div>
+      <div class="stat-sub">pedidos por entregar</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Facturado esta semana</div>
+      <div class="stat-valor">$ ${totalSemana.toLocaleString("es-AR")}</div>
+      <div class="stat-sub">últimos 7 días</div>
+    </div>
+    <div class="stat-card" style="border-left: 3px solid #1a5c2a;">
+      <div class="stat-label" style="color:#1a5c2a; font-weight:600;">Ganancia esta semana</div>
+      <div class="stat-valor" style="color:#1a5c2a">$ ${gananciaSemana.toLocaleString("es-AR")}</div>
+      <div class="stat-sub">Neta calculada</div>
+    </div>
+  `;
+    }
+
+    function renderPedidos() {
+      const q = normalizar(document.getElementById("buscador-ped").value);
+      const filtroPago = document.getElementById("filtro-pago").value;
+      const filtroEntrega = document.getElementById("filtro-entrega").value;
+      const desde = document.getElementById("filtro-desde").value;
+      const hasta = document.getElementById("filtro-hasta").value;
+
+      let filtrados = pedidos.filter(p => {
+        const matchQ = !q || normalizar(p.cliente_nombre).includes(q);
+        const matchPago = !filtroPago || p.estado_pago === filtroPago;
+        const matchEntrega = !filtroEntrega || p.estado_entrega === filtroEntrega;
+        const fechaPed = (p.fecha || p.created_at || "").slice(0, 10);
+        const matchDesde = !desde || fechaPed >= desde;
+        const matchHasta = !hasta || fechaPed <= hasta;
+        return matchQ && matchPago && matchEntrega && matchDesde && matchHasta;
+      });
+
+      const tbody = document.getElementById("tbody-ped");
+      const estadoEl = document.getElementById("estado-ped");
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = "";
+        estadoEl.style.display = "block";
+        estadoEl.textContent = pedidos.length === 0 ? "Todavía no hay pedidos cargados." : "No hay pedidos que coincidan.";
+      } else {
+        estadoEl.style.display = "none";
+        tbody.innerHTML = filtrados.map(p => {
+          const items = Array.isArray(p.items) ? p.items : [];
+          const itemsTexto = items.slice(0, 2).map(i => `${i.nombre} x${i.cantidad}`).join(", ") + (items.length > 2 ? ` +${items.length - 2} más` : "");
+          const gananciaP = items.reduce((s, i) => s + ((i.precio - (i.costo || 0)) * i.cantidad), 0);
+          const margen = p.total ? Math.round(gananciaP / p.total * 100) : 0;
+          return `
+        <tr>
+          <td style="white-space:nowrap">${formatFecha(p.fecha || p.created_at)}</td>
+          <td>
+            <div style="font-weight:500">${esc(p.cliente_nombre)}</div>
+            ${p.cliente_telefono ? `<div style="font-size:11px;color:#999">${esc(p.cliente_telefono)}</div>` : ""}
+          </td>
+          <td><div class="pedido-items">${itemsTexto || "—"}</div></td>
+          <td style="font-weight:600;white-space:nowrap">$ ${(p.total || 0).toLocaleString("es-AR")}</td>
+          <td style="white-space:nowrap">
+            <div style="font-weight:600;color:#2e7d32">$ ${gananciaP.toLocaleString("es-AR")}</div>
+            <div style="font-size:11px;color:#aaa">${margen}%</div>
+          </td>
+          <td><span class="tag ${p.tipo_entrega === 'retiro' ? 'tag-retiro' : 'tag-envio'}">${p.tipo_entrega === 'retiro' ? '🏃 Retiro' : '🚚 Envío'}</span></td>
+          <td>
+            <select onchange="actualizarEstadoPedido(${p.id}, 'estado_pago', this.value)" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff">
+              <option value="pendiente" ${p.estado_pago === 'pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
+              <option value="pagado" ${p.estado_pago === 'pagado' ? 'selected' : ''}>✅ Pagado</option>
+            </select>
+          </td>
+          <td>
+            <select onchange="actualizarEstadoPedido(${p.id}, 'estado_entrega', this.value)" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff">
+              <option value="pendiente" ${p.estado_entrega === 'pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
+              <option value="entregado" ${p.estado_entrega === 'entregado' ? 'selected' : ''}>📦 Entregado</option>
+            </select>
+          </td>
+          <td>
+            <div class="acciones">
+              <button class="ico-btn" title="Editar" onclick="abrirModalPedidoEditar(${p.id})">✏️</button>
+              <button class="ico-btn danger" title="Eliminar" onclick="eliminarPedido(${p.id})">🗑️</button>
+            </div>
+          </td>
+        </tr>
+      `;
+        }).join("");
+      }
+
+      const totalFiltrado = filtrados.reduce((s, p) => s + (p.total || 0), 0);
+      const gananciaFiltrada = filtrados.reduce((s, p) => {
+        const items = Array.isArray(p.items) ? p.items : [];
+        return s + items.reduce((si, i) => si + ((i.precio - (i.costo || 0)) * i.cantidad), 0);
+      }, 0);
+
+      document.getElementById("footer-ped").textContent =
+        `${filtrados.length} pedidos — Total: $ ${totalFiltrado.toLocaleString("es-AR")} — Ganancia: $ ${gananciaFiltrada.toLocaleString("es-AR")}`;
+    }
+
+    function formatFecha(str) {
+      if (!str) return "—";
+      const d = new Date(str);
+      return d.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "2-digit" });
+    }
+
+    function abrirModalPedidoNuevo() {
+      document.getElementById("modal-ped-titulo").textContent = "Nuevo pedido";
+      document.getElementById("modal-ped-id").value = "";
+      document.getElementById("modal-ped-cliente").value = "";
+      document.getElementById("modal-ped-telefono").value = "";
+      document.getElementById("modal-ped-notas").value = "";
+      document.getElementById("modal-ped-entrega").value = "envio";
+      document.getElementById("modal-ped-pago").value = "pendiente";
+      document.getElementById("modal-ped-fecha").value = new Date().toISOString().slice(0, 10);
+      document.getElementById("prod-search").value = "";
+      document.getElementById("prod-suggestions").classList.remove("visible");
+      itemsPedidoActual = [];
+      renderItemsPedido();
+      document.getElementById("modal-ped-overlay").classList.add("visible");
+      document.getElementById("modal-ped-direccion").value = "";
+      document.getElementById("campo-ped-direccion").style.display = "block";
+    }
+
+    function abrirModalPedidoEditar(id) {
+      const p = pedidos.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById("modal-ped-titulo").textContent = "Editar pedido";
+      document.getElementById("modal-ped-id").value = p.id;
+      document.getElementById("modal-ped-cliente").value = p.cliente_nombre;
+      document.getElementById("modal-ped-telefono").value = p.cliente_telefono || "";
+      document.getElementById("modal-ped-notas").value = p.notas || "";
+      document.getElementById("modal-ped-entrega").value = p.tipo_entrega || "envio";
+      document.getElementById("modal-ped-pago").value = p.estado_pago || "pendiente";
+      document.getElementById("modal-ped-fecha").value = p.fecha || new Date().toISOString().slice(0, 10);
+      document.getElementById("prod-search").value = "";
+      itemsPedidoActual = Array.isArray(p.items) ? JSON.parse(JSON.stringify(p.items)) : [];
+      renderItemsPedido();
+      document.getElementById("modal-ped-overlay").classList.add("visible");
+      document.getElementById("modal-ped-direccion").value = p.direccion_entrega || "";
+      document.getElementById("campo-ped-direccion").style.display =
+        (p.tipo_entrega === "envio") ? "block" : "none";
+    }
+
+    function cerrarModalPed(e) {
+      if (e.target === document.getElementById("modal-ped-overlay"))
+        document.getElementById("modal-ped-overlay").classList.remove("visible");
+    }
+    function cerrarModalPedBtn() {
+      document.getElementById("modal-ped-overlay").classList.remove("visible");
+    }
+
+    // Buscador de productos dentro del modal de pedido
+    function buscarProductoParaPedido() {
+      const q = normalizar(document.getElementById("prod-search").value.trim());
+      const sugg = document.getElementById("prod-suggestions");
+      if (!q) { sugg.classList.remove("visible"); return; }
+      const resultados = productos.filter(p => normalizar(p.nombre).includes(q)).slice(0, 15);
+      if (resultados.length === 0) { sugg.classList.remove("visible"); return; }
+      sugg.innerHTML = resultados.map(p => `
+            <div div class="sugg-item" onclick = "agregarItemPedido(${p.id}, '${esc(p.nombre)}', ${p.precio})" >
+      <span>
+        ${esc(p.nombre)}
+        ${p.marca ? `<span style="font-size:11px;color:#aaa;margin-left:4px">${esc(p.marca)}</span>` : ""}
+      </span>
+      <span class="sugg-precio">$ ${p.precio.toLocaleString("es-AR")}</span>
+    </div >
+            `).join("");
+      sugg.classList.add("visible");
+    }
+
+    function agregarItemPedido(id, nombre, precio) {
+      const producto = productos.find(p => p.id === id);
+      const costo = producto ? (producto.precio_costo || 0) : 0;
+
+      const existente = itemsPedidoActual.find(i => i.id === id);
+      if (existente) {
+        existente.cantidad++;
+      } else {
+        itemsPedidoActual.push({ id, nombre, precio, costo, cantidad: 1 });
+      }
+      document.getElementById("prod-search").value = "";
+      document.getElementById("prod-suggestions").classList.remove("visible");
+      renderItemsPedido();
+    }
+
+    function cambiarCantidadItem(id, delta) {
+      const item = itemsPedidoActual.find(i => i.id === id);
+      if (!item) return;
+      item.cantidad = Math.max(1, item.cantidad + delta);
+      renderItemsPedido();
+    }
+
+    function quitarItemPedido(id) {
+      itemsPedidoActual = itemsPedidoActual.filter(i => i.id !== id);
+      renderItemsPedido();
+    }
+
+    function renderItemsPedido() {
+      const cont = document.getElementById("items-pedido");
+      if (itemsPedidoActual.length === 0) {
+        cont.innerHTML = '<div class="items-vacio">Todavía no agregaste productos</div>';
+        return;
+      }
+      const total = itemsPedidoActual.reduce((s, i) => s + i.precio * i.cantidad, 0);
+      cont.innerHTML = itemsPedidoActual.map(i => `
+            <div div class="item-pedido-row" >
+      <span class="item-pedido-nombre">${esc(i.nombre)}</span>
+      <button class="item-pedido-quitar" onclick="cambiarCantidadItem(${i.id}, -1)">−</button>
+      <input class="item-pedido-qty" type="number" value="${i.cantidad}" min="1"
+        onchange="itemsPedidoActual.find(x=>x.id===${i.id}).cantidad=Math.max(1,parseInt(this.value)||1);renderItemsPedido()">
+      <button class="item-pedido-quitar" onclick="cambiarCantidadItem(${i.id}, 1)">+</button>
+      <span class="item-pedido-precio">$ ${(i.precio * i.cantidad).toLocaleString("es-AR")}</span>
+      <button class="item-pedido-quitar" onclick="quitarItemPedido(${i.id})">×</button>
+    </div>
+          `).join("") + ` <div div class="items-total" ><span>Total</span><span>$ ${total.toLocaleString("es-AR")}</span></div > `;
+    }
+
+    async function guardarPedido() {
+      const id = document.getElementById("modal-ped-id").value;
+      const cliente = document.getElementById("modal-ped-cliente").value.trim();
+      if (!cliente) { mostrarToast("Ingresá el nombre del cliente", true); return; }
+      if (itemsPedidoActual.length === 0) { mostrarToast("Agregá al menos un producto", true); return; }
+      const total = itemsPedidoActual.reduce((s, i) => s + i.precio * i.cantidad, 0);
+      const datos = {
+        cliente_nombre: cliente,
+        cliente_telefono: document.getElementById("modal-ped-telefono").value.trim() || null,
+        items: itemsPedidoActual,
+        total,
+        tipo_entrega: document.getElementById("modal-ped-entrega").value,
+        estado_pago: document.getElementById("modal-ped-pago").value,
+        estado_entrega: "pendiente",
+        notas: document.getElementById("modal-ped-notas").value.trim() || null,
+        fecha: document.getElementById("modal-ped-fecha").value,
+        direccion_entrega: document.getElementById("modal-ped-entrega").value === "envio"
+          ? document.getElementById("modal-ped-direccion").value.trim() || null
+          : null,
+      };
+      try {
+        if (id) {
+          await apiFetch(`/rest/v1/pedidos?id=eq.${id}`, { method: "PATCH", body: JSON.stringify(datos) });
+          const idx = pedidos.findIndex(p => p.id == id);
+          if (idx !== -1) pedidos[idx] = { ...pedidos[idx], ...datos };
+          mostrarToast("Pedido actualizado");
+        } else {
+          const nuevo = await apiFetch("/rest/v1/pedidos", { method: "POST", body: JSON.stringify(datos), prefer: "return=representation" });
+          if (nuevo && nuevo[0]) pedidos.unshift(nuevo[0]);
+          mostrarToast("Pedido guardado");
+        }
+        cerrarModalPedBtn();
+        renderPedidos();
+        renderStatsPedidos();
+        // Guardar/actualizar cliente automáticamente
+        await guardarClienteDesde(datos.cliente_nombre, datos.cliente_telefono);
+        renderClientes();
+      } catch (e) { mostrarToast("Error al guardar pedido", true); console.error(e); }
+    }
+
+    async function actualizarEstadoPedido(id, campo, valor) {
+      try {
+        await apiFetch(`/rest/v1/pedidos?id=eq.${id}`, { method: "PATCH", body: JSON.stringify({ [campo]: valor }) });
+        const p = pedidos.find(x => x.id === id);
+        if (p) p[campo] = valor;
+        renderStatsPedidos();
+        mostrarToast("Estado actualizado");
+      } catch (e) { mostrarToast("Error al actualizar", true); }
+    }
+
+    async function eliminarPedido(id) {
+      if (!confirm("¿Eliminar este pedido?")) return;
+      try {
+        await apiFetch(`/rest/v1/pedidos?id=eq.${id}`, { method: "DELETE" });
+        pedidos = pedidos.filter(p => p.id !== id);
+        renderPedidos();
+        renderStatsPedidos();
+        mostrarToast("Pedido eliminado");
+      } catch (e) { mostrarToast("Error al eliminar", true); }
+    }
+
+    // ── CLIENTES ──
+    async function cargarClientes() {
+      try {
+        clientes = await apiFetch("/rest/v1/clientes?order=nombre&limit=500");
+        renderClientes();
+      } catch (e) {
+        document.getElementById("estado-cli").textContent = "Error al cargar clientes.";
+      }
+    }
+
+    // Cuando se guarda un pedido, si el cliente no existe lo crea automáticamente
+    async function guardarClienteDesde(nombre, telefono) {
+      const existe = clientes.find(c => c.nombre.toLowerCase() === nombre.toLowerCase());
+      if (existe) return;
+      try {
+        const nuevo = await apiFetch("/rest/v1/clientes", {
+          method: "POST",
+          body: JSON.stringify({ nombre, telefono: telefono || null }),
+          prefer: "return=representation"
+        });
+        if (nuevo && nuevo[0]) clientes.push(nuevo[0]);
+      } catch (e) { /* si falla no bloqueamos el pedido */ }
+    }
+
+    function renderClientes() {
+      const q = normalizar(document.getElementById("buscador-cli").value);
+      let filtrados = clientes.filter(c => !q || normalizar(c.nombre).includes(q) || normalizar(c.telefono || "").includes(q));
+
+      const tbody = document.getElementById("tbody-cli");
+      const estadoEl = document.getElementById("estado-cli");
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = "";
+        estadoEl.style.display = "block";
+        estadoEl.textContent = clientes.length === 0 ? "Todavía no hay clientes." : "No hay clientes que coincidan.";
+      } else {
+        estadoEl.style.display = "none";
+        tbody.innerHTML = filtrados.map(c => {
+          const pedidosCli = pedidos.filter(p => p.cliente_nombre.toLowerCase() === c.nombre.toLowerCase());
+          const totalGastado = pedidosCli.reduce((s, p) => s + (p.total || 0), 0);
+          return `
+            <tr tr >
+        <td><div style="font-weight:500">${esc(c.nombre)}</div></td>
+        <td>${c.telefono ? `<a href="https://wa.me/54${c.telefono.replace(/\D/g, '')}" target="_blank" style="color:#25d366">📲 ${esc(c.telefono)}</a>` : "—"}</td>
+        <td>${c.direccion ? esc(c.direccion) : "—"}</td>
+        <td>${pedidosCli.length}</td>
+        <td style="font-weight:500">$ ${totalGastado.toLocaleString("es-AR")}</td>
+        <td>
+          <div class="acciones">
+            <button class="ico-btn" title="Editar" onclick="abrirModalClienteEditar(${c.id})">✏️</button>
+            <button class="ico-btn danger" title="Eliminar" onclick="eliminarCliente(${c.id}, '${esc(c.nombre)}')">🗑️</button>
+          </div>
+        </td>
+      </tr >
+            `;
+        }).join("");
+      }
+
+      document.getElementById("footer-cli").textContent = `${filtrados.length} clientes`;
+    }
+
+    function abrirModalClienteNuevo() {
+      document.getElementById("modal-cli-titulo").textContent = "Nuevo cliente";
+      document.getElementById("modal-cli-id").value = "";
+      document.getElementById("modal-cli-nombre").value = "";
+      document.getElementById("modal-cli-tel").value = "";
+      document.getElementById("modal-cli-dir").value = "";
+      document.getElementById("modal-cli-notas").value = "";
+      document.getElementById("modal-cli-overlay").classList.add("visible");
+    }
+
+    function abrirModalClienteEditar(id) {
+      const c = clientes.find(x => x.id === id);
+      if (!c) return;
+      document.getElementById("modal-cli-titulo").textContent = "Editar cliente";
+      document.getElementById("modal-cli-id").value = c.id;
+      document.getElementById("modal-cli-nombre").value = c.nombre;
+      document.getElementById("modal-cli-tel").value = c.telefono || "";
+      document.getElementById("modal-cli-dir").value = c.direccion || "";
+      document.getElementById("modal-cli-notas").value = c.notas || "";
+      document.getElementById("modal-cli-overlay").classList.add("visible");
+    }
+
+    // Cambiar para cerrar correctamente el modal de clientes
+    function cerrarModalCli(e) {
+      if (e.target === document.getElementById("modal-cli-overlay"))
+        document.getElementById("modal-cli-overlay").classList.remove("visible");
+    }
+    function cerrarModalCliBtn() {
+      document.getElementById("modal-cli-overlay").classList.remove("visible");
+    }
+
+    async function guardarCliente() {
+      const id = document.getElementById("modal-cli-id").value;
+      const nombre = document.getElementById("modal-cli-nombre").value.trim();
+      if (!nombre) { mostrarToast("Ingresá el nombre del cliente", true); return; }
+      const datos = {
+        nombre,
+        telefono: document.getElementById("modal-cli-tel").value.trim() || null,
+        direccion: document.getElementById("modal-cli-dir").value.trim() || null,
+        notas: document.getElementById("modal-cli-notas").value.trim() || null,
+      };
+      try {
+        if (id) {
+          await apiFetch(`/rest/v1/clientes?id=eq.${id}`, { method: "PATCH", body: JSON.stringify(datos) });
+          const idx = clientes.findIndex(c => c.id == id);
+          if (idx !== -1) clientes[idx] = { ...clientes[idx], ...datos };
+          mostrarToast("Cliente actualizado");
+        } else {
+          const nuevo = await apiFetch("/rest/v1/clientes", { method: "POST", body: JSON.stringify(datos), prefer: "return=representation" });
+          if (nuevo && nuevo[0]) clientes.push(nuevo[0]);
+          mostrarToast("Cliente agregado");
+        }
+        cerrarModalCliBtn();
+        renderClientes();
+      } catch (e) { mostrarToast("Error al guardar", true); }
+    }
+
+    async function eliminarCliente(id, nombre) {
+      if (!confirm(`¿Eliminar a "${nombre}" ? `)) return;
+      try {
+        await apiFetch(`/rest/v1/clientes?id=eq.${id}`, { method: "DELETE" });
+        clientes = clientes.filter(c => c.id !== id);
+        renderClientes();
+        mostrarToast("Cliente eliminado");
+      } catch (e) { mostrarToast("Error al eliminar", true); }
+    }
+
+    // ── UTILS ──
+    function normalizar(str) {
+      return String(str || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    // ── CICLO SEMANAL ──
+    // El ciclo va de miércoles 13hs a miércoles 13hs
+    function getCicloActual() {
+      const ahora = new Date();
+      const diaSemana = ahora.getDay(); // 0=dom, 3=mie
+      const hora = ahora.getHours();
+
+      // Cuántos días desde el último miércoles 13hs
+      let diasDesde = (diaSemana + 7 - 3) % 7;
+      if (diasDesde === 0 && hora < 13) diasDesde = 7; // si hoy es mié pero antes de las 13, el ciclo aún no cerró
+
+      const inicio = new Date(ahora);
+      inicio.setDate(ahora.getDate() - diasDesde);
+      inicio.setHours(13, 0, 0, 0);
+
+      const fin = new Date(inicio);
+      fin.setDate(inicio.getDate() + 7);
+
+      return { inicio, fin };
+    }
+
+    function pedidosDelCiclo(inicio, fin) {
+      return pedidos.filter(p => {
+        const fecha = new Date(p.fecha || p.created_at);
+        return fecha >= inicio && fecha < fin;
+      });
+    }
+
+    function renderSemana() {
+      const { inicio, fin } = getCicloActual();
+      const pedidosSemana = pedidosDelCiclo(inicio, fin);
+
+      const label = document.getElementById("semana-label");
+      label.textContent = `Semana: ${inicio.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit" })} al ${fin.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit" })} `;
+
+      const totalFac = pedidosSemana.reduce((s, p) => s + (p.total || 0), 0);
+      const sinCobrar = pedidosSemana.filter(p => p.estado_pago === "pendiente");
+      const totalSinCobrar = sinCobrar.reduce((s, p) => s + (p.total || 0), 0);
+      const sinEntregar = pedidosSemana.filter(p => p.estado_entrega === "pendiente").length;
+
+      document.getElementById("stats-semana").innerHTML = `
+            <div div class="stat-card" >
+      <div class="stat-label">Pedidos esta semana</div>
+      <div class="stat-valor">${pedidosSemana.length}</div>
+    </div >
+    <div class="stat-card">
+      <div class="stat-label">Total facturado</div>
+      <div class="stat-valor">$ ${totalFac.toLocaleString("es-AR")}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Sin cobrar</div>
+      <div class="stat-valor" style="color:#e65100">${sinCobrar.length}</div>
+      <div class="stat-sub">$ ${totalSinCobrar.toLocaleString("es-AR")} pendiente</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Sin entregar</div>
+      <div class="stat-valor" style="color:#1565c0">${sinEntregar}</div>
+      <div class="stat-sub">pedidos por entregar</div>
+    </div>
+          `;
+
+      const tbody = document.getElementById("tbody-semana");
+      const estadoEl = document.getElementById("estado-semana");
+
+      if (pedidosSemana.length === 0) {
+        tbody.innerHTML = "";
+        estadoEl.style.display = "block";
+      } else {
+        estadoEl.style.display = "none";
+        tbody.innerHTML = pedidosSemana.map(p => {
+          const items = Array.isArray(p.items) ? p.items : [];
+          const itemsTexto = items.slice(0, 2).map(i => `${i.nombre} x${i.cantidad} `).join(", ") + (items.length > 2 ? ` + ${items.length - 2} más` : "");
+          return `<tr tr >
+      <td>
+        <div style="font-weight:500">${esc(p.cliente_nombre)}</div>
+        ${p.direccion_entrega ? `<div style="font-size:11px;color:#888">📍 ${esc(p.direccion_entrega)}</div>` : ""}
+        ${p.cliente_telefono ? `<div style="font-size:11px;color:#999">${esc(p.cliente_telefono)}</div>` : ""}
+      </td>
+      <td><div style="font-size:12px;color:#666;max-width:220px">${itemsTexto || "—"}</div></td>
+      <td style="font-weight:600;white-space:nowrap">$ ${(p.total || 0).toLocaleString("es-AR")}</td>
+      <td><span class="tag ${p.tipo_entrega === 'retiro' ? 'tag-retiro' : 'tag-envio'}">${p.tipo_entrega === 'retiro' ? '🏃 Retiro' : '🚚 Envío'}</span></td>
+      <td>
+        <select onchange="actualizarEstadoPedido(${p.id},'estado_pago',this.value);renderSemana()" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff">
+          <option value="pendiente" ${p.estado_pago === 'pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
+          <option value="pagado" ${p.estado_pago === 'pagado' ? 'selected' : ''}>✅ Pagado</option>
+        </select>
+      </td>
+      <td>
+        <select onchange="actualizarEstadoPedido(${p.id},'estado_entrega',this.value);renderSemana()" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;background:#fff">
+          <option value="pendiente" ${p.estado_entrega === 'pendiente' ? 'selected' : ''}>⏳ Pendiente</option>
+          <option value="entregado" ${p.estado_entrega === 'entregado' ? 'selected' : ''}>📦 Entregado</option>
+        </select>
+      </td>
+    </tr > `;
+        }).join("");
+      }
+    }
+
+    function filtrarSemanaActual() {
+      const { inicio, fin } = getCicloActual();
+      document.getElementById("filtro-desde").value = inicio.toISOString().slice(0, 10);
+      const finMenos1 = new Date(fin);
+      finMenos1.setDate(fin.getDate() - 1);
+      document.getElementById("filtro-hasta").value = finMenos1.toISOString().slice(0, 10);
+      renderPedidos();
+    }
+
+    function filtrarSemanaPasada() {
+      const { inicio } = getCicloActual();
+      const inicioAnterior = new Date(inicio);
+      inicioAnterior.setDate(inicio.getDate() - 7);
+      const finAnterior = new Date(inicio);
+      finAnterior.setDate(inicio.getDate() - 1);
+      document.getElementById("filtro-desde").value = inicioAnterior.toISOString().slice(0, 10);
+      document.getElementById("filtro-hasta").value = finAnterior.toISOString().slice(0, 10);
+      renderPedidos();
+    }
+
+    function limpiarFiltroFechas() {
+      document.getElementById("filtro-desde").value = "";
+      document.getElementById("filtro-hasta").value = "";
+      renderPedidos();
+    }
+
+    function renderHistorico() {
+      // Stats generales
+      const totalTodos = pedidos.reduce((s, p) => s + (p.total || 0), 0);
+      const clientesUnicos = new Set(pedidos.map(p => p.cliente_nombre.toLowerCase())).size;
+
+      document.getElementById("stats-historico").innerHTML = `
+            <div div class="stat-card" >
+      <div class="stat-label">Total pedidos histórico</div>
+      <div class="stat-valor">${pedidos.length}</div>
+    </div >
+    <div class="stat-card">
+      <div class="stat-label">Facturado total</div>
+      <div class="stat-valor">$ ${totalTodos.toLocaleString("es-AR")}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Clientes distintos</div>
+      <div class="stat-valor">${clientesUnicos}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Promedio por pedido</div>
+      <div class="stat-valor">$ ${pedidos.length ? Math.round(totalTodos / pedidos.length).toLocaleString("es-AR") : 0}</div>
+    </div>
+          `;
+
+      // Top productos
+      const conteoProductos = {};
+      pedidos.forEach(p => {
+        (p.items || []).forEach(i => {
+          const key = i.nombre;
+          if (!conteoProductos[key]) conteoProductos[key] = { cantidad: 0, total: 0 };
+          conteoProductos[key].cantidad += i.cantidad;
+          conteoProductos[key].total += i.precio * i.cantidad;
+        });
+      });
+      const topProd = Object.entries(conteoProductos)
+        .sort((a, b) => b[1].cantidad - a[1].cantidad)
+        .slice(0, 8);
+
+      document.getElementById("top-productos").innerHTML = topProd.length === 0
+        ? '<div style="color:#bbb;font-size:13px">Sin datos todavía</div>'
+        : topProd.map(([nombre, data], i) => `
+            <div div class="ranking-item" >
+        <span class="ranking-pos">${i + 1}</span>
+        <span class="ranking-nombre">${esc(nombre)}</span>
+        <span class="ranking-valor">${data.cantidad} unid.</span>
+      </div >
+            `).join("");
+
+      // Top clientes
+      const conteoClientes = {};
+      pedidos.forEach(p => {
+        const key = p.cliente_nombre;
+        if (!conteoClientes[key]) conteoClientes[key] = { pedidos: 0, total: 0 };
+        conteoClientes[key].pedidos++;
+        conteoClientes[key].total += p.total || 0;
+      });
+      const topCli = Object.entries(conteoClientes)
+        .sort((a, b) => b[1].total - a[1].total)
+        .slice(0, 8);
+
+      document.getElementById("top-clientes").innerHTML = topCli.length === 0
+        ? '<div style="color:#bbb;font-size:13px">Sin datos todavía</div>'
+        : topCli.map(([nombre, data], i) => `
+            <div div class="ranking-item" >
+        <span class="ranking-pos">${i + 1}</span>
+        <span class="ranking-nombre">${esc(nombre)}</span>
+        <span class="ranking-valor">$ ${data.total.toLocaleString("es-AR")} · ${data.pedidos} pedidos</span>
+      </div >
+            `).join("");
+
+      // Últimas semanas
+      const semanas = [];
+      const ahora = new Date();
+      for (let i = 0; i < 8; i++) {
+        const { inicio } = getCicloActual();
+        const iniSem = new Date(inicio);
+        iniSem.setDate(inicio.getDate() - i * 7);
+        const finSem = new Date(iniSem);
+        finSem.setDate(iniSem.getDate() + 7);
+        const peds = pedidosDelCiclo(iniSem, finSem);
+        if (peds.length > 0 || i === 0) {
+          semanas.push({ inicio: iniSem, fin: finSem, pedidos: peds });
+        }
+      }
+
+      document.getElementById("tabla-semanas").innerHTML = `
+            <table table class="semanas-tabla" >
+      <thead>
+        <tr>
+          <th>Semana</th>
+          <th>Pedidos</th>
+          <th>Facturado</th>
+          <th>Cobrado</th>
+          <th>Entregado</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${semanas.map((s, idx) => {
+        const total = s.pedidos.reduce((sum, p) => sum + (p.total || 0), 0);
+        const cobrado = s.pedidos.filter(p => p.estado_pago === "pagado").reduce((sum, p) => sum + (p.total || 0), 0);
+        const entregados = s.pedidos.filter(p => p.estado_entrega === "entregado").length;
+        return `<tr ${idx === 0 ? 'style="background:#f9fdf5"' : ''}>
+            <td style="white-space:nowrap;font-weight:${idx === 0 ? '600' : '400'}">
+              ${idx === 0 ? '⭐ ' : ''}${s.inicio.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit" })} — ${s.fin.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit" })}
+            </td>
+            <td>${s.pedidos.length}</td>
+            <td>$ ${total.toLocaleString("es-AR")}</td>
+            <td>$ ${cobrado.toLocaleString("es-AR")}</td>
+            <td>${entregados} / ${s.pedidos.length}</td>
+          </tr>`;
+      }).join("")}
+      </tbody>
+    </table >
+            `;
+    }
+
+    function esc(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function mostrarToast(msg, error = false) {
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.className = "toast" + (error ? " error" : "") + " visible";
+      setTimeout(() => t.classList.remove("visible"), 2800);
+    }
+
+    // Cerrar suggestions al hacer click afuera
+    document.addEventListener("click", e => {
+      if (!e.target.closest(".producto-search-wrap"))
+        document.getElementById("prod-suggestions").classList.remove("visible");
+    });
+
+    // - Mostrar/ocultar dirección según tipo de entrega
+    document.getElementById("modal-ped-entrega").addEventListener("change", function () {
+      document.getElementById("campo-ped-direccion").style.display =
+        this.value === "envio" ? "block" : "none";
+    });
+
+    // ── IMPORTADOR CSV ──
+    let csvProductos = [];
+
+    function procesarCSV() {
+      const file = document.getElementById("csv-input").files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const texto = e.target.result;
+        const lineas = texto.trim().split("\n");
+        const headers = lineas[0].split(",").map(h => h.trim().replace(/^\uFEFF/, ""));
+
+        csvProductos = lineas.slice(1).map(linea => {
+          const valores = linea.split(",");
+          const obj = {};
+          headers.forEach((h, i) => obj[h] = (valores[i] || "").trim());
+          return obj;
+        }).filter(p => p.nombre);
+
+        const nuevos = [];
+        const actualizaciones = [];
+
+        csvProductos.forEach(p => {
+          const existente = productos.find(ex => ex.codigo && ex.codigo === p.codigo);
+          if (existente) {
+            actualizaciones.push({ ...p, id: existente.id, precioAnterior: existente.precio });
+          } else {
+            nuevos.push(p);
+          }
+        });
+
+        document.getElementById("importar-resumen").innerHTML = `
+            <strong strong >📋 Resumen:</strong >
+              ${csvProductos.length} productos en el archivo —
+          <span style="color: #2e7d32">✅ ${nuevos.length} nuevos</span> ·
+          <span style="color: #1565c0">🔄 ${actualizaciones.length} actualizaciones de precio</span>
+          `;
+
+        document.getElementById("importar-tbody").innerHTML = csvProductos.map(p => {
+          const existente = productos.find(ex => ex.codigo && ex.codigo === p.codigo);
+          const esActualizacion = !!existente;
+          return `
+            <tr tr >
+          <td>${p.codigo || "—"}</td>
+          <td>${esc(p.nombre)}</td>
+          <td>$ ${parseInt(p.precio).toLocaleString("es-AR")}</td>
+          <td>${p.marca || "—"}</td>
+          <td>${p.categoria_nombre || p.categoria_id}</td>
+          <td>
+            ${esActualizacion
+              ? `<span style="color:#1565c0">🔄 Actualizar precio (antes $${parseInt(existente.precio).toLocaleString("es-AR")})</span>`
+              : `<span style="color:#2e7d32">✅ Nuevo</span>`}
+          </td>
+        </tr >
+            `;
+        }).join("");
+
+        document.getElementById("importar-preview").style.display = "block";
+        document.getElementById("importar-resultado").style.display = "none";
+      };
+      reader.readAsText(file);
+    }
+
+    async function confirmarImport() {
+      const btn = document.querySelector("#tab-importar .btn-primary");
+      btn.disabled = true;
+      btn.textContent = "Importando...";
+
+      let ok = 0, errores = 0;
+
+      for (const p of csvProductos) {
+        const existente = productos.find(ex => ex.codigo && ex.codigo === p.codigo);
+        try {
+          if (existente) {
+            await apiFetch(`/rest/v1/productos?id=eq.${existente.id}`, {
+              method: "PATCH",
+              body: JSON.stringify({ precio: parseInt(p.precio) })
+            });
+          } else {
+            await apiFetch("/rest/v1/productos", {
+              method: "POST",
+              body: JSON.stringify({
+                codigo: p.codigo || null,
+                nombre: p.nombre,
+                precio: parseInt(p.precio),
+                marca: p.marca || null,
+                categoria_id: p.categoria_id,
+                categoria_nombre: p.categoria_nombre,
+                categoria_emoji: p.categoria_emoji,
+                activo: p.activo === "True" || p.activo === "true" || p.activo === true
+              })
+            });
+          }
+          ok++;
+        } catch (e) {
+          errores++;
+        }
+      }
+
+      await cargarProductos();
+
+      document.getElementById("importar-preview").style.display = "none";
+      document.getElementById("csv-input").value = "";
+      csvProductos = [];
+
+      const res = document.getElementById("importar-resultado");
+      res.style.display = "block";
+      res.style.background = errores === 0 ? "#f0f7f0" : "#fff3e0";
+      res.style.border = `1px solid ${errores === 0 ? "#c3e6c3" : "#ffcc80"} `;
+      res.innerHTML = `
+            <strong strong > ${errores === 0 ? "✅ Importación completada" : "⚠️ Importación con errores"}</strong > <br>
+              ${ok} productos procesados correctamente${errores > 0 ? ` · ${errores} errores` : ""}.
+              `;
+
+      btn.disabled = false;
+      btn.textContent = "✅ Confirmar importación";
+    }
+
+    function cancelarImport() {
+      document.getElementById("importar-preview").style.display = "none";
+      document.getElementById("csv-input").value = "";
+      csvProductos = [];
+    }
+
+    // ── IMPORTADOR DE COSTOS ──
+    let csvCostos = [];
+
+    function procesarCSVCostos() {
+      const file = document.getElementById("csv-costos-input").files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const texto = e.target.result;
+        const lineas = texto.trim().split("\n");
+        const headers = lineas[0].split(",").map(h => h.trim().replace(/^\uFEFF/, "").toLowerCase());
+
+        csvCostos = lineas.slice(1).map(linea => {
+          const valores = linea.split(",");
+          const obj = {};
+          headers.forEach((h, i) => obj[h] = (valores[i] || "").trim());
+          return obj;
+        }).filter(p => p.id && p.costo_proveedor);
+
+        const preview = csvCostos.map(row => {
+          const id = parseInt(row.id);
+          const costoNuevo = parseInt(String(row.costo_proveedor).replace(/[^0-9]/g, "")) || 0;
+          const prod = productos.find(p => p.id === id);
+          return { id, costoNuevo, prod };
+        }).filter(r => r.prod);
+
+        document.getElementById("costos-resumen").innerHTML = `
+              <strong>📋 Resumen:</strong> ${preview.length} productos para actualizar
+              ${csvCostos.length - preview.length > 0 ? ` · <span style="color:#e65100">${csvCostos.length - preview.length} no encontrados</span>` : ""}
+              `;
+
+        document.getElementById("costos-tbody").innerHTML = preview.map(r => {
+          const costoAnterior = r.prod.precio_costo || 0;
+          const gananciaNueva = r.prod.precio - r.costoNuevo;
+          const margenNuevo = r.prod.precio ? Math.round(gananciaNueva / r.prod.precio * 100) : 0;
+          return `
+              <tr>
+                <td>${r.id}</td>
+                <td>${esc(r.prod.nombre)}</td>
+                <td style="color:#aaa">$ ${costoAnterior.toLocaleString("es-AR")}</td>
+                <td style="color:#1565c0;font-weight:600">$ ${r.costoNuevo.toLocaleString("es-AR")}</td>
+                <td style="color:#2e7d32;font-weight:600">$ ${gananciaNueva.toLocaleString("es-AR")} (${margenNuevo}%)</td>
+              </tr>
+              `;
+        }).join("");
+
+        document.getElementById("costos-preview").style.display = "block";
+        document.getElementById("costos-resultado").style.display = "none";
+      };
+      reader.readAsText(file);
+    }
+
+    async function confirmarImportCostos() {
+      const btn = document.querySelector("#costos-preview .btn-green");
+      btn.disabled = true;
+      btn.textContent = "Actualizando...";
+
+      let ok = 0, errores = 0;
+
+      for (const row of csvCostos) {
+        const id = parseInt(row.id);
+        const costoNuevo = parseInt(String(row.costo_proveedor).replace(/[^0-9]/g, ""));
+        const prod = productos.find(p => p.id === id);
+        if (!prod || isNaN(costoNuevo)) continue;
+        try {
+          await apiFetch(`/rest/v1/productos?id=eq.${id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ precio_costo: costoNuevo })
+          });
+          prod.precio_costo = costoNuevo;
+          ok++;
+        } catch (e) {
+          errores++;
+        }
+      }
+
+      await cargarProductos();
+
+      document.getElementById("costos-preview").style.display = "none";
+      document.getElementById("csv-costos-input").value = "";
+      csvCostos = [];
+
+      const res = document.getElementById("costos-resultado");
+      res.style.display = "block";
+      res.style.background = errores === 0 ? "#f0f7f0" : "#fff3e0";
+      res.style.border = `1px solid ${errores === 0 ? "#c3e6c3" : "#ffcc80"}`;
+      res.innerHTML = `
+              <strong>${errores === 0 ? "✅ Costos actualizados" : "⚠️ Actualización con errores"}</strong><br>
+                ${ok} productos actualizados correctamente${errores > 0 ? ` · ${errores} errores` : ""}.
+                `;
+
+      btn.disabled = false;
+      btn.textContent = "✅ Actualizar costos";
+      renderProductos();
+    }
+
+    function cancelarImportCostos() {
+      document.getElementById("costos-preview").style.display = "none";
+      document.getElementById("csv-costos-input").value = "";
+      csvCostos = [];
+    }
+
+    // ── NUEVA CATEGORÍA ──
+    function abrirModalNuevaCategoria() {
+      document.getElementById("modal-cat-nombre").value = "";
+      document.getElementById("modal-cat-emoji").value = "";
+      document.getElementById("modal-cat-id").value = "";
+      document.getElementById("modal-cat-overlay").classList.add("visible");
+    }
+
+    // Cambiar para cerrar correctamente el modal de categorías
+    function cerrarModalCat(event) {
+      if (event.target === document.getElementById("modal-cat-overlay")) cerrarModalCatBtn();
+    }
+
+    function cerrarModalCatBtn() {
+      document.getElementById("modal-cat-overlay").classList.remove("visible");
+    }
+
+    function confirmarNuevaCategoria() {
+      const nombre = document.getElementById("modal-cat-nombre").value.trim();
+      const emoji = document.getElementById("modal-cat-emoji").value.trim();
+      const id = document.getElementById("modal-cat-id").value.trim().toLowerCase().replace(/\s+/g, "-");
+
+      if (!nombre || !emoji || !id) { mostrarToast("Completá todos los campos", true); return; }
+
+      // Agregar al array CATEGORIAS si no existe
+      const existe = CATEGORIAS.find(c => c.id === id);
+      if (!existe) {
+        CATEGORIAS.push({ id, nombre, emoji });
+      }
+
+      cerrarModalCatBtn();
+      abrirModalProductoNuevo();
+
+      // Seleccionar la nueva categoría en el select del modal de producto
+      const select = document.getElementById("modal-prod-categoria");
+      let option = Array.from(select.options).find(o => o.value === id);
+      if (!option) {
+        option = document.createElement("option");
+        option.value = id;
+        option.textContent = `${emoji} ${nombre}`;
+        select.appendChild(option);
+      }
+      select.value = id;
+
+      mostrarToast(`Categoría "${nombre}" lista — agregá el primer producto`);
+    }
+  </script>
+</body>
+
+</html>

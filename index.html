@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Más Vale Natural</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta property="og:title" content="Más Vale Natural 🌿" />
+<meta property="og:description" content="Catálogo online de productos saludables. Pedí por WhatsApp." />
+<meta property="og:image" content="https://eaxdcdsgurlgotlwcqvf.supabase.co/storage/v1/object/public/imagenes/banner-wsp.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://tienda-mas-vale-natural.vercel.app/" />
+<meta property="og:type" content="website" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Más Vale Natural 🌿" />
+<meta name="twitter:description" content="Catálogo online de productos saludables. Pedí por WhatsApp." />
+<meta name="twitter:image" content="https://eaxdcdsgurlgotlwcqvf.supabase.co/storage/v1/object/public/imagenes/banner-wsp.png" />
+<meta property="fb:app_id" content="0" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: #f0ede6;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+ .header picture,
+.header img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  object-position: center center;
+}
+
+  /* ── BARRA INFORMATIVA ── */
+  .barra-info {
+    background: #edf7df;
+    color: #1a3a08;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid #dce8c8;
+  }
+
+  /* ── BUSCADOR ── */
+  .buscador-wrap {
+    background: #fff;
+    padding: 14px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .buscador-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .buscador-inner input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border: 1.5px solid #e0dbd2;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: #1a1a1a;
+    background: #f9f7f4;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .buscador-inner input:focus {
+    border-color: #1a3a08;
+    background: #fff;
+  }
+  .buscador-inner input::placeholder { color: #bbb; }
+  .buscador-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 16px;
+    pointer-events: none;
+  }
+  .buscador-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    line-height: 1;
+    padding: 2px 4px;
+  }
+  .buscador-clear.visible { display: block; }
+
+  /* ── FILTROS ── */
+  .filtros-wrap {
+    position: relative;
+    background: #f9f7f4;
+    border-bottom: 1px solid #e8e3da;
+    padding: 10px 12px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .filtros-wrap::-webkit-scrollbar { display: none; }
+
+  /* Degradados que indican que hay más categorías para el costado */
+  .filtros-wrap::before,
+  .filtros-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 28px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .filtros-wrap::before {
+    left: 0;
+    background: linear-gradient(to right, #f9f7f4, transparent);
+  }
+  .filtros-wrap::after {
+    right: 0;
+    background: linear-gradient(to left, #f9f7f4, transparent);
+  }
+  .filtros-wrap.fade-izq::before { opacity: 1; }
+  .filtros-wrap.fade-der::after { opacity: 1; }
+  .filtros-inner {
+    display: flex;
+    gap: 8px;
+    max-width: 680px;
+    margin: 0 auto;
+    width: max-content;
+    min-width: 100%;
+  }
+  .filtro-btn {
+    background: #fff;
+    border: 1.5px solid #e0dbd2;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .filtro-btn:hover { border-color: #1a3a08; color: #1a3a08; }
+  .filtro-btn.activo {
+    background: #1a3a08;
+    border-color: #1a3a08;
+    color: #d4eda8;
+  }
+  .filtros-wrap::before,
+  .filtros-wrap::after {
+  display: none !important;
+}
+
+  /* ── DESTACADOS ── */
+
+#destacados{
+  padding:16px 12px;
+}
+
+.destacados-header {
+  margin-bottom: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.destacados-header h2 {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #1a3a08;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.destacados-header h2::before,
+.destacados-header h2::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #1a3a08;
+  opacity: 0.25;
+  border-radius: 2px;
+}
+
+.destacados-header span {
+  font-size: 13px;
+  color: #8a8478;
+  font-style: italic;
+}
+
+.destacados-carrusel{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:4px;
+}
+
+.destacados-carrusel::-webkit-scrollbar{
+  display:none;
+}
+
+.card-destacado{
+  min-width:172px;
+  max-width:172px;
+  background:#fff;
+  border:1px solid #e8e3da;
+  border-radius:16px;
+  overflow:hidden;
+  flex-shrink:0;
+  box-shadow: 0 2px 10px rgba(26, 58, 8, 0.08);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card-destacado:hover{
+  box-shadow: 0 4px 14px rgba(26, 58, 8, 0.14);
+  transform: translateY(-2px);
+}
+
+.card-destacado img{
+  width: 90%;
+  height: 130px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.card-destacado .cantidad-control {
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.card-info{
+  padding:10px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+}
+
+.card-nombre{
+  font-size:13px;
+  font-weight:600;
+  line-height:1.3;
+  height:34px;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  text-align:center;
+}
+
+.card-precio{
+  margin-top:8px;
+  color:#1a3a08;
+  font-weight:700;
+  font-size:16px;
+  text-align:center;
+}
+
+.card-destacado .qty-menos,
+.card-destacado .qty-valor {
+  display: flex;
+}
+
+@keyframes rebote-cantidad {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.4); }
+  65% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.card-destacado .qty-valor.rebotar {
+  animation: rebote-cantidad 0.35s ease;
+}
+
+@keyframes pulso-carrito {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.08); }
+  60% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+.carrito-btn.pulso {
+  animation: pulso-carrito 0.35s ease;
+}
+
+.destacados-carrusel-wrap {
+  position: relative;
+}
+
+.destacados-flecha {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #e8e3da;
+  background: #fff;
+  color: #1a3a08;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.destacados-flecha:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.destacados-flecha-izq { left: -6px; }
+.destacados-flecha-der { right: -6px; }
+
+@media (min-width: 681px) {
+  .destacados-flecha {
+    display: flex;
+  }
+}
+
+.card-marca {
+  font-size: 10px;
+  font-weight: 600;
+  color: #8a8478;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 3px;
+}
+
+  /* ── CONTENIDO ── */
+  .contenido {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 8px 0 100px;
+  }
+
+  /* ── SECCIÓN ── */
+  .seccion {
+    margin-top: 8px;
+    background: #fff;
+  }
+  .seccion-titulo {
+    background: #1a3a08;
+    color: #d4eda8;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ── PRODUCTO ── */
+  .producto {
+    display: flex;
+    flex-direction: column;
+    padding: 11px 16px 11px 20px;
+    border-bottom: 1px solid #f0ede6;
+    transition: background 0.1s;
+  }
+  .producto:last-child { border-bottom: none; }
+  .producto.oculto { display: none; }
+
+  .producto-fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .producto-info { flex: 1; min-width: 0; }
+  .producto-nombre {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    line-height: 1.3;
+  }
+  .producto-precio {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a3a08;
+    white-space: nowrap;
+    margin-left: 8px;
+  }
+  .producto-marca {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  /* ── SIN RESULTADOS ── */
+  .sin-resultados {
+    text-align: center;
+    padding: 40px 20px;
+    color: #aaa;
+    font-size: 14px;
+    display: none;
+  }
+  .sin-resultados.visible { display: block; }
+  .seccion.vacia { display: none; }
+
+  /* ── CARGANDO ── */
+  .cargando {
+    text-align: center;
+    padding: 40px 20px;
+    color: #aaa;
+    font-size: 14px;
+  }
+
+  /* ── CARRITO FLOTANTE ── */
+  .carrito-flotante {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: none;
+    width: calc(100% - 32px);
+    max-width: 648px;
+  }
+  .carrito-flotante.visible { display: block; }
+
+  .carrito-btn {
+    background: #25d366;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: all 0.15s;
+  }
+  .carrito-btn:hover { background: #1db954; transform: translateY(-1px); }
+  .carrito-btn-left { display: flex; align-items: center; gap: 10px; }
+  .carrito-badge {
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ── PANEL CARRITO ── */
+  .carrito-panel {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.15);
+    z-index: 300;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .carrito-panel.abierto { transform: translateY(0); }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 299;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .overlay.visible { display: block; opacity: 1; }
+
+  .carrito-header {
+    padding: 16px 20px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0ede6;
+    flex-shrink: 0;
+  }
+  .carrito-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #1a1a1a;
+  }
+  .carrito-cerrar {
+    background: #f0ede6;
+    border: none;
+    border-radius: 50%;
+    width: 30px; height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #555;
+  }
+
+  .carrito-lista {
+    max-height: 220px;
+    overflow-y: auto;
+    flex: 1;
+    padding: 8px 0;
+  }
+
+  .carrito-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 12px;
+    border-bottom: 1px solid #f9f7f4;
+  }
+  .carrito-item-nombre {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+    line-height: 1.3;
+  }
+  .carrito-item-precio {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a3a08;
+    white-space: nowrap;
+  }
+  .carrito-item-quitar {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 0 0 8px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .carrito-item-quitar:hover { color: #e55; }
+
+  .carrito-footer {
+    padding: 14px 20px 20px;
+    border-top: 1px solid #f0ede6;
+    flex-shrink: 0;
+  }
+  .carrito-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .carrito-total span:first-child { font-size: 14px; color: #888; }
+  .carrito-total-monto {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a3a08;
+  }
+  .carrito-enviar {
+    background: #25d366;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s;
+  }
+  .carrito-enviar:hover { background: #1db954; }
+  .carrito-vaciar {
+    background: none;
+    border: none;
+    color: #bbb;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .carrito-vaciar:hover { color: #e55; }
+
+  .carrito-vacio {
+    text-align: center;
+    padding: 40px 20px;
+    color: #bbb;
+    font-size: 14px;
+  }
+
+  .checkout-info-pago{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+
+  margin:16px 0;
+
+  padding:14px;
+
+  background:#f7f5ef;
+  border:1px solid #e8e3da;
+  border-radius:14px;
+}
+
+.checkout-info-icono{
+  font-size:20px;
+  line-height:1;
+}
+
+.checkout-info-pago strong{
+  display:block;
+  color:#1a3a08;
+  font-size:14px;
+  margin-bottom:4px;
+}
+
+.checkout-info-pago p{
+  margin:0;
+  font-size:13px;
+  line-height:1.45;
+  color:#666;
+}
+
+  /* ── DATOS DE ENTREGA ── */
+  .checkout-datos {
+    margin-bottom: 14px;
+  }
+  .checkout-campo {
+    margin-bottom: 10px;
+  }
+  .checkout-campo label {
+    display: block;
+    font-size: 12px;
+    color: #8a8478;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .checkout-campo input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #e0dbd2;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #1a1a1a;
+    background: #f9f7f4;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .checkout-campo input:focus {
+    border-color: #1a3a08;
+    background: #fff;
+  }
+  .checkout-campo input.invalido {
+    border-color: #e55;
+    background: #fff5f5;
+  }
+  .checkout-error {
+    display: none;
+    font-size: 11px;
+    color: #e55;
+    margin-top: 4px;
+  }
+  .checkout-error.visible {
+    display: block;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: #1a3a08;
+    padding: 28px 24px;
+    margin-top: 8px;
+  }
+  .footer h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #f5f0e8;
+    margin-bottom: 14px;
+  }
+  .footer p {
+    font-size: 13px;
+    color: #9ac86a;
+    line-height: 2;
+  }
+  .footer strong { color: #f5f0e8; }
+
+  .fecha {
+    text-align: center;
+    font-size: 11px;
+    color: #bbb;
+    padding: 16px;
+  }
+
+  /* ── CONTROL DE CANTIDAD ── */
+  .cantidad-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .qty-btn {
+    background: none;
+    border: 1.5px solid #d0e8b8;
+    border-radius: 8px;
+    color: #1a3a08;
+    font-size: 16px;
+    font-weight: 600;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    line-height: 1;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .qty-btn:hover { background: #e8f5d8; border-color: #1a3a08; }
+  .qty-mas.activo {
+    background: #1a3a08;
+    border-color: #1a3a08;
+    color: #d4eda8;
+  }
+  .qty-menos, .qty-valor {
+    display: none;
+  }
+  .cantidad-control.con-cantidad .qty-menos,
+  .cantidad-control.con-cantidad .qty-valor {
+    display: flex;
+  }
+  .qty-valor {
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 16px;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+  }
+
+  /* ── ENVÍO ── */
+  .carrito-envio-nota {
+    font-size: 12px;
+    color: #8a8478;
+    background: #f6f3ed;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .carrito-envio-nota.gratis {
+    background: #e8f5d8;
+    color: #1a3a08;
+    font-weight: 500;
+  }
+  .carrito-linea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+  .carrito-linea span:last-child { font-weight: 600; color: #555; }
+  .carrito-linea.envio-gratis span:last-child { color: #1a3a08; }
+
+  /* ── BARRA DE INFO ── */
+.info-barra {
+  background: #344C1B;
+  border-bottom: 1px solid #2a3d15;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.info-barra-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.info-barra-separador {
+  width: 1px;
+  height: 16px;
+  background: rgba(255,255,255,0.3);
+}
+
+.info-barra-item:hover {
+  text-decoration: underline;
+}
+
+.info-barra-separador {
+  width: 1px;
+  height: 16px;
+  background: #e0dbd2;
+}
+
+.info-barra-icono {
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  .info-barra-separador {
+    display: none;
+  }
+  .info-barra {
+    gap: 6px;
+    justify-content: space-around;
+  }
+  .info-barra-item{
+    font-size: 10px;
+  }
+}
+
+/* ── BOTÓN FLOTANTE WHATSAPP ── */
+.wsp-flotante {
+  position: fixed;
+  bottom: 140px;
+  right: 20px;
+  z-index: 400;
+  background: #25d366;
+  color: #fff;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wsp-flotante:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+}
+
+.carrito-desglose {
+  display: none;
+  margin-bottom: 8px;
+}
+.carrito-desglose.visible {
+  display: block;
+}
+.ver-detalle-btn {
+  background: none;
+  border: none;
+  color: #1a3a08;
+  font-size: 11px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-left: 6px;
+  opacity: 0.7;
+}
+.ver-detalle-btn:hover {
+  opacity: 1;
+}
+
+/* ── SWITCH ENVÍO/RETIRO ── */
+.entrega-switch {
+  display: flex;
+  background: #f0ede6;
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 14px;
+  gap: 0;
+}
+
+.entrega-opcion {
+  flex: 1;
+  padding: 7px 10px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.entrega-opcion.activo {
+  background: #1a3a08;
+  color: #d4eda8;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.retiro-nota {
+  font-size: 12px;
+  color: #8a8478;
+  background: #f6f3ed;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+</style>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VVQVHS1PHG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VVQVHS1PHG');
+</script>
+</head>
+<body>
+
+<div class="header">
+  <picture>
+    <source media="(max-width: 480px)" srcset="./assets/Banner_mobile_nuevo.png">
+    <img src="./assets/Banner_desktop_nuevo.png" alt="Más Vale Natural">
+  </picture>
+</div>
+
+<div class="info-barra">
+  <a class="info-barra-item" href="https://wa.me/5493492588990" target="_blank">
+    <i class="fa-brands fa-whatsapp info-barra-icono"></i>
+    <span>3492-588990</span>
+  </a>
+  <div class="info-barra-separador"></div>
+  <a class="info-barra-item" href="https://instagram.com/masvalenatural" target="_blank">
+    <i class="fa-brands fa-instagram info-barra-icono"></i>
+    <span>@masvalenatural</span>
+  </a>
+  <div class="info-barra-separador"></div>
+  <div class="info-barra-item">
+    <i class="fa-solid fa-truck info-barra-icono"></i>
+    <span>Envíos en Rafaela</span>
+  </div>
+</div>
+
+<!-- PEDIDOS -->
+<div class="barra-info">
+  ⏰ Cerramos pedidos los días miércoles 13 hs
+</div>
+
+<!-- BUSCADOR -->
+<div class="buscador-wrap">
+  <div class="buscador-inner">
+    <span class="buscador-icon">🔍</span>
+    <input type="text" id="buscador" placeholder="Buscar producto..." autocomplete="off">
+    <button class="buscador-clear" id="buscador-clear">×</button>
+  </div>
+</div>
+
+<!-- FILTROS (se generan por JS) -->
+<div class="filtros-wrap">
+  <div class="filtros-inner" id="filtros">
+    <button class="filtro-btn activo" data-cat="todos">Todos</button>
+  </div>
+</div>
+
+<!-- FLECHAS CARRUSEL -->
+
+
+<!-- DESTACADOS -->
+<section id="destacados">
+  <div class="destacados-header">
+    <h2>⭐ Más Vendidos</h2>
+    <span>Los favoritos de nuestros clientes</span>
+  </div>
+
+  <div class="destacados-carrusel-wrap">
+  <button class="destacados-flecha destacados-flecha-izq" id="flecha-izq">‹</button>
+  <div class="destacados-carrusel" id="destacados-carrusel">
+     <div class="card-destacado">
+      <img src="assets/productos/Aceite_de_coco_Entrenuts.png" alt="Aceite de Coco">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Aceite de Coco Neutro x 360cc
+        </div>
+
+        <div class="card-precio">
+          $ 9.200
+        </div>
+        
+      </div>
+    </div>
+
+     <div class="card-destacado">
+      <img src="assets/productos/Almendras_guara.png" alt="Almendras">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Almendras Naturales x 250gr
+        </div>
+
+        <div class="card-precio">
+          $ 5.200
+        </div>
+      </div>
+    </div>
+
+     <div class="card-destacado">
+      <img src="assets/productos/Barritas_proteicas_Entrenuts.png" alt="Barra Proteíca Choco-mani Entrenuts">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Barra Proteíca Choco-mani x 10
+        </div>
+
+        <div class="card-precio">
+          $ 17.500
+        </div>
+      </div>
+    </div>
+
+     <div class="card-destacado">
+      <img src="assets/productos/Creatina_Aker.png" alt="Creatina Aker">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Creatina Monohidratada Micronizada 300gr
+        </div>
+
+        <div class="card-precio">
+          $ 20.200
+        </div>
+      </div>
+    </div>
+
+     <div class="card-destacado">
+      <img src="assets/productos/Dulce_de_leche_ganofi.png" alt="Dulce de Leche c/stevia Ganofi">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Dulce de Leche c/stevia x 400gr
+        </div>
+
+        <div class="card-precio">
+          $ 6.500
+        </div>
+      </div>
+    </div>
+
+    <div class="card-destacado">
+      <img src="assets/productos/Mix_frutos_secos_sin_pasas.png" alt="Mix Frutos Secos s/Pasas">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Mix Frutos Secos s/Pasas x 1kg
+        </div>
+
+        <div class="card-precio">
+          $ 24.000
+        </div>
+      </div>
+    </div>
+
+    <div class="card-destacado">
+      <img src="assets/productos/Pancakes_Granger.png" alt="Pancakes Granger">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Pancakes Proteicos chocolate x 400gr
+        </div>
+
+        <div class="card-precio">
+          $ 17.000
+        </div>
+      </div>
+    </div>
+
+    <div class="card-destacado">
+      <img src="assets/productos/Pasta_de_mani_Entrenuts.png"  class="img-pasta-mani" alt="Pasta de Maní">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Pasta de Maní Natural x 370gr
+        </div>
+
+        <div class="card-precio">
+          $ 4.200
+        </div>
+      </div>
+    </div>
+
+    <div class="card-destacado">
+      <img src="assets/productos/Flor_de_Jamaica.png"  class="img-pasta-mani" alt="Flor de Jamaica">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Hibisco x 500gr (Flor de Jamaica)
+        </div>
+
+        <div class="card-precio">
+          $ 11.900
+        </div>
+      </div>
+    </div>
+
+    <div class="card-destacado">
+      <img src="assets/productos/Barritas_Vitalgy.png"  class="img-pasta-mani" alt="Barritas Vitalgy">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Barrita Cacao y Almendras x 10 Vitalgy
+        </div>
+
+        <div class="card-precio">
+          $ 14.200
+        </div>
+      </div>
+    </div>
+
+    <div class="card-destacado">
+      <img src="assets/productos/Ghee_Manteca_Clarificada.png" alt="Ghee Manteca Clarificada">
+
+      <div class="card-info">
+        <div class="card-nombre">
+          Ghee Manteca Clarificada x 300gr
+        </div>
+
+        <div class="card-precio">
+          $ 11.800
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="destacados-flecha destacados-flecha-der" id="flecha-der">›</button>
+</div>
+</section>
+
+<div class="contenido">
+
+  <div id="secciones">
+    <div class="cargando">Cargando productos...</div>
+  </div>
+
+  <div class="sin-resultados" id="sin-resultados">No encontramos productos con ese nombre 🌿</div>
+
+  <div class="footer">
+    <h3>¿Cómo hacer tu pedido?</h3>
+    <p>
+      📲 <strong>WhatsApp:</strong> Escribinos al 3492-588990 si tenés alguna consulta.<br>
+      📸 <strong>Instagram:</strong> Seguinos en @masvalenatural para ver novedades.<br>
+      🚚 <strong>Envíos</strong> a domicilio en Rafaela — coordinamos el día.<br>
+      💳 <strong>Medios de pago:</strong> Efectivo y transferencia.
+    </p>
+  </div>
+  <div class="fecha" id="fecha"></div>
+</div>
+
+<!-- CARRITO FLOTANTE -->
+<div class="carrito-flotante" id="carrito-flotante">
+  <button class="carrito-btn" id="carrito-btn-abrir">
+    <div class="carrito-btn-left">
+      <span>🛒</span>
+      <span>Ver mi pedido</span>
+      <span class="carrito-badge" id="carrito-count">0</span>
+    </div>
+    <span id="carrito-total-flotante">$ 0</span>
+  </button>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<!-- PANEL CARRITO -->
+<div class="carrito-panel" id="carrito-panel">
+  <div class="carrito-header">
+    <h3>Mi pedido</h3>
+    <button class="carrito-cerrar" id="carrito-cerrar">×</button>
+  </div>
+  <div class="carrito-lista" id="carrito-lista">
+    <div class="carrito-vacio">Tu carrito está vacío 🌿<br>Agregá productos para hacer tu pedido.</div>
+  </div>
+  <div class="carrito-footer">
+    <div class="carrito-envio-nota" id="carrito-envio-nota"></div>
+    <div class="carrito-total">
+      <span>Total estimado <button class="ver-detalle-btn" id="ver-detalle-btn">Ver detalle</button></span>
+      <span class="carrito-total-monto" id="carrito-total-monto">$ 0</span>
+    </div>
+    <div class="carrito-desglose" id="carrito-desglose">
+      <div class="carrito-linea" id="linea-subtotal">
+        <span>Subtotal</span>
+        <span id="subtotal-monto">$ 0</span>
+      </div>
+      <div class="carrito-linea" id="linea-envio">
+        <span>Envío</span>
+        <span id="envio-monto">$ 0</span>
+      </div>
+    </div>
+    <div class="checkout-datos">
+
+  <!-- SWITCH ENVÍO / RETIRO -->
+  <div class="entrega-switch">
+    <button class="entrega-opcion activo" id="opcion-envio" type="button">
+      🚚 Envío a domicilio
+    </button>
+    <button class="entrega-opcion" id="opcion-retiro" type="button">
+      🏃 Retiro
+    </button>
+  </div>
+
+  <div class="checkout-campo">
+    <label for="cliente-nombre">Nombre completo</label>
+    <input type="text" id="cliente-nombre" placeholder="Tu nombre y apellido" autocomplete="name">
+    <span class="checkout-error" id="error-nombre">Ingresá tu nombre completo</span>
+  </div>
+
+  <div class="checkout-campo" id="campo-direccion">
+    <label for="cliente-direccion">Dirección de entrega</label>
+    <input type="text" id="cliente-direccion" placeholder="Calle, altura y barrio" autocomplete="street-address">
+    <span class="checkout-error" id="error-direccion">Ingresá la dirección de entrega</span>
+  </div>
+
+  <div class="retiro-nota" id="retiro-nota" style="display:none">
+    📍 Coordinamos el punto de retiro por WhatsApp al confirmar el pedido.
+  </div>
+
+</div>
+    
+    <div class="checkout-info-pago">
+      <div class="checkout-info-icono">💳</div>
+      <div>
+        <strong>Confirmación del pedido</strong>
+        <p>Trabajamos por pedido. Los productos se reservan una vez confirmado el pago.</p>
+      </div>
+    </div>
+
+    <button class="carrito-enviar" id="carrito-enviar">
+      <span>💬</span> Enviar pedido por WhatsApp
+    </button>
+    <button class="carrito-vaciar" id="carrito-vaciar">Vaciar carrito</button>
+  </div>
+  
+</div>
+
+<!-- BOTÓN FLOTANTE WHATSAPP -->
+<a class="wsp-flotante" href="https://wa.me/5493492588990?text=Hola!%20Quer%C3%ADa%20hacer%20una%20consulta%20%F0%9F%91%8B" target="_blank" aria-label="Consultar por WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+  // ── FECHA ──
+  const d = new Date();
+  const meses = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  document.getElementById("fecha").textContent = "Precios actualizados al " + d.getDate() + " de " + meses[d.getMonth()] + " de " + d.getFullYear();
+
+  // ── COSTO DE ENVÍO ──
+  const COSTO_ENVIO = 2500;
+  const ENVIO_GRATIS_DESDE = 40000;
+
+  // ── CARRITO STATE ──
+  let carrito = [];
+  let productosData = null;
+
+  function formatPeso(n) {
+    return "$ " + n.toLocaleString("es-AR");
+  }
+
+  // ── CARGA DE PRODUCTOS DESDE JSON ──
+  // ── SUPABASE CONFIG ──
+const SUPABASE_URL = "https://eaxdcdsgurlgotlwcqvf.supabase.co";
+const SUPABASE_KEY = "sb_publishable_cojsw7ukcsKrdXG1oAvB7g_5xEO85wi";
+
+
+async function cargarProductos() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/productos?activo=eq.true&order=categoria_id,nombre&limit=500`,
+      { headers: { "apikey": SUPABASE_KEY, "Authorization": `Bearer ${SUPABASE_KEY}` } }
+    );
+    const filas = await res.json();
+
+    // Convertir el array plano de Supabase al formato que espera el catálogo
+    const categoriasMap = {};
+    filas.forEach(p => {
+      if (!categoriasMap[p.categoria_id]) {
+        categoriasMap[p.categoria_id] = {
+          id: p.categoria_id,
+          nombre: p.categoria_nombre,
+          emoji: p.categoria_emoji,
+          productos: []
+        };
+      }
+      categoriasMap[p.categoria_id].productos.push({
+        nombre: p.nombre,
+        precio: p.precio,
+        marca: p.marca,
+        imagen: p.imagen,
+        destacado: p.destacado
+      });
+    });
+
+    // Mantener el orden original de categorías
+    const ordenCategorias = ["frutos-secos","aceites","harinas","mani","semillas","especias","yerbas","chocolates","panes","suplementos","galletitas-crackers","barritas","conservas","cereales-legumbres","fideos","dulces-mermeladas","condimentos-auxiliares", "tes", "tostadas"];
+    productosData = {
+      categorias: ordenCategorias
+        .filter(id => categoriasMap[id])
+        .map(id => categoriasMap[id])
+    };
+
+    renderFiltros();
+    renderDestacados();
+    renderSecciones();
+    filtrarProductos();
+  } catch (err) {
+    document.getElementById("secciones").innerHTML =
+      '<div class="cargando">No se pudieron cargar los productos. Probá recargando la página.</div>';
+    console.error(err);
+  }
+}
+
+  // ── RENDER DE FILTROS ──
+  function renderFiltros() {
+    const filtros = document.getElementById("filtros");
+    let html = '<button class="filtro-btn activo" data-cat="todos">Todos</button>';
+    productosData.categorias.forEach(cat => {
+      html += `<button class="filtro-btn" data-cat="${cat.id}">${cat.emoji} ${cat.nombre}</button>`;
+    });
+    filtros.innerHTML = html;
+
+    filtros.querySelectorAll(".filtro-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        filtros.querySelector(".filtro-btn.activo").classList.remove("activo");
+        btn.classList.add("activo");
+        filtrarProductos();
+        // si el filtro elegido no estaba a la vista, lo centramos un poco
+        btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      });
+    });
+
+    actualizarFadeFiltros();
+    habilitarArrastreConMouse(document.querySelector(".filtros-wrap"));
+  }
+
+  // ── DEGRADADOS DE SCROLL EN FILTROS ──
+  function actualizarFadeFiltros() {
+    const wrap = document.querySelector(".filtros-wrap");
+    if (!wrap) return;
+    const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+    if (maxScroll <= 4) {
+      // entran todos los filtros, no hace falta ningún degradado
+      wrap.classList.remove("fade-izq", "fade-der");
+      return;
+    }
+    wrap.classList.toggle("fade-izq", wrap.scrollLeft > 4);
+    wrap.classList.toggle("fade-der", wrap.scrollLeft < maxScroll - 4);
+  }
+
+  // ── RENDER DE PRODUCTOS ──
+  function renderSecciones() {
+    const cont = document.getElementById("secciones");
+    let html = "";
+    productosData.categorias.forEach(cat => {
+      html += `<div class="seccion" data-cat="${cat.id}">`;
+      html += `<div class="seccion-titulo">${cat.emoji} ${escapeHtml(cat.nombre)}</div>`;
+      cat.productos.forEach(p => {
+        html += productoHtml(p);
+      });
+      html += `</div>`;
+    });
+    cont.innerHTML = html;
+
+    // listeners de + y -
+    cont.querySelectorAll(".qty-mas").forEach(b => {
+      b.addEventListener("click", () => agregarUnidad(b.dataset.nombre, parseInt(b.dataset.precio)));
+    });
+    cont.querySelectorAll(".qty-menos").forEach(b => {
+      b.addEventListener("click", () => quitarUnidad(b.dataset.nombre));
+    });
+  }
+
+  function productoHtml(p) {
+    const marcaHtml = p.marca ? `<div class="producto-marca">${escapeHtml(p.marca)}</div>` : "";
+    const nombreEsc = escapeHtml(p.nombre);
+    return `<div class="producto" data-nombre="${nombreEsc}">
+      <div class="producto-fila">
+        <div class="producto-info">
+          <div class="producto-nombre">${nombreEsc}</div>
+          ${marcaHtml}
+        </div>
+        <span class="producto-precio">${formatPeso(p.precio)}</span>
+        <div class="cantidad-control">
+          <button class="qty-btn qty-menos" data-nombre="${nombreEsc}">−</button>
+          <span class="qty-valor">0</span>
+          <button class="qty-btn qty-mas" data-nombre="${nombreEsc}" data-precio="${p.precio}">+</button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  function productoDestacadoHtml(p) {
+  const nombreEsc = escapeHtml(p.nombre);
+  const imagenSrc = p.imagen ? escapeHtml(p.imagen) : "";
+  const marcaHtml = `<div class="card-marca">${p.marca ? escapeHtml(p.marca) : "&nbsp;"}</div>`;
+  return `<div class="card-destacado">
+      <img src="${imagenSrc}" alt="${nombreEsc}">
+      <div class="card-info">
+        ${marcaHtml}
+        <div class="card-nombre">${nombreEsc}</div>
+        <div class="card-precio">${formatPeso(p.precio)}</div>
+        <div class="cantidad-control">
+          <button class="qty-btn qty-menos" data-nombre="${nombreEsc}">−</button>
+          <span class="qty-valor">0</span>
+          <button class="qty-btn qty-mas" data-nombre="${nombreEsc}" data-precio="${p.precio}">+</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function rebotarNumero(boton) {
+  const valorEl = boton.parentElement.querySelector(".qty-valor");
+  if (!valorEl) return;
+  valorEl.classList.remove("rebotar");
+  void valorEl.offsetWidth; // fuerza el reinicio de la animación si se toca varias veces seguidas
+  valorEl.classList.add("rebotar");
+}
+
+function habilitarArrastreConMouse(el) {
+  let arrastrando = false;
+  let inicioX = 0;
+  let scrollInicial = 0;
+
+  el.style.cursor = "grab";
+
+  el.addEventListener("mousedown", (e) => {
+    arrastrando = true;
+    inicioX = e.pageX;
+    scrollInicial = el.scrollLeft;
+    el.style.cursor = "grabbing";
+    e.preventDefault();
+  });
+
+  window.addEventListener("mouseup", () => {
+    if (!arrastrando) return;
+    arrastrando = false;
+    el.style.cursor = "grab";
+  });
+
+  window.addEventListener("mousemove", (e) => {
+    if (!arrastrando) return;
+    el.scrollLeft = scrollInicial - (e.pageX - inicioX);
+  });
+
+  // Por si el mouse sale de la ventana mientras arrastrás
+  window.addEventListener("mouseleave", () => {
+    arrastrando = false;
+    el.style.cursor = "grab";
+  });
+}
+
+function habilitarFlechas(cont) {
+  const flechaIzq = document.getElementById("flecha-izq");
+  const flechaDer = document.getElementById("flecha-der");
+  if (!flechaIzq || !flechaDer) return;
+
+  const PASO = 300;
+
+  flechaDer.addEventListener("click", () => {
+    cont.scrollBy({ left: PASO, behavior: "smooth" });
+  });
+
+  flechaIzq.addEventListener("click", () => {
+    cont.scrollBy({ left: -PASO, behavior: "smooth" });
+  });
+
+  // Mostrar/ocultar flechas según posición del scroll
+  function actualizarFlechas() {
+    flechaIzq.style.opacity = cont.scrollLeft > 10 ? "1" : "0.3";
+    flechaIzq.style.pointerEvents = cont.scrollLeft > 10 ? "auto" : "none";
+    const maxScroll = cont.scrollWidth - cont.clientWidth;
+    flechaDer.style.opacity = cont.scrollLeft < maxScroll - 10 ? "1" : "0.3";
+    flechaDer.style.pointerEvents = cont.scrollLeft < maxScroll - 10 ? "auto" : "none";
+  }
+
+  cont.addEventListener("scroll", actualizarFlechas);
+  actualizarFlechas();
+}
+
+function renderDestacados() {
+  const cont = document.getElementById("destacados-carrusel");
+  if (!cont) return;
+
+  const destacados = [];
+  productosData.categorias.forEach(cat => {
+    cat.productos.forEach(p => {
+      if (p.destacado === true) destacados.push(p);
+    });
+  });
+
+  if (destacados.length === 0) {
+    const seccion = document.getElementById("destacados");
+    if (seccion) seccion.style.display = "none";
+    return;
+  }
+
+  cont.innerHTML = destacados.map(p => productoDestacadoHtml(p)).join("");
+
+  cont.querySelectorAll(".qty-mas").forEach(b => {
+    b.addEventListener("click", () => {
+      agregarUnidad(b.dataset.nombre, parseInt(b.dataset.precio));
+      rebotarNumero(b);
+    });
+  });
+  cont.querySelectorAll(".qty-menos").forEach(b => {
+    b.addEventListener("click", () => quitarUnidad(b.dataset.nombre));
+  });
+
+  habilitarArrastreConMouse(cont);
+  habilitarFlechas(cont);
+}
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  // ── CARRITO LOGICA ──
+  function pulsarBotonCarrito() {
+  const btn = document.getElementById("carrito-btn-abrir");
+  if (!btn) return;
+  btn.classList.remove("pulso");
+  void btn.offsetWidth; // fuerza el reinicio de la animación si se agregan varios productos seguidos
+  btn.classList.add("pulso");
+}
+
+  function agregarUnidad(nombre, precio) {
+    const item = carrito.find(i => i.nombre === nombre);
+    if (item) {
+      item.cantidad++;
+    } else {
+      carrito.push({ nombre, precio, cantidad: 1 });
+    }
+    actualizarTodo();
+    pulsarBotonCarrito();
+  }
+
+  function quitarUnidad(nombre) {
+    const item = carrito.find(i => i.nombre === nombre);
+    if (!item) return;
+    item.cantidad--;
+    if (item.cantidad <= 0) {
+      carrito = carrito.filter(i => i.nombre !== nombre);
+    }
+    actualizarTodo();
+  }
+
+  function eliminarProducto(nombre) {
+    carrito = carrito.filter(i => i.nombre !== nombre);
+    actualizarTodo();
+  }
+
+  function calcularEnvio(subtotal) {
+  if (subtotal === 0) return 0;
+  if (modoRetiro) return 0;
+  return subtotal >= ENVIO_GRATIS_DESDE ? 0 : COSTO_ENVIO;
+}
+
+  function actualizarTodo() {
+    actualizarSteppers();
+    actualizarCarrito();
+  }
+
+  // Sincroniza los steppers visibles en la lista de productos
+  function actualizarSteppers() {
+    document.querySelectorAll(".cantidad-control").forEach(ctrl => {
+      const nombre = ctrl.querySelector(".qty-mas").dataset.nombre;
+      const item = carrito.find(i => i.nombre === nombre);
+      const cantidad = item ? item.cantidad : 0;
+      const valorEl = ctrl.querySelector(".qty-valor");
+      const btnMas = ctrl.querySelector(".qty-mas");
+      valorEl.textContent = cantidad;
+      ctrl.classList.toggle("con-cantidad", cantidad > 0);
+      btnMas.classList.toggle("activo", cantidad > 0);
+    });
+  }
+
+  function actualizarCarrito() {
+    const subtotal = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+    const envio = calcularEnvio(subtotal);
+    const total = subtotal + envio;
+    const cantidadTotal = carrito.reduce((s, i) => s + i.cantidad, 0);
+
+    document.getElementById("carrito-count").textContent = cantidadTotal;
+    document.getElementById("carrito-total-flotante").textContent = formatPeso(total);
+    document.getElementById("carrito-flotante").classList.toggle("visible", cantidadTotal > 0);
+
+    // Subtotal y envío en el panel
+    document.getElementById("subtotal-monto").textContent = formatPeso(subtotal);
+    const envioMontoEl = document.getElementById("envio-monto");
+    const lineaEnvio = document.getElementById("linea-envio");
+    if (envio === 0 && subtotal > 0) {
+      envioMontoEl.textContent = "GRATIS";
+      lineaEnvio.classList.add("envio-gratis");
+    } else {
+      envioMontoEl.textContent = formatPeso(envio);
+      lineaEnvio.classList.remove("envio-gratis");
+    }
+    document.getElementById("carrito-total-monto").textContent = formatPeso(total);
+
+    // Nota de envío gratis
+    const nota = document.getElementById("carrito-envio-nota");
+    if (subtotal === 0) {
+      nota.textContent = "";
+      nota.classList.remove("gratis");
+    } else if (subtotal >= ENVIO_GRATIS_DESDE) {
+      nota.textContent = "🎉 ¡Tu pedido tiene envío gratis!";
+      nota.classList.add("gratis");
+    } else {
+      const faltante = ENVIO_GRATIS_DESDE - subtotal;
+      nota.textContent = `Envío $2.500. Te faltan ${formatPeso(faltante)} en compras para que el envío sea gratis (a partir de ${formatPeso(ENVIO_GRATIS_DESDE)}).`;
+      nota.classList.remove("gratis");
+    }
+
+    // Lista de items
+    const lista = document.getElementById("carrito-lista");
+    if (carrito.length === 0) {
+      lista.innerHTML = '<div class="carrito-vacio">Tu carrito está vacío 🌿<br>Agregá productos para hacer tu pedido.</div>';
+    } else {
+      lista.innerHTML = carrito.map(item => `
+        <div class="carrito-item">
+          <span class="carrito-item-nombre">${escapeHtml(item.nombre)}</span>
+          <div class="cantidad-control con-cantidad">
+            <button class="qty-btn qty-menos" data-nombre="${escapeHtml(item.nombre)}">−</button>
+            <span class="qty-valor">${item.cantidad}</span>
+            <button class="qty-btn qty-mas activo" data-nombre="${escapeHtml(item.nombre)}" data-precio="${item.precio}">+</button>
+          </div>
+          <span class="carrito-item-precio">${formatPeso(item.precio * item.cantidad)}</span>
+          <button class="carrito-item-quitar" data-nombre="${escapeHtml(item.nombre)}">×</button>
+        </div>
+      `).join("");
+
+      lista.querySelectorAll(".qty-mas").forEach(b => {
+        b.addEventListener("click", () => agregarUnidad(b.dataset.nombre, parseInt(b.dataset.precio)));
+      });
+      lista.querySelectorAll(".qty-menos").forEach(b => {
+        b.addEventListener("click", () => quitarUnidad(b.dataset.nombre));
+      });
+      lista.querySelectorAll(".carrito-item-quitar").forEach(b => {
+        b.addEventListener("click", () => eliminarProducto(b.dataset.nombre));
+      });
+    }
+  }
+
+  // ── PANEL CARRITO ──
+  const panel = document.getElementById("carrito-panel");
+  const overlay = document.getElementById("overlay");
+
+  function abrirCarrito() {
+  panel.classList.add("abierto");
+  overlay.classList.add("visible");
+  document.body.style.overflow = "hidden";
+  document.querySelector(".wsp-flotante").style.display = "none";
+  }
+  function cerrarCarrito() {
+  panel.classList.remove("abierto");
+  overlay.classList.remove("visible");
+  document.body.style.overflow = "";
+  document.querySelector(".wsp-flotante").style.display = "flex";
+  } 
+
+  document.getElementById("carrito-btn-abrir").addEventListener("click", abrirCarrito);
+  document.getElementById("carrito-cerrar").addEventListener("click", cerrarCarrito);
+  overlay.addEventListener("click", cerrarCarrito);
+
+  // ── VACIAR ──
+  document.getElementById("carrito-vaciar").addEventListener("click", () => {
+    carrito = [];
+    actualizarTodo();
+    cerrarCarrito();
+  });
+
+  // ── DATOS DE ENTREGA (nombre y dirección) ──
+  const inputNombre = document.getElementById("cliente-nombre");
+  const inputDireccion = document.getElementById("cliente-direccion");
+
+  // Si el cliente ya pidió antes desde este mismo navegador, le precargamos los datos
+  try {
+    const nombreGuardado = localStorage.getItem("mvn_nombre");
+    const direccionGuardada = localStorage.getItem("mvn_direccion");
+    if (nombreGuardado) inputNombre.value = nombreGuardado;
+    if (direccionGuardada) inputDireccion.value = direccionGuardada;
+  } catch (e) {
+    // si el navegador bloquea localStorage (modo privado, etc.) seguimos sin precargar
+  }
+
+  // Sacar el error apenas el cliente empieza a completar el campo
+  [inputNombre, inputDireccion].forEach(campo => {
+    campo.addEventListener("input", () => {
+      if (campo.value.trim() !== "") {
+        campo.classList.remove("invalido");
+        const err = campo.parentElement.querySelector(".checkout-error");
+        if (err) err.classList.remove("visible");
+      }
+    });
+  });
+
+  // ── SWITCH ENVÍO / RETIRO ──
+let modoRetiro = false;
+
+document.getElementById("opcion-envio").addEventListener("click", () => {
+  modoRetiro = false;
+  document.getElementById("opcion-envio").classList.add("activo");
+  document.getElementById("opcion-retiro").classList.remove("activo");
+  document.getElementById("campo-direccion").style.display = "block";
+  document.getElementById("retiro-nota").style.display = "none";
+  actualizarCarrito();
+});
+
+  document.getElementById("opcion-retiro").addEventListener("click", () => {
+    modoRetiro = true;
+    document.getElementById("opcion-retiro").classList.add("activo");
+    document.getElementById("opcion-envio").classList.remove("activo");
+    document.getElementById("campo-direccion").style.display = "none";
+    document.getElementById("retiro-nota").style.display = "block";
+    actualizarCarrito();
+  });
+
+  function validarDatosCliente() {
+    const errorNombre = document.getElementById("error-nombre");
+    const errorDireccion = document.getElementById("error-direccion");
+    let valido = true;
+    let primerInvalido = null;
+
+    if (inputNombre.value.trim() === "") {
+      inputNombre.classList.add("invalido");
+      errorNombre.classList.add("visible");
+      valido = false;
+      primerInvalido = primerInvalido || inputNombre;
+    } else {
+      inputNombre.classList.remove("invalido");
+      errorNombre.classList.remove("visible");
+    }
+
+    if (!modoRetiro && inputDireccion.value.trim() === "") {
+  inputDireccion.classList.add("invalido");
+  errorDireccion.classList.add("visible");
+  valido = false;
+  primerInvalido = primerInvalido || inputDireccion;
+} else {
+  inputDireccion.classList.remove("invalido");
+  errorDireccion.classList.remove("visible");
+}
+
+    if (!valido && primerInvalido) {
+      primerInvalido.focus();
+      primerInvalido.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    return valido;
+  }
+
+  // ── ENVIAR POR WHATSAPP ──
+  document.getElementById("carrito-enviar").addEventListener("click", () => {
+    if (carrito.length === 0) return;
+    if (!validarDatosCliente()) return;
+
+    const nombreCliente = inputNombre.value.trim();
+    const direccionCliente = inputDireccion.value.trim();
+
+    try {
+      localStorage.setItem("mvn_nombre", nombreCliente);
+      localStorage.setItem("mvn_direccion", direccionCliente);
+    } catch (e) {
+      // si no se puede guardar, no pasa nada, el pedido se manda igual
+    }
+
+    const subtotal = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+    const envio = calcularEnvio(subtotal);
+    const total = subtotal + envio;
+
+    let msg = "Hola! Quiero hacer el siguiente pedido:\n\n";
+    msg += "Nombre: " + nombreCliente + "\n";
+    msg += modoRetiro
+      ? "Entrega: Retiro — coordinamos punto de encuentro por WhatsApp\n\n"
+      : "Dirección de entrega: " + direccionCliente + "\n\n";
+    carrito.forEach(i => {
+      const cantidadTxt = i.cantidad > 1 ? ` x${i.cantidad}` : "";
+      msg += "• " + i.nombre + cantidadTxt + " — " + formatPeso(i.precio * i.cantidad) + "\n";
+    });
+    msg += "\nSubtotal: " + formatPeso(subtotal);
+    msg += "\nEnvío: " + (envio === 0 ? "GRATIS" : formatPeso(envio));
+    msg += "\nTotal estimado: " + formatPeso(total);
+    msg += "\n\n¿Me confirman disponibilidad y envío? 🙏";
+    const url = "https://wa.me/5493492588990?text=" + encodeURIComponent(msg);
+    window.open(url, "_blank");
+  });
+
+  // ── BUSCADOR ──
+  const input = document.getElementById("buscador");
+  const clearBtn = document.getElementById("buscador-clear");
+  const sinResultados = document.getElementById("sin-resultados");
+
+  function normalizar(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
+  function filtrarProductos() {
+    const q = normalizar(input.value.trim());
+
+    // Ocultar/mostrar destacados según si hay búsqueda activa
+    const seccionDestacados = document.getElementById("destacados");
+    if (seccionDestacados) {
+    seccionDestacados.style.display = q.length > 0 ? "none" : "block";
+  }
+
+    const catActiva = document.querySelector(".filtro-btn.activo").dataset.cat;
+
+    clearBtn.classList.toggle("visible", q.length > 0);
+
+    let hayAlguno = false;
+
+    document.querySelectorAll(".seccion").forEach(sec => {
+      const catSec = sec.dataset.cat;
+      const categoriaOk = catActiva === "todos" || catActiva === catSec;
+
+      if (!categoriaOk) { sec.classList.add("vacia"); return; }
+
+      let hayEnSec = false;
+      sec.querySelectorAll(".producto").forEach(p => {
+        const nombre = normalizar(p.dataset.nombre);
+        const marca = normalizar(p.querySelector(".producto-marca")?.textContent || "");
+        const visible = nombre.includes(q) || marca.includes(q);
+        p.classList.toggle("oculto", !visible);
+        if (visible) { hayEnSec = true; hayAlguno = true; }
+      });
+      sec.classList.toggle("vacia", !hayEnSec);
+    });
+
+    sinResultados.classList.toggle("visible", !hayAlguno && q.length > 0);
+  }
+
+  input.addEventListener("input", filtrarProductos);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      input.blur();
+    }
+  });
+  clearBtn.addEventListener("click", () => { input.value = ""; filtrarProductos(); input.focus(); });
+
+  // Escucha el scroll de los filtros para prender/apagar los degradados
+  document.querySelector(".filtros-wrap").addEventListener("scroll", actualizarFadeFiltros);
+  window.addEventListener("resize", actualizarFadeFiltros);
+
+  // ── VER DETALLE CARRITO ──
+  document.getElementById("ver-detalle-btn").addEventListener("click", () => {
+    const desglose = document.getElementById("carrito-desglose");
+    const btn = document.getElementById("ver-detalle-btn");
+    const visible = desglose.classList.toggle("visible");
+    btn.textContent = visible ? "Ocultar detalle" : "Ver detalle";
+  });
+
+  // ── INICIO ──
+  cargarProductos();
+
+</script>
+</body>
+</html>
