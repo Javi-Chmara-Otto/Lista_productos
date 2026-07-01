@@ -17,6 +17,7 @@
       background: #f5f5f3;
       color: #1a1a1a;
       font-size: 14px;
+      overflow-x: hidden;
     }
 
     /* LOGIN */
@@ -275,7 +276,10 @@
 
     /* TABLA */
     .table-wrap {
+      width: 100%;
+      max-width: 100vw;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     table {
@@ -1223,6 +1227,7 @@
       { id: "fideos", nombre: "Fideos y Pastas", emoji: "🍝" },
       { id: "dulces-mermeladas", nombre: "Dulces, Mermeladas y Miel", emoji: "🍯" },
       { id: "condimentos-auxiliares", nombre: "Condimentos y Auxiliares de Cocina", emoji: "🥣" },
+      { id: "tes", nombre: "Tés", emoji: "🫖" },
     ];
 
     let productos = [];
