@@ -720,9 +720,30 @@
       flex-shrink: 0;
     }
 
+    .historico-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 16px 24px;
+    }
+
+    .historico-semanas {
+      padding: 0 24px 24px;
+    }
+
+    .historico-semanas-scroll {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      background: #fff;
+    }
+
     .ranking-nombre {
       flex: 1;
+      min-width: 0;
       font-weight: 500;
+      overflow-wrap: anywhere;
     }
 
     .ranking-valor {
@@ -733,6 +754,7 @@
 
     .semanas-tabla {
       width: 100%;
+      min-width: 640px;
       border-collapse: collapse;
       background: #fff;
       border: 1px solid #e8e8e8;
@@ -760,6 +782,178 @@
     .semanas-tabla tr:last-child td {
       border-bottom: none;
     }
+
+    /* MOBILE RESPONSIVE */
+    body {
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    #app {
+      min-height: 100vh;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid #e8e8e8;
+      border-radius: 8px;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mobile-logout {
+      display: none;
+    }
+
+    .table-wrap {
+      background: #fff;
+    }
+
+    .table-wrap table {
+      min-width: 760px;
+      background: #fff;
+    }
+
+    th,
+    td {
+      background: #fff;
+    }
+
+    th {
+      background: #fafafa;
+    }
+
+    @media (max-width: 640px) {
+      header {
+        width: 100%;
+        max-width: 100vw;
+        padding: 12px 14px;
+        gap: 10px;
+      }
+
+      .header-left {
+        min-width: 0;
+      }
+
+      .header-logo {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 14px;
+      }
+
+      .menu-toggle {
+        display: flex;
+        margin-left: auto;
+      }
+
+      .btn-logout {
+        display: none;
+      }
+
+      .tabs {
+        display: none;
+        position: sticky;
+        top: 61px;
+        z-index: 9;
+        width: 100%;
+        max-width: 100vw;
+        padding: 8px;
+        background: #fff;
+        border-bottom: 1px solid #e8e8e8;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      }
+
+      .tabs.menu-abierto {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .tab-btn {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        text-align: left;
+      }
+
+      .tab-btn.activo {
+        background: #f5f5f3;
+        border-color: #1a1a1a;
+      }
+
+      .mobile-logout {
+        display: block;
+        color: #888;
+      }
+
+      .toolbar {
+        width: 100%;
+        max-width: 100vw;
+        padding: 12px 14px;
+        background: #fff;
+        align-items: stretch;
+      }
+
+      .toolbar input[type="text"] {
+        flex-basis: 100%;
+      }
+
+      .toolbar select,
+      .toolbar .btn {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+
+      .stats-bar {
+        padding: 12px 14px;
+      }
+
+      .historico-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 12px 14px;
+      }
+
+      .historico-semanas {
+        padding: 0 14px 18px;
+      }
+
+      .ranking-item {
+        align-items: flex-start;
+      }
+
+      .ranking-valor {
+        font-size: 11px;
+      }
+
+      .semanas-tabla {
+        min-width: 620px;
+      }
+
+      .table-wrap {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .table-wrap table {
+        min-width: 720px;
+      }
+    }
   </style>
 </head>
 
@@ -782,6 +976,7 @@
       <div class="header-left">
         <span class="header-logo">🌿 Más Vale Natural — Admin</span>
       </div>
+      <button class="menu-toggle" onclick="toggleAdminMenu()" aria-label="Abrir menú">☰</button>
       <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
     </header>
 
@@ -793,6 +988,7 @@
       <button class="tab-btn" onclick="cambiarTab('semana')">📊 Esta semana</button>
       <button class="tab-btn" onclick="cambiarTab('historico')">📈 Histórico</button>
       <button class="tab-btn" onclick="cambiarTab('importar')">📥 Importar</button>
+      <button class="tab-btn mobile-logout" onclick="cerrarSesion()">Cerrar sesión</button>
     </div>
 
     <!-- ── TAB PRODUCTOS ── -->
@@ -831,200 +1027,201 @@
       <div class="table-footer"></div>
       <span id="footer-prod">—</span>
     </div>
-  </div>
 
-  <!-- ── TAB PEDIDOS ── -->
-  <div class="tab-content" id="tab-pedidos">
-    <div class="stats-bar" id="stats-pedidos"></div>
-    <div class="toolbar">
-      <input type="text" id="buscador-ped" placeholder="Buscar por cliente..." oninput="renderPedidos()">
-      <select id="filtro-pago" onchange="renderPedidos()">
-        <option value="">Todos los pagos</option>
-        <option value="pendiente">Pago pendiente</option>
-        <option value="pagado">Pagado</option>
-      </select>
-      <select id="filtro-entrega" onchange="renderPedidos()">
-        <option value="">Todas las entregas</option>
-        <option value="pendiente">Entrega pendiente</option>
-        <option value="entregado">Entregado</option>
-      </select>
-      <input type="date" id="filtro-desde" onchange="renderPedidos()">
-      <input type="date" id="filtro-hasta" onchange="renderPedidos()">
-      <button class="btn" onclick="filtrarSemanaActual()">Esta semana</button>
-      <button class="btn" onclick="filtrarSemanaPasada()">Semana pasada</button>
-      <button class="btn" onclick="limpiarFiltroFechas()">✕ Fechas</button>
-      <button class="btn btn-green" onclick="abrirModalPedidoNuevo()">+ Nuevo pedido</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Cliente</th>
-            <th>Productos</th>
-            <th>Total</th>
-            <th>Ganancia</th>
-            <th>Entrega</th>
-            <th>Pago</th>
-            <th>Entrega</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-ped"></tbody>
-      </table>
-      <div id="estado-ped" class="estado">Cargando pedidos...</div>
-    </div>
-    <div class="table-footer">
-      <span id="footer-ped">—</span>
-    </div>
-  </div>
-
-  <!-- ── TAB CLIENTES ── -->
-  <div class="tab-content" id="tab-clientes">
-    <div class="toolbar">
-      <input type="text" id="buscador-cli" placeholder="Buscar cliente..." oninput="renderClientes()">
-      <button class="btn btn-primary" onclick="abrirModalClienteNuevo()">+ Nuevo cliente</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th>Dirección</th>
-            <th>Pedidos</th>
-            <th>Total gastado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-cli"></tbody>
-      </table>
-      <div id="estado-cli" class="estado">Cargando clientes...</div>
-    </div>
-    <div class="table-footer">
-      <span id="footer-cli">—</span>
-    </div>
-  </div>
-
-  <!-- ── TAB ESTA SEMANA ── -->
-  <div class="tab-content" id="tab-semana">
-    <div class="stats-bar" id="stats-semana"></div>
-    <div
-      style="padding:16px 24px 8px;font-size:12px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:0.05em"
-      id="semana-label"></div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Cliente</th>
-            <th>Productos</th>
-            <th>Total</th>
-            <th>Entrega</th>
-            <th>Pago</th>
-            <th>Entrega</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-semana"></tbody>
-      </table>
-      <div id="estado-semana" class="estado" style="display:none">No hay pedidos esta semana.</div>
-    </div>
-  </div>
-
-  <!-- ── TAB HISTÓRICO ── -->
-  <div class="tab-content" id="tab-historico">
-    <div class="stats-bar" id="stats-historico"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 24px">
-      <div>
-        <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">Top
-          productos más pedidos</div>
-        <div id="top-productos"></div>
+    <!-- ── TAB PEDIDOS ── -->
+    <div class="tab-content" id="tab-pedidos">
+      <div class="stats-bar" id="stats-pedidos"></div>
+      <div class="toolbar">
+        <input type="text" id="buscador-ped" placeholder="Buscar por cliente..." oninput="renderPedidos()">
+        <select id="filtro-pago" onchange="renderPedidos()">
+          <option value="">Todos los pagos</option>
+          <option value="pendiente">Pago pendiente</option>
+          <option value="pagado">Pagado</option>
+        </select>
+        <select id="filtro-entrega" onchange="renderPedidos()">
+          <option value="">Todas las entregas</option>
+          <option value="pendiente">Entrega pendiente</option>
+          <option value="entregado">Entregado</option>
+        </select>
+        <input type="date" id="filtro-desde" onchange="renderPedidos()">
+        <input type="date" id="filtro-hasta" onchange="renderPedidos()">
+        <button class="btn" onclick="filtrarSemanaActual()">Esta semana</button>
+        <button class="btn" onclick="filtrarSemanaPasada()">Semana pasada</button>
+        <button class="btn" onclick="limpiarFiltroFechas()">✕ Fechas</button>
+        <button class="btn btn-green" onclick="abrirModalPedidoNuevo()">+ Nuevo pedido</button>
       </div>
-      <div>
-        <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">
-          Clientes que más compran</div>
-        <div id="top-clientes"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Cliente</th>
+              <th>Productos</th>
+              <th>Total</th>
+              <th>Ganancia</th>
+              <th>Entrega</th>
+              <th>Pago</th>
+              <th>Entrega</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-ped"></tbody>
+        </table>
+        <div id="estado-ped" class="estado">Cargando pedidos...</div>
+      </div>
+      <div class="table-footer">
+        <span id="footer-ped">—</span>
       </div>
     </div>
-    <div style="padding:0 24px 24px">
-      <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">Últimas
-        semanas</div>
-      <div id="tabla-semanas"></div>
+
+    <!-- ── TAB CLIENTES ── -->
+    <div class="tab-content" id="tab-clientes">
+      <div class="toolbar">
+        <input type="text" id="buscador-cli" placeholder="Buscar cliente..." oninput="renderClientes()">
+        <button class="btn btn-primary" onclick="abrirModalClienteNuevo()">+ Nuevo cliente</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Dirección</th>
+              <th>Pedidos</th>
+              <th>Total gastado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-cli"></tbody>
+        </table>
+        <div id="estado-cli" class="estado">Cargando clientes...</div>
+      </div>
+      <div class="table-footer">
+        <span id="footer-cli">—</span>
+      </div>
     </div>
-  </div>
 
-  <!-- ── TAB IMPORTAR ── -->
-  <div class="tab-content" id="tab-importar">
-    <div class="toolbar">
-      <h2 style="margin:0">📥 Importar productos desde CSV</h2>
+    <!-- ── TAB ESTA SEMANA ── -->
+    <div class="tab-content" id="tab-semana">
+      <div class="stats-bar" id="stats-semana"></div>
+      <div
+        style="padding:16px 24px 8px;font-size:12px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:0.05em"
+        id="semana-label"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Productos</th>
+              <th>Total</th>
+              <th>Entrega</th>
+              <th>Pago</th>
+              <th>Entrega</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-semana"></tbody>
+        </table>
+        <div id="estado-semana" class="estado" style="display:none">No hay pedidos esta semana.</div>
+      </div>
     </div>
 
-    <div style="padding: 24px; max-width: 700px;">
-      <p style="color:#666; margin-bottom: 20px;">
-        Subí el CSV generado por GPT con las columnas:
-        <code>codigo, nombre, precio, marca, categoria_id, categoria_nombre, categoria_emoji, activo</code>
-      </p>
-
-      <input type="file" id="csv-input" accept=".csv" style="margin-bottom: 16px;" onchange="procesarCSV()">
-
-      <div id="importar-preview" style="display:none">
-        <div id="importar-resumen"
-          style="margin-bottom: 16px; padding: 12px; background: #f0f7f0; border-radius: 8px; border: 1px solid #c3e6c3;">
+    <!-- ── TAB HISTÓRICO ── -->
+    <div class="tab-content" id="tab-historico">
+      <div class="stats-bar" id="stats-historico"></div>
+      <div class="historico-grid">
+        <div>
+          <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">Top
+            productos más pedidos</div>
+          <div id="top-productos"></div>
         </div>
-        <div class="table-wrap" style="margin-bottom: 16px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Marca</th>
-                <th>Categoría</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody id="importar-tbody"></tbody>
-          </table>
+        <div>
+          <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">
+            Clientes que más compran</div>
+          <div id="top-clientes"></div>
         </div>
-        <button class="btn btn-primary" onclick="confirmarImport()">✅ Confirmar importación</button>
-        <button class="btn" onclick="cancelarImport()" style="margin-left: 8px;">Cancelar</button>
       </div>
-
-      <div id="importar-resultado" style="display:none; padding: 16px; border-radius: 8px;"></div>
+      <div class="historico-semanas">
+        <div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:12px">Últimas
+          semanas</div>
+        <div class="historico-semanas-scroll">
+          <div id="tabla-semanas"></div>
+        </div>
+      </div>
     </div>
 
-    <!-- IMPORTAR COSTOS -->
-    <div
-      style="margin-top: 40px; border-top: 1px solid #e8e8e8; padding-top: 24px; padding-left: 24px; max-width: 700px;">
-      <h3 style="font-size:15px;font-weight:500;margin-bottom:8px">💰 Actualizar precios de costo desde CSV</h3>
-      <p style="color:#666; margin-bottom: 16px; font-size:13px;">
-        Subí un CSV con las columnas: <code>id, costo_proveedor</code><br>
-        El <code>id</code> es el número de Supabase que aparece en la tabla de productos.
-      </p>
-      <input type="file" id="csv-costos-input" accept=".csv" style="margin-bottom: 16px;"
-        onchange="procesarCSVCostos()">
-      <div id="costos-preview" style="display:none">
-        <div id="costos-resumen"
-          style="margin-bottom:16px;padding:12px;background:#f0f7f0;border-radius:8px;border:1px solid #c3e6c3"></div>
-        <div class="table-wrap" style="margin-bottom:16px">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Producto</th>
-                <th>Costo anterior</th>
-                <th>Costo nuevo</th>
-                <th>Ganancia nueva</th>
-              </tr>
-            </thead>
-            <tbody id="costos-tbody"></tbody>
-          </table>
-        </div>
-        <button class="btn btn-green" onclick="confirmarImportCostos()">✅ Actualizar costos</button>
-        <button class="btn" onclick="cancelarImportCostos()" style="margin-left:8px">Cancelar</button>
+    <!-- ── TAB IMPORTAR ── -->
+    <div class="tab-content" id="tab-importar">
+      <div class="toolbar">
+        <h2 style="margin:0">📥 Importar productos desde CSV</h2>
       </div>
-      <div id="costos-resultado" style="display:none;padding:16px;border-radius:8px"></div>
+
+      <div style="padding: 24px; max-width: 700px;">
+        <p style="color:#666; margin-bottom: 20px;">
+          Subí el CSV generado por GPT con las columnas:
+          <code>codigo, nombre, precio, marca, categoria_id, categoria_nombre, categoria_emoji, activo</code>
+        </p>
+
+        <input type="file" id="csv-input" accept=".csv" style="margin-bottom: 16px;" onchange="procesarCSV()">
+
+        <div id="importar-preview" style="display:none">
+          <div id="importar-resumen"
+            style="margin-bottom: 16px; padding: 12px; background: #f0f7f0; border-radius: 8px; border: 1px solid #c3e6c3;">
+          </div>
+          <div class="table-wrap" style="margin-bottom: 16px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Marca</th>
+                  <th>Categoría</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="importar-tbody"></tbody>
+            </table>
+          </div>
+          <button class="btn btn-primary" onclick="confirmarImport()">✅ Confirmar importación</button>
+          <button class="btn" onclick="cancelarImport()" style="margin-left: 8px;">Cancelar</button>
+        </div>
+
+        <div id="importar-resultado" style="display:none; padding: 16px; border-radius: 8px;"></div>
+      </div>
+
+      <!-- IMPORTAR COSTOS -->
+      <div
+        style="margin-top: 40px; border-top: 1px solid #e8e8e8; padding-top: 24px; padding-left: 24px; max-width: 700px;">
+        <h3 style="font-size:15px;font-weight:500;margin-bottom:8px">💰 Actualizar precios de costo desde CSV</h3>
+        <p style="color:#666; margin-bottom: 16px; font-size:13px;">
+          Subí un CSV con las columnas: <code>id, costo_proveedor</code><br>
+          El <code>id</code> es el número de Supabase que aparece en la tabla de productos.
+        </p>
+        <input type="file" id="csv-costos-input" accept=".csv" style="margin-bottom: 16px;"
+          onchange="procesarCSVCostos()">
+        <div id="costos-preview" style="display:none">
+          <div id="costos-resumen"
+            style="margin-bottom:16px;padding:12px;background:#f0f7f0;border-radius:8px;border:1px solid #c3e6c3"></div>
+          <div class="table-wrap" style="margin-bottom:16px">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Producto</th>
+                  <th>Costo anterior</th>
+                  <th>Costo nuevo</th>
+                  <th>Ganancia nueva</th>
+                </tr>
+              </thead>
+              <tbody id="costos-tbody"></tbody>
+            </table>
+          </div>
+          <button class="btn btn-green" onclick="confirmarImportCostos()">✅ Actualizar costos</button>
+          <button class="btn" onclick="cancelarImportCostos()" style="margin-left:8px">Cancelar</button>
+        </div>
+        <div id="costos-resultado" style="display:none;padding:16px;border-radius:8px"></div>
+      </div>
     </div>
-  </div>
   </div>
 
   <!-- MODAL PRODUCTO -->
@@ -1264,8 +1461,13 @@
       });
       document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("activo"));
       document.getElementById("tab-" + tab).classList.add("activo");
+      document.querySelector(".tabs").classList.remove("menu-abierto");
       if (tab === "semana") renderSemana();
       if (tab === "historico") renderHistorico();
+    }
+
+    function toggleAdminMenu() {
+      document.querySelector(".tabs").classList.toggle("menu-abierto");
     }
 
     // ── API ──
@@ -2118,11 +2320,11 @@
       document.getElementById("top-productos").innerHTML = topProd.length === 0
         ? '<div style="color:#bbb;font-size:13px">Sin datos todavía</div>'
         : topProd.map(([nombre, data], i) => `
-            <div div class="ranking-item" >
+            <div class="ranking-item">
         <span class="ranking-pos">${i + 1}</span>
         <span class="ranking-nombre">${esc(nombre)}</span>
         <span class="ranking-valor">${data.cantidad} unid.</span>
-      </div >
+      </div>
             `).join("");
 
       // Top clientes
@@ -2140,11 +2342,11 @@
       document.getElementById("top-clientes").innerHTML = topCli.length === 0
         ? '<div style="color:#bbb;font-size:13px">Sin datos todavía</div>'
         : topCli.map(([nombre, data], i) => `
-            <div div class="ranking-item" >
+            <div class="ranking-item">
         <span class="ranking-pos">${i + 1}</span>
         <span class="ranking-nombre">${esc(nombre)}</span>
         <span class="ranking-valor">$ ${data.total.toLocaleString("es-AR")} · ${data.pedidos} pedidos</span>
-      </div >
+      </div>
             `).join("");
 
       // Últimas semanas
@@ -2163,7 +2365,7 @@
       }
 
       document.getElementById("tabla-semanas").innerHTML = `
-            <table table class="semanas-tabla" >
+            <table class="semanas-tabla">
       <thead>
         <tr>
           <th>Semana</th>
