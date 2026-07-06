@@ -1548,7 +1548,11 @@
       const estado = document.getElementById("filtro-estado").value;
 
       let filtrados = productos.filter(p => {
-        const matchQ = !q || normalizar(p.nombre).includes(q) || normalizar(p.marca || "").includes(q);
+        const matchQ = !q
+          || normalizar(p.nombre).includes(q)
+          || normalizar(p.marca || "").includes(q)
+          || normalizar(p.codigo || "").includes(q)
+          || normalizar(catNombre(p.categoria_id) || "").includes(q);
         const matchCat = !cat || p.categoria_id === cat;
         const matchEstado = estado === "" || String(p.activo) === estado;
         return matchQ && matchCat && matchEstado;
