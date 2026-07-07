@@ -1229,6 +1229,18 @@
         </div>
         <div id="costos-resultado" style="display:none;padding:16px;border-radius:8px"></div>
       </div>
+
+      <!-- DETECTAR FOTOS PUBLICADAS -->
+      <div
+        style="margin-top: 40px; border-top: 1px solid #e8e8e8; padding-top: 24px; padding-left: 24px; max-width: 700px;">
+        <h3 style="font-size:15px;font-weight:500;margin-bottom:8px">🖼️ Detectar fotos ya publicadas</h3>
+        <p style="color:#666; margin-bottom: 16px; font-size:13px;">
+          Busca productos que ya tienen una imagen cargada (campo <code>imagen</code>) y los marca como "Publicada"
+          automáticamente. También te muestra cuáles son destacados.
+        </p>
+        <button class="btn btn-primary" onclick="detectarFotosPublicadas()">🔍 Analizar productos</button>
+        <div id="deteccion-resultado" style="display:none; margin-top:16px"></div>
+      </div>
     </div>
   </div>
 
@@ -2702,6 +2714,67 @@
       document.getElementById("costos-preview").style.display = "none";
       document.getElementById("csv-costos-input").value = "";
       csvCostos = [];
+    }
+
+    function detectarFotosPublicadas() {
+      const conImagen = productos.filter(p => p.imagen && p.imagen.trim() !== "" && p.estado_imagen !== "publicada");
+      const destacados = productos.filter(p => p.destacado === true);
+
+      const res = document.getElementById("deteccion-resultado");
+      res.style.display = "block";
+
+      if (conImagen.length === 0) {
+        res.innerHTML = `<div style="padding:12px;background:#f0f7f0;border-radius:8px;color:#666">No hay productos nuevos para marcar como publicados.</div>`;
+        return;
+      }
+
+      res.innerHTML = `
+    <div style="margin-bottom:12px;padding:12px;background:#f0f7f0;border-radius:8px;border:1px solid #c3e6c3">
+      <strong>📋 Encontrados:</strong> ${conImagen.length} productos con imagen cargada para marcar como "Publicada".
+      ${destacados.length > 0 ? `<br><span style="color:#1565c0">⭐ ${destacados.length} de ellos son destacados.</span>` : ""}
+    </div>
+    <div class="table-wrap" style="margin-bottom:16px">
+      <table>
+        <thead>
+          <tr><th>Producto</th><th>Destacado</th><th>Imagen</th></tr>
+        </thead>
+        <tbody>
+          ${conImagen.map(p => `
+            <tr>
+              <td>${esc(p.nombre)}</td>
+              <td>${p.destacado ? "⭐ Sí" : "—"}</td>
+              <td style="font-size:11px;color:#888">${esc(p.imagen)}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-green" onclick="confirmarMarcarPublicadas()">✅ Marcar estos ${conImagen.length} como Publicada</button>
+  `;
+
+      window._productosParaPublicar = conImagen;
+    }
+
+    async function confirmarMarcarPublicadas() {
+      const lista = window._productosParaPublicar || [];
+      if (lista.length === 0) return;
+
+      let ok = 0;
+      for (const p of lista) {
+        try {
+          await apiFetch(`/rest/v1/productos?id=eq.${p.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ estado_imagen: "publicada" })
+          });
+          p.estado_imagen = "publicada";
+          ok++;
+        } catch (e) { /* seguimos con el resto */ }
+      }
+
+      mostrarToast(`${ok} productos marcados como Publicada`);
+      document.getElementById("deteccion-resultado").innerHTML =
+        `<div style="padding:12px;background:#f0f7f0;border-radius:8px;color:#2e7d32">✅ ${ok} productos actualizados correctamente.</div>`;
+      renderProductos();
     }
 
     // ── NUEVA CATEGORÍA ──
