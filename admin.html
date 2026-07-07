@@ -1250,6 +1250,14 @@
           <label>Código del proveedor (opcional)</label>
           <input type="text" id="modal-prod-codigo" placeholder="Ej: 1374">
         </div>
+        <div class="form-group">
+          <label>Estado de imagen</label>
+          <select id="modal-prod-estado-imagen">
+            <option value="sin_foto">🔴 Sin foto</option>
+            <option value="foto_descargada">🟡 Foto descargada</option>
+            <option value="publicada">🟢 Publicada</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
         <label>Categoría</label>
@@ -1618,6 +1626,7 @@
       document.getElementById("modal-prod-activo").checked = true;
       document.getElementById("modal-prod-categoria").value = "frutos-secos";
       document.getElementById("modal-prod-costo").value = "";
+      document.getElementById("modal-prod-estado-imagen").value = "sin_foto";
       document.getElementById("modal-prod-overlay").classList.add("visible");
     }
 
@@ -1635,6 +1644,7 @@
       document.getElementById("modal-prod-categoria").value = p.categoria_id;
       document.getElementById("modal-prod-codigo").value = p.codigo || "";
       document.getElementById("modal-prod-costo").value = p.precio_costo || "";
+      document.getElementById("modal-prod-estado-imagen").value = p.estado_imagen || "sin_foto";
       document.getElementById("modal-prod-overlay").classList.add("visible");
     }
 
@@ -1661,6 +1671,7 @@
           destacado: document.getElementById("modal-prod-destacado").checked,
           activo: document.getElementById("modal-prod-activo").checked,
           precio_costo: precio_costo,
+          estado_imagen: document.getElementById("modal-prod-estado-imagen").value,
           categoria_id: catId,
           categoria_nombre: cat.nombre,
           categoria_emoji: cat.emoji,
