@@ -1611,7 +1611,7 @@
       <tr>
         <td><div class="prod-codigo">${p.codigo ? esc(p.codigo) : '<span style="color:#ccc">—</span>'}</div></td>
         <td>
-          <div class="prod-nombre">${esc(p.nombre)}</div>
+          <div class="prod-nombre">${p.destacado ? "⭐ " : ""}${esc(p.nombre)}</div>
           ${p.marca ? `<div class="prod-marca">${esc(p.marca)}</div>` : ""}
         </td>
         <td>${catNombre(p.categoria_id)}</td>
