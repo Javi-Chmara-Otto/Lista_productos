@@ -1521,12 +1521,18 @@
           });
         });
 
-        // Mantener el orden original de categorías
-        const ordenCategorias = ["frutos-secos", "aceites", "harinas", "mani", "semillas", "especias", "yerbas", "chocolates", "panes", "suplementos", "galletitas-crackers", "barritas", "conservas", "cereales-legumbres", "fideos", "dulces-mermeladas", "condimentos-auxiliares", "tes", "tostadas", "bebidas", "endulzantes"];
+        // Orden preferido para las categorías más importantes; cualquier categoría
+        // nueva que no esté en esta lista se agrega automáticamente al final.
+        const ordenPreferido = ["frutos-secos", "aceites", "harinas", "mani", "semillas", "especias", "yerbas", "chocolates", "panes", "suplementos", "galletitas-crackers", "barritas", "conservas", "cereales-legumbres", "fideos", "dulces-mermeladas", "condimentos-auxiliares", "tes", "tostadas", "bebidas", "endulzantes"];
+
+        const idsExistentes = Object.keys(categoriasMap);
+        const idsOrdenados = [
+          ...ordenPreferido.filter(id => categoriasMap[id]),
+          ...idsExistentes.filter(id => !ordenPreferido.includes(id))
+        ];
+
         productosData = {
-          categorias: ordenCategorias
-            .filter(id => categoriasMap[id])
-            .map(id => categoriasMap[id])
+          categorias: idsOrdenados.map(id => categoriasMap[id])
         };
 
         renderFiltros();
