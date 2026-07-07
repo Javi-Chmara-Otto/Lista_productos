@@ -993,6 +993,7 @@
 
     <!-- ── TAB PRODUCTOS ── -->
     <div class="tab-content activo" id="tab-productos">
+      <div id="progreso-fotos" style="padding: 12px 24px; background: #fff; border-bottom: 1px solid #e8e8e8;"></div>
       <div class="toolbar">
         <input type="text" id="buscador-prod" placeholder="Buscar producto o marca..." oninput="renderProductos()">
         <select id="filtro-cat" onchange="renderProductos()">
@@ -1002,6 +1003,12 @@
           <option value="">Todos</option>
           <option value="true">Activos</option>
           <option value="false">Inactivos</option>
+        </select>
+        <select id="filtro-estado-imagen" onchange="renderProductos()">
+          <option value="">Todas las fotos</option>
+          <option value="sin_foto">🔴 Sin foto</option>
+          <option value="foto_descargada">🟡 Foto descargada</option>
+          <option value="publicada">🟢 Publicada</option>
         </select>
         <button class="btn btn-primary" onclick="abrirModalProductoNuevo()">+ Agregar producto</button>
         <button class="btn" onclick="abrirModalNuevaCategoria()">+ Nueva categoría</button>
@@ -1017,6 +1024,7 @@
               <th>Costo</th>
               <th>Ganancia</th>
               <th>Estado</th>
+              <th>Foto</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -1554,6 +1562,7 @@
       const q = normalizar(document.getElementById("buscador-prod").value);
       const cat = document.getElementById("filtro-cat").value;
       const estado = document.getElementById("filtro-estado").value;
+      const estadoImg = document.getElementById("filtro-estado-imagen").value;
 
       let filtrados = productos.filter(p => {
         const matchQ = !q
@@ -1563,7 +1572,8 @@
           || normalizar(catNombre(p.categoria_id) || "").includes(q);
         const matchCat = !cat || p.categoria_id === cat;
         const matchEstado = estado === "" || String(p.activo) === estado;
-        return matchQ && matchCat && matchEstado;
+        const matchEstadoImg = !estadoImg || (p.estado_imagen || "sin_foto") === estadoImg;
+        return matchQ && matchCat && matchEstado && matchEstadoImg;
       });
 
       const tbody = document.getElementById("tbody-prod");
@@ -1579,6 +1589,12 @@
           const costo = p.precio_costo || 0;
           const ganancia = p.precio - costo;
           const margen = p.precio ? Math.round(ganancia / p.precio * 100) : 0;
+          const estadoImgTags = {
+            sin_foto: '<span class="tag" style="background:#fce4e4;color:#c0392b">🔴 Sin foto</span>',
+            foto_descargada: '<span class="tag" style="background:#fff3e0;color:#e65100">🟡 Descargada</span>',
+            publicada: '<span class="tag tag-on">🟢 Publicada</span>'
+          };
+          const tagImagen = estadoImgTags[p.estado_imagen || "sin_foto"];
           return `
       <tr>
         <td><div class="prod-codigo">${p.codigo ? esc(p.codigo) : '<span style="color:#ccc">—</span>'}</div></td>
@@ -1594,6 +1610,7 @@
              <div style="font-size:11px;color:#aaa">${margen}%</div>`
               : '<span style="color:#ccc">—</span>'}</td>
         <td><span class="tag ${p.activo ? "tag-on" : "tag-off"}">${p.activo ? "Activo" : "Inactivo"}</span></td>
+        <td>${tagImagen}</td>
         <td>
           <div class="acciones">
             <button class="ico-btn" title="Editar" onclick="abrirModalProductoEditar(${p.id})">✏️</button>
@@ -1607,6 +1624,29 @@
 
       document.getElementById("footer-prod").textContent =
         `Mostrando ${filtrados.length} de ${productos.length} productos`;
+
+      renderProgresoFotos();
+    }
+
+    function renderProgresoFotos() {
+      const el = document.getElementById("progreso-fotos");
+      if (!el) return;
+      const total = productos.length;
+      const publicadas = productos.filter(p => p.estado_imagen === "publicada").length;
+      const descargadas = productos.filter(p => p.estado_imagen === "foto_descargada").length;
+      const porcentaje = total ? Math.round(publicadas / total * 100) : 0;
+
+      el.innerHTML = `
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="font-size:13px;color:#666">
+            <strong style="color:#1a3a08">${publicadas} / ${total}</strong> fotos publicadas (${porcentaje}%)
+            ${descargadas > 0 ? ` · <span style="color:#e65100">${descargadas} descargadas sin publicar</span>` : ""}
+          </div>
+          <div style="flex:1;min-width:120px;max-width:300px;height:8px;background:#f0f0f0;border-radius:4px;overflow:hidden">
+            <div style="width:${porcentaje}%;height:100%;background:#2e7d32;transition:width 0.3s"></div>
+          </div>
+        </div>
+      `;
     }
 
     function catNombre(id) {
