@@ -1241,6 +1241,38 @@
         <button class="btn btn-primary" onclick="detectarFotosPublicadas()">🔍 Analizar productos</button>
         <div id="deteccion-resultado" style="display:none; margin-top:16px"></div>
       </div>
+
+      <div
+        style="margin-top: 40px; border-top: 1px solid #e8e8e8; padding-top: 24px; padding-left: 24px; max-width: 700px;">
+        <h3 style="font-size:15px;font-weight:500;margin-bottom:8px">📸 Importar rutas de imagen desde CSV</h3>
+        <p style="color:#666; margin-bottom: 16px; font-size:13px;">
+          Subí un CSV con las columnas: <code>id, ruta_imagen</code><br>
+          Ejemplo: <code>id,ruta_imagen</code><br>
+          <code>151,assets/productos/almendras.png</code><br>
+          Actualiza el campo imagen y marca el estado como "Publicada" automáticamente.
+        </p>
+        <input type="file" id="csv-imagenes-input" accept=".csv" style="margin-bottom: 16px;"
+          onchange="procesarCSVImagenes()">
+        <div id="imagenes-preview" style="display:none">
+          <div id="imagenes-resumen"
+            style="margin-bottom:16px;padding:12px;background:#f0f7f0;border-radius:8px;border:1px solid #c3e6c3"></div>
+          <div class="table-wrap" style="margin-bottom:16px">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Producto</th>
+                  <th>Ruta nueva</th>
+                </tr>
+              </thead>
+              <tbody id="imagenes-tbody"></tbody>
+            </table>
+          </div>
+          <button class="btn btn-green" onclick="confirmarImportImagenes()">✅ Actualizar imágenes</button>
+          <button class="btn" onclick="cancelarImportImagenes()" style="margin-left:8px">Cancelar</button>
+        </div>
+        <div id="imagenes-resultado" style="display:none;padding:16px;border-radius:8px"></div>
+      </div>
     </div>
   </div>
 
@@ -2822,6 +2854,99 @@
       select.value = id;
 
       mostrarToast(`Categoría "${nombre}" lista — agregá el primer producto`);
+    }
+
+    let csvImagenes = [];
+
+    function procesarCSVImagenes() {
+      const file = document.getElementById("csv-imagenes-input").files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const texto = e.target.result;
+        const lineas = texto.trim().split("\n");
+        const headers = lineas[0].split(",").map(h => h.trim().replace(/^\uFEFF/, "").toLowerCase());
+
+        csvImagenes = lineas.slice(1).map(linea => {
+          const valores = linea.split(",");
+          const obj = {};
+          headers.forEach((h, i) => obj[h] = (valores[i] || "").trim());
+          return obj;
+        }).filter(p => p.id && p.ruta_imagen);
+
+        const preview = csvImagenes.map(row => {
+          const id = parseInt(row.id);
+          const prod = productos.find(p => p.id === id);
+          return { id, ruta: row.ruta_imagen, prod };
+        }).filter(r => r.prod);
+
+        document.getElementById("imagenes-resumen").innerHTML = `
+      <strong>📋 Resumen:</strong> ${preview.length} productos para actualizar
+      ${csvImagenes.length - preview.length > 0 ? ` · <span style="color:#e65100">${csvImagenes.length - preview.length} no encontrados</span>` : ""}
+    `;
+
+        document.getElementById("imagenes-tbody").innerHTML = preview.map(r => `
+      <tr>
+        <td>${r.id}</td>
+        <td>${esc(r.prod.nombre)}</td>
+        <td style="font-size:11px;color:#1565c0">${esc(r.ruta)}</td>
+      </tr>
+    `).join("");
+
+        document.getElementById("imagenes-preview").style.display = "block";
+        document.getElementById("imagenes-resultado").style.display = "none";
+        window._imagenesParaActualizar = preview;
+      };
+      reader.readAsText(file);
+    }
+
+    async function confirmarImportImagenes() {
+      const lista = window._imagenesParaActualizar || [];
+      const btn = document.querySelector("#imagenes-preview .btn-green");
+      btn.disabled = true;
+      btn.textContent = "Actualizando...";
+
+      let ok = 0, errores = 0;
+
+      for (const r of lista) {
+        try {
+          await apiFetch(`/rest/v1/productos?id=eq.${r.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ imagen: r.ruta, estado_imagen: "publicada" })
+          });
+          r.prod.imagen = r.ruta;
+          r.prod.estado_imagen = "publicada";
+          ok++;
+        } catch (e) {
+          errores++;
+        }
+      }
+
+      await cargarProductos();
+
+      document.getElementById("imagenes-preview").style.display = "none";
+      document.getElementById("csv-imagenes-input").value = "";
+      csvImagenes = [];
+
+      const res = document.getElementById("imagenes-resultado");
+      res.style.display = "block";
+      res.style.background = errores === 0 ? "#f0f7f0" : "#fff3e0";
+      res.style.border = `1px solid ${errores === 0 ? "#c3e6c3" : "#ffcc80"}`;
+      res.innerHTML = `
+    <strong>${errores === 0 ? "✅ Imágenes actualizadas" : "⚠️ Actualización con errores"}</strong><br>
+    ${ok} productos actualizados correctamente${errores > 0 ? ` · ${errores} errores` : ""}.
+  `;
+
+      btn.disabled = false;
+      btn.textContent = "✅ Actualizar imágenes";
+      renderProductos();
+    }
+
+    function cancelarImportImagenes() {
+      document.getElementById("imagenes-preview").style.display = "none";
+      document.getElementById("csv-imagenes-input").value = "";
+      csvImagenes = [];
     }
   </script>
 </body>

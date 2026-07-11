@@ -434,6 +434,120 @@
       margin-bottom: 3px;
     }
 
+    #categorias-landing {
+      padding: 16px 12px 8px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .categorias-header {
+      margin-bottom: 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .categorias-header h2 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: #1a3a08;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .categorias-header h2::before,
+    .categorias-header h2::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: #1a3a08;
+      opacity: 0.25;
+      border-radius: 2px;
+    }
+
+    .categorias-header span {
+      font-size: 13px;
+      color: #8a8478;
+      font-style: italic;
+    }
+
+    .categorias-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .categoria-card {
+      position: relative;
+      height: 110px;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      background: #d8d0c0;
+      box-shadow: 0 2px 10px rgba(26, 58, 8, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .categoria-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(26, 58, 8, 0.18);
+    }
+
+    .categoria-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .categoria-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26, 58, 8, 0.75) 0%, rgba(26, 58, 8, 0.15) 55%, rgba(26, 58, 8, 0) 100%);
+      display: flex;
+      align-items: flex-end;
+      padding: 10px;
+    }
+
+    .categoria-card-nombre {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: left;
+      line-height: 1.25;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .categoria-card-emoji {
+      font-size: 28px;
+    }
+
+    .categoria-card.sin-foto {
+      background: linear-gradient(135deg, #e8f0d8, #d4e5b8);
+    }
+
+    .categoria-card.sin-foto .categoria-card-overlay {
+      background: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .categoria-card.sin-foto .categoria-card-nombre {
+      color: #1a3a08;
+      text-align: center;
+      text-shadow: none;
+    }
+
     /* ── CONTENIDO ── */
     .contenido {
       max-width: 680px;
@@ -1125,6 +1239,113 @@
       margin-bottom: 10px;
       line-height: 1.5;
     }
+
+    /* ── GRILLA DE PRODUCTOS CON FOTO ── */
+    #grilla-productos-wrap {
+      width: 100%;
+      max-width: 100% !important;
+    }
+
+    .productos-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px;
+      padding: 4px 16px 16px;
+      width: 100%;
+      max-width: 100% !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+    }
+
+    @media (min-width: 700px) {
+      .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+        gap: 18px;
+        padding: 4px 24px 24px;
+      }
+    }
+
+    .producto-card {
+      background: #fff;
+      border: 1px solid #e8e3da;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(26, 58, 8, 0.06);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .producto-card:hover {
+      box-shadow: 0 4px 14px rgba(26, 58, 8, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .producto-card-img-wrap {
+      width: 100%;
+      height: 180px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 12px;
+    }
+
+    .producto-card-img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .producto-card-emoji-fallback {
+      font-size: 42px;
+      opacity: 0.5;
+    }
+
+    .producto-card-info {
+      padding: 10px;
+    }
+
+    .producto-card-marca {
+      font-size: 10px;
+      font-weight: 600;
+      color: #8a8478;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 3px;
+    }
+
+    .producto-card-nombre {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+      min-height: 34px;
+      margin-bottom: 6px;
+    }
+
+    .producto-card-precio {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a3a08;
+      margin-bottom: 8px;
+    }
+
+    /* Botón "volver a categorías" */
+    .btn-volver-categorias {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: #1a3a08;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 10px 12px;
+      margin: 4px auto 0;
+    }
   </style>
 
   <!-- Google Analytics -->
@@ -1356,7 +1577,20 @@
     </div>
   </section>
 
+  <!-- CATEGORÍAS -->
+  <section id="categorias-landing">
+    <div class="categorias-header">
+      <h2>🛒 Explorá por categoría</h2>
+      <span>Encontrá justo lo que buscás</span>
+    </div>
+    <div class="categorias-grid" id="categorias-grid">
+      <!-- se generan por JS -->
+    </div>
+  </section>
+
   <div class="contenido">
+
+    <div id="grilla-productos-wrap" style="display:none"></div>
 
     <div id="secciones">
       <div class="cargando">Cargando productos...</div>
@@ -1546,7 +1780,7 @@
       }
     }
 
-    // ── RENDER DE FILTROS ──
+    // ── RENDER DE FILTROS Y CATEGORÍAS ──
     function renderFiltros() {
       const filtros = document.getElementById("filtros");
       let html = '<button class="filtro-btn activo" data-cat="todos">Todos</button>';
@@ -1560,13 +1794,51 @@
           filtros.querySelector(".filtro-btn.activo").classList.remove("activo");
           btn.classList.add("activo");
           filtrarProductos();
-          // si el filtro elegido no estaba a la vista, lo centramos un poco
           btn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+
+          const catId = btn.dataset.cat;
+          if (catId === "todos") {
+            volverACategorias();
+          } else {
+            mostrarGrillaCategoria(catId);
+          }
         });
       });
 
       actualizarFadeFiltros();
       habilitarArrastreConMouse(document.querySelector(".filtros-wrap"));
+
+      renderCategoriasLanding();
+    }
+
+    // Genera las cards grandes de categoría. Si no existe la imagen
+    // assets/categorias/{id}.jpg, muestra un fondo de color con el emoji.
+    function renderCategoriasLanding() {
+      const grid = document.getElementById("categorias-grid");
+      if (!grid) return;
+
+      grid.innerHTML = productosData.categorias.map(cat => {
+        const rutaImg = `assets/categorias/${cat.id}.png`;
+        return `
+      <button class="categoria-card" data-cat="${cat.id}" id="cat-card-${cat.id}">
+        <img src="${rutaImg}" alt="${escapeHtml(cat.nombre)}"
+          onerror="document.getElementById('cat-card-${cat.id}').classList.add('sin-foto'); this.remove();">
+        <div class="categoria-card-overlay">
+          <span class="categoria-card-nombre">${escapeHtml(cat.nombre)}</span>
+        </div>
+      </button>
+    `;
+      }).join("");
+
+      grid.querySelectorAll(".categoria-card").forEach(card => {
+        card.addEventListener("click", () => {
+          const catId = card.dataset.cat;
+          const filtroBtn = document.querySelector(`.filtro-btn[data-cat="${catId}"]`);
+          if (filtroBtn) filtroBtn.click();
+          mostrarGrillaCategoria(catId);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
     }
 
     // ── DEGRADADOS DE SCROLL EN FILTROS ──
@@ -1584,11 +1856,12 @@
     }
 
     // ── RENDER DE PRODUCTOS ──
+    // ── RENDER DE PRODUCTOS ──
     function renderSecciones() {
       const cont = document.getElementById("secciones");
       let html = "";
       productosData.categorias.forEach(cat => {
-        html += `<div class="seccion" data-cat="${cat.id}">`;
+        html += `<div class="seccion" data-cat="${cat.id}" style="display:none">`;
         html += `<div class="seccion-titulo">${cat.emoji} ${escapeHtml(cat.nombre)}</div>`;
         cat.productos.forEach(p => {
           html += productoHtml(p);
@@ -1597,13 +1870,77 @@
       });
       cont.innerHTML = html;
 
-      // listeners de + y -
+      // listeners de + y - (lista en texto, la sigue usando el buscador)
       cont.querySelectorAll(".qty-mas").forEach(b => {
         b.addEventListener("click", () => agregarUnidad(b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
       });
       cont.querySelectorAll(".qty-menos").forEach(b => {
         b.addEventListener("click", () => quitarUnidad(b.dataset.nombre));
       });
+    }
+
+    // Arma la card visual de un producto (con foto) para la grilla
+    function productoCardHtml(p) {
+      const nombreEsc = escapeHtml(p.nombre);
+      const marcaEsc = p.marca ? escapeHtml(p.marca) : "";
+      const marcaHtml = p.marca ? `<div class="producto-card-marca">${escapeHtml(p.marca)}</div>` : "";
+      const imgHtml = p.imagen
+        ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}" onerror="this.parentElement.innerHTML='<span class=\\'producto-card-emoji-fallback\\'>🌿</span>'">`
+        : `<span class="producto-card-emoji-fallback">🌿</span>`;
+
+      return `
+    <div class="producto-card">
+      <div class="producto-card-img-wrap">${imgHtml}</div>
+      <div class="producto-card-info">
+        ${marcaHtml}
+        <div class="producto-card-nombre">${nombreEsc}</div>
+        <div class="producto-card-precio">${formatPeso(p.precio)}</div>
+        <div class="cantidad-control">
+          <button class="qty-btn qty-menos" data-nombre="${nombreEsc}">−</button>
+          <span class="qty-valor">0</span>
+          <button class="qty-btn qty-mas" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}">+</button>
+        </div>
+      </div>
+    </div>
+  `;
+    }
+
+    // Muestra la grilla de fotos de una categoría específica
+    function mostrarGrillaCategoria(catId) {
+      const cat = productosData.categorias.find(c => c.id === catId);
+      const cont = document.getElementById("grilla-productos-wrap");
+      if (!cat || !cont) return;
+
+      cont.innerHTML = `
+    <button class="btn-volver-categorias" id="btn-volver-cats">← Volver a categorías</button>
+    <div class="seccion-titulo" style="max-width:680px;margin:0 auto;border-radius:10px 10px 0 0">${cat.emoji} ${escapeHtml(cat.nombre)}</div>
+    <div class="productos-grid">
+      ${cat.productos.map(p => productoCardHtml(p)).join("")}
+    </div>
+  `;
+
+      cont.querySelectorAll(".qty-mas").forEach(b => {
+        b.addEventListener("click", () => agregarUnidad(b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
+      });
+      cont.querySelectorAll(".qty-menos").forEach(b => {
+        b.addEventListener("click", () => quitarUnidad(b.dataset.nombre));
+      });
+
+      document.getElementById("btn-volver-cats").addEventListener("click", () => {
+        volverACategorias();
+      });
+
+      cont.style.display = "block";
+      document.getElementById("categorias-landing").style.display = "none";
+      document.getElementById("destacados").style.display = "none";
+    }
+
+    function volverACategorias() {
+      document.getElementById("grilla-productos-wrap").style.display = "none";
+      document.getElementById("categorias-landing").style.display = "block";
+      document.getElementById("destacados").style.display = "block";
+      document.querySelector(".filtro-btn.activo").classList.remove("activo");
+      document.querySelector('.filtro-btn[data-cat="todos"]').classList.add("activo");
     }
 
     function productoHtml(p) {
