@@ -435,10 +435,11 @@
     }
 
     #categorias-landing {
-      padding: 16px 12px 8px;
-      max-width: 680px;
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 16px 20px 8px;
     }
+
 
     .categorias-header {
       margin-bottom: 16px;
@@ -480,6 +481,13 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
+    }
+
+    @media (min-width: 700px) {
+      .categorias-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+      }
     }
 
     .categoria-card {
@@ -553,6 +561,10 @@
       max-width: 680px;
       margin: 0 auto;
       padding: 8px 0 100px;
+    }
+
+    .contenido:has(#grilla-productos-wrap[style*="block"]) {
+      max-width: 100%;
     }
 
     /* ── SECCIÓN ── */
@@ -971,6 +983,10 @@
       background: #1a3a08;
       padding: 28px 24px;
       margin-top: 8px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 16px 16px 0 0;
     }
 
     .footer h3 {
@@ -1242,26 +1258,23 @@
 
     /* ── GRILLA DE PRODUCTOS CON FOTO ── */
     #grilla-productos-wrap {
-      width: 100%;
-      max-width: 100% !important;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
     .productos-grid {
-      display: grid !important;
-      grid-template-columns: repeat(2, 1fr) !important;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      padding: 4px 16px 16px;
-      width: 100%;
-      max-width: 100% !important;
-      margin: 0 !important;
-      box-sizing: border-box;
+      padding: 4px 0 16px;
     }
 
     @media (min-width: 700px) {
       .productos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
         gap: 18px;
-        padding: 4px 24px 24px;
+        padding: 4px 0 24px;
       }
     }
 
@@ -1588,27 +1601,27 @@
     </div>
   </section>
 
-  <div class="contenido">
+  <div id="grilla-productos-wrap" style="display:none"></div>
 
-    <div id="grilla-productos-wrap" style="display:none"></div>
+  <div class="contenido">
 
     <div id="secciones">
       <div class="cargando">Cargando productos...</div>
     </div>
 
     <div class="sin-resultados" id="sin-resultados">No encontramos productos con ese nombre 🌿</div>
-
-    <div class="footer">
-      <h3>¿Cómo hacer tu pedido?</h3>
-      <p>
-        📲 <strong>WhatsApp:</strong> Escribinos al 3492-588990 si tenés alguna consulta.<br>
-        📸 <strong>Instagram:</strong> Seguinos en @masvalenatural para ver novedades.<br>
-        🚚 <strong>Envíos</strong> a domicilio en Rafaela — coordinamos el día.<br>
-        💳 <strong>Medios de pago:</strong> Efectivo y transferencia.
-      </p>
-    </div>
-    <div class="fecha" id="fecha"></div>
   </div>
+
+  <div class="footer">
+    <h3>¿Cómo hacer tu pedido?</h3>
+    <p>
+      📲 <strong>WhatsApp:</strong> Escribinos al 3492-588990 si tenés alguna consulta.<br>
+      📸 <strong>Instagram:</strong> Seguinos en @masvalenatural para ver novedades.<br>
+      🚚 <strong>Envíos</strong> a domicilio en Rafaela — coordinamos el día.<br>
+      💳 <strong>Medios de pago:</strong> Efectivo y transferencia.
+    </p>
+  </div>
+  <div class="fecha" id="fecha"></div>
 
   <!-- CARRITO FLOTANTE -->
   <div class="carrito-flotante" id="carrito-flotante">
@@ -1757,7 +1770,7 @@
 
         // Orden preferido para las categorías más importantes; cualquier categoría
         // nueva que no esté en esta lista se agrega automáticamente al final.
-        const ordenPreferido = ["frutos-secos", "aceites", "harinas", "mani", "semillas", "especias", "yerbas", "chocolates", "panes", "suplementos", "galletitas-crackers", "barritas", "conservas", "cereales-legumbres", "fideos", "dulces-mermeladas", "condimentos-auxiliares", "tes", "tostadas", "bebidas", "endulzantes"];
+        const ordenPreferido = ["frutos-secos", "aceites", "harinas", "mani", "semillas", "chocolates", "yerbas", "panes", "suplementos", "galletitas-crackers", "barritas", "especias", "conservas", "cereales-legumbres", "fideos", "dulces-mermeladas", "condimentos-auxiliares", "tes", "tostadas", "bebidas", "endulzantes"];
 
         const idsExistentes = Object.keys(categoriasMap);
         const idsOrdenados = [
@@ -1836,7 +1849,6 @@
           const filtroBtn = document.querySelector(`.filtro-btn[data-cat="${catId}"]`);
           if (filtroBtn) filtroBtn.click();
           mostrarGrillaCategoria(catId);
-          window.scrollTo({ top: 0, behavior: "smooth" });
         });
       });
     }
