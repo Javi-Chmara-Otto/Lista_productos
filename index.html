@@ -2471,7 +2471,8 @@
         <h2>🌿 Más Vendidos</h2>
         <span>Los favoritos de nuestros clientes</span>
       </div>
-      <a href="#" class="ver-seccion-link">Ver todos <i class="fa-solid fa-arrow-right"></i></a>
+      <a href="#" class="ver-seccion-link" id="ver-todos-destacados">Ver todos <i
+          class="fa-solid fa-arrow-right"></i></a>
     </div>
 
     <div class="destacados-carrusel-wrap">
@@ -3246,6 +3247,7 @@
 
     function seleccionarCategoriaCatalogo(catId) {
       catalogoCategoriaFiltro = catId;
+      catalogoSoloDestacados = false;
       catalogoPagina = 1;
       document.getElementById("catalogo-filtrar-btn").classList.toggle("activo", catId !== "todos");
       document.getElementById("catalogo-filtro-label").textContent =
@@ -3763,6 +3765,7 @@
     let catalogoPagina = 1;
     let catalogoOrden = "relevancia";
     let catalogoCategoriaFiltro = "todos";
+    let catalogoSoloDestacados = false;
     let catalogoBusqueda = "";
 
     function obtenerProductosPlanos() {
@@ -3780,6 +3783,10 @@
 
       if (catalogoCategoriaFiltro !== "todos") {
         productos = productos.filter(p => p.categoria_id === catalogoCategoriaFiltro);
+      }
+
+      if (catalogoSoloDestacados) {
+        productos = productos.filter(p => p.destacado === true);
       }
 
       if (catalogoBusqueda.trim() !== "") {
@@ -3869,6 +3876,18 @@
     document.getElementById("catalogo-ver-mas").addEventListener("click", () => {
       catalogoPagina++;
       renderCatalogo();
+    });
+
+    document.getElementById("ver-todos-destacados").addEventListener("click", (e) => {
+      e.preventDefault();
+      catalogoCategoriaFiltro = "todos";
+      catalogoSoloDestacados = true;
+      catalogoPagina = 1;
+      document.getElementById("catalogo-filtrar-btn").classList.add("activo");
+      document.getElementById("catalogo-filtro-label").textContent = "Destacados";
+      renderCatalogoFiltroPanel();
+      renderCatalogo();
+      document.getElementById("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
     // ── ANIMACIONES DE SCROLL ──
