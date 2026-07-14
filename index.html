@@ -2388,6 +2388,62 @@
     .reveal.visible .categoria-card:nth-child(6) {
       transition-delay: 0.18s;
     }
+
+    /* ── LIGHTBOX DE IMAGEN ── */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .lightbox-overlay.visible {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 12px;
+      background: #fff;
+      object-fit: contain;
+      transform: scale(0.96);
+      transition: transform 0.2s ease;
+    }
+
+    .lightbox-overlay.visible .lightbox-img {
+      transform: scale(1);
+    }
+
+    .lightbox-cerrar {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      color: #1a1a1a;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Cursor de "se puede ampliar" en las imágenes de producto */
+    .producto-card-img-wrap img,
+    .card-destacado-img-wrap img {
+      cursor: zoom-in;
+    }
   </style>
 
   <!-- Google Analytics -->
@@ -2981,6 +3037,12 @@
     aria-label="Consultar por WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
   </a>
+
+  <!-- LIGHTBOX DE IMAGEN DE PRODUCTO -->
+  <div class="lightbox-overlay" id="lightbox-overlay">
+    <button class="lightbox-cerrar" id="lightbox-cerrar">×</button>
+    <img src="" alt="" id="lightbox-img" class="lightbox-img">
+  </div>
 
   <script>
 
@@ -3904,6 +3966,38 @@
 
       elementos.forEach(el => observer.observe(el));
     }
+
+    // ── LIGHTBOX DE IMAGEN DE PRODUCTO ──
+    const lightboxOverlay = document.getElementById("lightbox-overlay");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    function abrirLightbox(src, alt) {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightboxOverlay.classList.add("visible");
+      document.body.style.overflow = "hidden";
+    }
+
+    function cerrarLightbox() {
+      lightboxOverlay.classList.remove("visible");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("lightbox-cerrar").addEventListener("click", cerrarLightbox);
+    lightboxOverlay.addEventListener("click", (e) => {
+      if (e.target === lightboxOverlay) cerrarLightbox();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") cerrarLightbox();
+    });
+
+    // Delegación de eventos: funciona para imágenes que se generan dinámicamente
+    document.addEventListener("click", (e) => {
+      const img = e.target.closest(".producto-card-img-wrap img, .card-destacado-img-wrap img");
+      if (img) {
+        abrirLightbox(img.src, img.alt);
+      }
+    });
 
     // ── INICIO ──
     cargarProductos();
