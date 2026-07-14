@@ -2395,17 +2395,18 @@
       inset: 0;
       background: rgba(0, 0, 0, 0.75);
       z-index: 500;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
       opacity: 0;
-      transition: opacity 0.2s ease;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .lightbox-overlay.visible {
-      display: flex;
       opacity: 1;
+      visibility: visible;
     }
 
     .lightbox-img {
@@ -2414,8 +2415,8 @@
       border-radius: 12px;
       background: #fff;
       object-fit: contain;
-      transform: scale(0.96);
-      transition: transform 0.2s ease;
+      transform: scale(0.85);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .lightbox-overlay.visible .lightbox-img {
@@ -2443,6 +2444,12 @@
     .producto-card-img-wrap img,
     .card-destacado-img-wrap img {
       cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+
+    .producto-card-img-wrap img:hover,
+    .card-destacado-img-wrap img:hover {
+      transform: scale(1.05);
     }
   </style>
 
