@@ -2312,6 +2312,82 @@
       color: #8a8478;
       line-height: 1.6;
     }
+
+    /* ── ANIMACIONES DE SCROLL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Las cards adentro de cada sección aparecen escalonadas */
+    .reveal .card-destacado,
+    .reveal .categoria-card,
+    .reveal .producto-card {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible .card-destacado,
+    .reveal.visible .categoria-card,
+    .reveal.visible .producto-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal.visible .card-destacado:nth-child(1) {
+      transition-delay: 0.05s;
+    }
+
+    .reveal.visible .card-destacado:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .reveal.visible .card-destacado:nth-child(3) {
+      transition-delay: 0.15s;
+    }
+
+    .reveal.visible .card-destacado:nth-child(4) {
+      transition-delay: 0.2s;
+    }
+
+    .reveal.visible .card-destacado:nth-child(5) {
+      transition-delay: 0.25s;
+    }
+
+    .reveal.visible .card-destacado:nth-child(6) {
+      transition-delay: 0.3s;
+    }
+
+    .reveal.visible .categoria-card:nth-child(1) {
+      transition-delay: 0.03s;
+    }
+
+    .reveal.visible .categoria-card:nth-child(2) {
+      transition-delay: 0.06s;
+    }
+
+    .reveal.visible .categoria-card:nth-child(3) {
+      transition-delay: 0.09s;
+    }
+
+    .reveal.visible .categoria-card:nth-child(4) {
+      transition-delay: 0.12s;
+    }
+
+    .reveal.visible .categoria-card:nth-child(5) {
+      transition-delay: 0.15s;
+    }
+
+    .reveal.visible .categoria-card:nth-child(6) {
+      transition-delay: 0.18s;
+    }
   </style>
 
   <!-- Google Analytics -->
@@ -2389,7 +2465,7 @@
 
 
   <!-- DESTACADOS -->
-  <section id="destacados">
+  <section id="destacados" class="reveal">
     <div class="destacados-header">
       <div>
         <h2>🌿 Más Vendidos</h2>
@@ -2561,7 +2637,7 @@
   </section>
 
   <!-- CATEGORÍAS -->
-  <section id="categorias-landing">
+  <section id="categorias-landing" class="reveal">
     <div class="categorias-header">
       <div>
         <h2>🌿 Explorá por categoría</h2>
@@ -2575,7 +2651,7 @@
     </div>
   </section>
 
-  <section id="catalogo">
+  <section id="catalogo" class="reveal">
     <div class="catalogo-header">
       <div>
         <h2>🌿 Nuestro catálogo</h2>
@@ -2622,7 +2698,7 @@
     <div class="sin-resultados" id="sin-resultados">No encontramos productos con ese nombre 🌿</div>
   </div>
 
-  <section id="trust-badges">
+  <section id="trust-badges" class="reveal">
     <div class="trust-badges-grid">
       <div class="trust-badge">
         <div class="trust-badge-icono"><i class="fa-solid fa-leaf"></i></div>
@@ -2659,7 +2735,7 @@
   </section>
 
   <!-- CÓMO HACER TU PEDIDO -->
-  <section id="como-pedir">
+  <section id="como-pedir" class="reveal">
     <div class="como-pedir-header">
       <span class="como-pedir-badge">Simple, rápido y confiable</span>
       <h2>¿Cómo hacer tu pedido saludable?</h2>
@@ -2702,7 +2778,7 @@
   </section>
 
   <!-- PREGUNTAS FRECUENTES -->
-  <section id="faq">
+  <section id="faq" class="reveal">
     <div class="faq-header">
       <span class="faq-badge"><i class="fa-regular fa-circle-question"></i> Centro de ayuda</span>
       <h2>Preguntas frecuentes</h2>
@@ -2996,6 +3072,7 @@
         renderSecciones();
         renderCatalogoFiltroPanel();
         renderCatalogo();
+        iniciarRevealScroll();
         filtrarProductos();
       } catch (err) {
         document.getElementById("secciones").innerHTML =
@@ -3793,6 +3870,21 @@
       catalogoPagina++;
       renderCatalogo();
     });
+
+    // ── ANIMACIONES DE SCROLL ──
+    function iniciarRevealScroll() {
+      const elementos = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      elementos.forEach(el => observer.observe(el));
+    }
 
     // ── INICIO ──
     cargarProductos();
