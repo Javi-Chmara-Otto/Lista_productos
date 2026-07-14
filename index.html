@@ -3314,16 +3314,17 @@
       cont.innerHTML = destacados.map(p => productoDestacadoHtml(p)).join("");
 
       cont.querySelectorAll(".qty-mas").forEach(b => {
-        b.addEventListener("click", () => agregarUnidad(b.dataset.codigo, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
-        rebotarNumero(b);
+        b.addEventListener("click", () => {
+          agregarUnidad(b.dataset.codigo, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca);
+          rebotarNumero(b);
+        });
       });
-    });
-    cont.querySelectorAll(".qty-menos").forEach(b => {
-      b.addEventListener("click", () => quitarUnidad(b.dataset.codigo));
-    });
+      cont.querySelectorAll(".qty-menos").forEach(b => {
+        b.addEventListener("click", () => quitarUnidad(b.dataset.codigo));
+      });
 
-    habilitarArrastreConMouse(cont);
-    habilitarFlechas(cont);
+      habilitarArrastreConMouse(cont);
+      habilitarFlechas(cont);
     }
 
     function escapeHtml(str) {
