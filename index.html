@@ -330,6 +330,12 @@
       display: flex;
       align-items: center;
       padding: 5px 5px 5px 20px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .buscador-inner:hover {
+      box-shadow: 0 8px 28px rgba(26, 58, 8, 0.18);
+      transform: translateY(-1px);
     }
 
     .buscador-inner input {
@@ -1967,6 +1973,12 @@
       border-radius: 10px;
       padding: 8px 14px;
       min-width: 220px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .catalogo-buscador:hover {
+      border-color: #1a3a08;
+      box-shadow: 0 4px 14px rgba(26, 58, 8, 0.1);
     }
 
     .catalogo-buscador i {
