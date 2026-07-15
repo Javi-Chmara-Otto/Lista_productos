@@ -8,6 +8,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
   <meta property="og:title" content="Más Vale Natural 🌿" />
   <meta property="og:description" content="Catálogo online de productos saludables. Pedí por WhatsApp." />
   <meta property="og:image"
@@ -27,6 +28,7 @@
   <meta property="og:image:height" content="630" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" type="image/png" href="./assets/favicon.png">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -891,9 +893,15 @@
     }
 
     .categoria-card-icono {
-      font-size: 22px;
+      width: 26px;
+      height: 26px;
       color: #1a3a08;
-      line-height: 1;
+      stroke-width: 1.5;
+    }
+
+    .categoria-card-icono-phosphor {
+      font-size: 26px;
+      color: #1a3a08;
     }
 
     .categoria-card-nombre {
@@ -3194,31 +3202,39 @@
     }
 
     const iconosCategorias = {
-      "frutos-secos": "fa-solid fa-seedling",
-      "aceites": "fa-solid fa-bottle-droplet",
-      "harinas": "fa-solid fa-wheat-awn",
-      "mani": "fa-solid fa-jar",
-      "semillas": "fa-solid fa-leaf",
-      "chocolates": "fa-solid fa-cookie",
-      "yerbas": "fa-solid fa-mug-hot",
-      "panes": "fa-solid fa-bread-slice",
-      "suplementos": "fa-solid fa-capsules",
-      "galletitas-crackers": "fa-solid fa-cookie-bite",
-      "barritas": "fa-solid fa-bolt",
-      "especias": "fa-solid fa-pepper-hot",
-      "conservas": "fa-solid fa-jar",
-      "cereales-legumbres": "fa-solid fa-wheat-awn",
-      "fideos": "fa-solid fa-utensils",
-      "dulces-mermeladas": "fa-solid fa-jar",
-      "condimentos-auxiliares": "fa-solid fa-flask",
-      "tes": "fa-solid fa-mug-saucer",
-      "tostadas": "fa-solid fa-bacon",
-      "bebidas": "fa-solid fa-glass-water",
-      "endulzantes": "fa-solid fa-cube"
+      "frutos-secos": "nut",
+      "aceites": "droplet",
+      "harinas": "wheat",
+      "semillas": "sprout",
+      "chocolates": "cookie",
+      "yerbas": "coffee",
+      "panes": "croissant",
+      "suplementos": "pill",
+      "galletitas-crackers": "cookie",
+      "barritas": "zap",
+      "especias": "flame",
+      "cereales-legumbres": "wheat",
+      "fideos": "utensils",
+      "condimentos-auxiliares": "flask-conical",
+      "tes": "cup-soda",
+      "tostadas": "sandwich",
+      "bebidas": "glass-water",
+      "endulzantes": "candy",
+      "lacteos": "milk"
     };
 
+    const iconosPhosphor = {
+      "mani": "ph-jar-label",
+      "conservas": "ph-jar-label",
+      "dulces-mermeladas": "ph-jar-label"
+    };
+
+    function esIconoPhosphor(catId) {
+      return iconosPhosphor.hasOwnProperty(catId);
+    }
+
     function iconoCategoria(catId) {
-      return iconosCategorias[catId] || "fa-solid fa-leaf";
+      return iconosCategorias[catId] || "leaf";
     }
 
     // Genera las cards grandes de categoría. Si no existe la imagen
@@ -3235,12 +3251,17 @@
       const hayMas = categorias.length > CATEGORIAS_VISIBLES_INICIAL;
       const aMostrar = categoriasExpandidas ? categorias : categorias.slice(0, CATEGORIAS_VISIBLES_INICIAL);
 
-      grid.innerHTML = aMostrar.map(cat => `
+      grid.innerHTML = aMostrar.map(cat => {
+        const iconoHtml = esIconoPhosphor(cat.id)
+          ? `<i class="ph ${iconosPhosphor[cat.id]} categoria-card-icono categoria-card-icono-phosphor"></i>`
+          : `<i data-lucide="${iconoCategoria(cat.id)}" class="categoria-card-icono"></i>`;
+        return `
     <button class="categoria-card" data-cat="${cat.id}">
-      <i class="${iconoCategoria(cat.id)} categoria-card-icono"></i>
+      ${iconoHtml}
       <span class="categoria-card-nombre">${escapeHtml(cat.nombre)}</span>
     </button>
-  `).join("");
+  `;
+      }).join("");
 
       grid.querySelectorAll(".categoria-card").forEach(card => {
         card.addEventListener("click", () => {
@@ -3248,7 +3269,8 @@
         });
       });
 
-      // Mostrar/ocultar el link "Ver todas" según haga falta
+      if (window.lucide) lucide.createIcons();
+
       if (linkVerTodas) {
         linkVerTodas.style.display = hayMas ? "inline-flex" : "none";
         linkVerTodas.innerHTML = categoriasExpandidas
