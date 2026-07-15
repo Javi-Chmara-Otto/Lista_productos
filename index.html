@@ -3897,10 +3897,11 @@
       }
 
       if (catalogoBusqueda.trim() !== "") {
-        const q = normalizar(catalogoBusqueda.trim());
-        productos = productos.filter(p =>
-          normalizar(p.nombre).includes(q) || normalizar(p.marca || "").includes(q)
-        );
+        const palabras = normalizar(catalogoBusqueda.trim()).split(/\s+/);
+        productos = productos.filter(p => {
+          const textoCompleto = normalizar(p.nombre + " " + (p.marca || ""));
+          return palabras.every(palabra => textoCompleto.includes(palabra));
+        });
       }
 
       if (catalogoOrden === "precio-asc") {
