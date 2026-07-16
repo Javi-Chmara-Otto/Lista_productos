@@ -2475,6 +2475,35 @@
     .card-destacado-img-wrap img:hover {
       transform: scale(1.05);
     }
+
+    .catalogo-sin-resultados {
+      display: none;
+      text-align: center;
+      padding: 48px 20px;
+    }
+
+    .catalogo-sin-resultados.visible {
+      display: block;
+    }
+
+    .catalogo-sin-resultados-icono {
+      font-size: 32px;
+      display: block;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    .catalogo-sin-resultados p {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .catalogo-sin-resultados span:last-child {
+      font-size: 13px;
+      color: #8a8478;
+    }
   </style>
 
   <!-- Google Analytics -->
@@ -2771,6 +2800,12 @@
     </div>
 
     <div class="productos-grid" id="catalogo-grid"></div>
+
+    <div class="catalogo-sin-resultados" id="catalogo-sin-resultados">
+      <span class="catalogo-sin-resultados-icono">🌿</span>
+      <p>No encontramos productos con esa búsqueda</p>
+      <span>Probá con otro nombre o marca</span>
+    </div>
 
     <div style="text-align:center; margin-top: 8px;">
       <button class="btn-ver-mas" id="catalogo-ver-mas">Ver más productos</button>
@@ -3920,7 +3955,11 @@
       const aMostrar = todos.slice(0, catalogoPagina * catalogoPaginaActual());
 
       const grid = document.getElementById("catalogo-grid");
+      const sinResultados = document.getElementById("catalogo-sin-resultados");
+
       grid.innerHTML = aMostrar.map(p => productoCardHtml(p)).join("");
+      grid.style.display = todos.length === 0 ? "none" : "grid";
+      sinResultados.classList.toggle("visible", todos.length === 0);
 
       grid.querySelectorAll(".qty-mas").forEach(b => {
         b.addEventListener("click", () => agregarUnidad(b.dataset.codigo, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
