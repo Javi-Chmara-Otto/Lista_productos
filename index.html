@@ -3173,6 +3173,7 @@
             };
           }
           categoriasMap[p.categoria_id].productos.push({
+            id: p.id,
             codigo: p.codigo,
             nombre: p.nombre,
             precio: p.precio,
@@ -3351,10 +3352,10 @@
 
       // listeners de + y - (lista en texto, la sigue usando el buscador)
       cont.querySelectorAll(".qty-mas").forEach(b => {
-        b.addEventListener("click", () => agregarUnidad(b.dataset.codigo, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
+        b.addEventListener("click", () => agregarUnidad(b.dataset.id, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
       });
       cont.querySelectorAll(".qty-menos").forEach(b => {
-        b.addEventListener("click", () => quitarUnidad(b.dataset.codigo));
+        b.addEventListener("click", () => quitarUnidad(b.dataset.id));
       });
     }
 
@@ -3362,7 +3363,6 @@
     function productoCardHtml(p) {
       const nombreEsc = escapeHtml(p.nombre);
       const marcaEsc = p.marca ? escapeHtml(p.marca) : "";
-      const codigoEsc = escapeHtml(p.codigo);
       const marcaHtml = p.marca ? `<div class="producto-card-marca">${escapeHtml(p.marca)}</div>` : "";
       const imgHtml = p.imagen
         ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}" onerror="this.parentElement.innerHTML='<span class=\\'producto-card-emoji-fallback\\'>🌿</span>'">`
@@ -3376,9 +3376,9 @@
         <div class="producto-card-nombre">${nombreEsc}</div>
         <div class="producto-card-precio">${formatPeso(p.precio)}</div>
         <div class="cantidad-control">
-          <button class="qty-btn qty-menos" data-codigo="${codigoEsc}">−</button>
+          <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
           <span class="qty-valor">0</span>
-          <button class="qty-btn qty-mas" data-codigo="${codigoEsc}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}">
+          <button class="qty-btn qty-mas" data-id="${p.id}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}" data-imagen="${p.imagen ? escapeHtml(p.imagen) : ''}">
             <span class="qty-mas-icon-inicial">🛒</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
           </button>
         </div>
@@ -3404,7 +3404,6 @@
       const marcaHtml = p.marca ? `<div class="producto-marca">${escapeHtml(p.marca)}</div>` : "";
       const nombreEsc = escapeHtml(p.nombre);
       const marcaEsc = p.marca ? escapeHtml(p.marca) : "";
-      const codigoEsc = escapeHtml(p.codigo);
       return `<div class="producto" data-nombre="${nombreEsc}">
     <div class="producto-fila">
       <div class="producto-info">
@@ -3413,9 +3412,9 @@
       </div>
       <span class="producto-precio">${formatPeso(p.precio)}</span>
       <div class="cantidad-control">
-        <button class="qty-btn qty-menos" data-codigo="${codigoEsc}">−</button>
+        <button class="qty-btn qty-menos" data-id="${p.id}"">−</button>
         <span class="qty-valor">0</span>
-        <button class="qty-btn qty-mas" data-codigo="${codigoEsc}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}">+</button>
+        <button class="qty-btn qty-mas" data-id="${p.id}"" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}">+</button>
       </div>
     </div>
   </div>`;
@@ -3425,7 +3424,6 @@
       const nombreEsc = escapeHtml(p.nombre);
       const imagenSrc = p.imagen ? escapeHtml(p.imagen) : "";
       const marcaEsc = p.marca ? escapeHtml(p.marca) : "";
-      const codigoEsc = escapeHtml(p.codigo);
       const marcaHtml = `<div class="card-marca">${p.marca ? escapeHtml(p.marca) : "&nbsp;"}</div>`;
       return `<div class="card-destacado">
     <div class="card-destacado-img-wrap">
@@ -3436,9 +3434,9 @@
       <div class="card-nombre">${nombreEsc}</div>
       <div class="card-precio">${formatPeso(p.precio)}</div>
       <div class="cantidad-control">
-        <button class="qty-btn qty-menos" data-codigo="${codigoEsc}">−</button>
+        <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
         <span class="qty-valor">0</span>
-        <button class="qty-btn qty-mas" data-codigo="${codigoEsc}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}">
+        <button class="qty-btn qty-mas" data-id="${p.id}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}" data-imagen="${p.imagen ? escapeHtml(p.imagen) : ''}">
           <span class="qty-mas-icon-inicial">🛒</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
         </button>
       </div>
@@ -3536,12 +3534,12 @@
 
       cont.querySelectorAll(".qty-mas").forEach(b => {
         b.addEventListener("click", () => {
-          agregarUnidad(b.dataset.codigo, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca);
+          agregarUnidad(b.dataset.id, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca);
           rebotarNumero(b);
         });
       });
       cont.querySelectorAll(".qty-menos").forEach(b => {
-        b.addEventListener("click", () => quitarUnidad(b.dataset.codigo));
+        b.addEventListener("click", () => quitarUnidad(b.dataset.id));
       });
 
       habilitarArrastreConMouse(cont);
@@ -3565,29 +3563,29 @@
       btn.classList.add("pulso");
     }
 
-    function agregarUnidad(codigo, nombre, precio, marca) {
-      const item = carrito.find(i => i.codigo === codigo);
+    function agregarUnidad(id, nombre, precio, marca, imagen) {
+      const item = carrito.find(i => i.id === id);
       if (item) {
         item.cantidad++;
       } else {
-        carrito.push({ codigo, nombre, precio, marca: marca || null, cantidad: 1 });
+        carrito.push({ id, nombre, precio, marca: marca || null, imagen: imagen || null, cantidad: 1 });
       }
       actualizarTodo();
       pulsarBotonCarrito();
     }
 
-    function quitarUnidad(codigo) {
-      const item = carrito.find(i => i.codigo === codigo);
+    function quitarUnidad(id) {
+      const item = carrito.find(i => i.id === id);
       if (!item) return;
       item.cantidad--;
       if (item.cantidad <= 0) {
-        carrito = carrito.filter(i => i.codigo !== codigo);
+        carrito = carrito.filter(i => i.id !== id);
       }
       actualizarTodo();
     }
 
-    function eliminarProducto(codigo) {
-      carrito = carrito.filter(i => i.codigo !== codigo);
+    function eliminarProducto(id) {
+      carrito = carrito.filter(i => i.id !== id);
       actualizarTodo();
     }
 
@@ -3605,8 +3603,8 @@
     // Sincroniza los steppers visibles en la lista de productos
     function actualizarSteppers() {
       document.querySelectorAll(".cantidad-control").forEach(ctrl => {
-        const codigo = ctrl.querySelector(".qty-mas").dataset.codigo;
-        const item = carrito.find(i => i.codigo === codigo);
+        const id = ctrl.querySelector(".qty-mas").dataset.id;
+        const item = carrito.find(i => i.id === id);
         const cantidad = item ? item.cantidad : 0;
         const valorEl = ctrl.querySelector(".qty-valor");
         const btnMas = ctrl.querySelector(".qty-mas");
@@ -3663,12 +3661,12 @@
       <div class="carrito-item">
         <span class="carrito-item-nombre">${escapeHtml(item.nombre)}</span>
         <div class="cantidad-control con-cantidad">
-          <button class="qty-btn qty-menos" data-codigo="${escapeHtml(item.codigo)}">−</button>
+          <button class="qty-btn qty-menos" data-id="${item.id}">−</button>
           <span class="qty-valor">${item.cantidad}</span>
-          <button class="qty-btn qty-mas activo" data-codigo="${escapeHtml(item.codigo)}" data-nombre="${escapeHtml(item.nombre)}" data-precio="${item.precio}">+</button>
+          <button class="qty-btn qty-mas activo" data-id="${item.id}" data-nombre="${escapeHtml(item.nombre)}" data-precio="${item.precio}">+</button>
         </div>
         <span class="carrito-item-precio">${formatPeso(item.precio * item.cantidad)}</span>
-        <button class="carrito-item-quitar" data-codigo="${escapeHtml(item.codigo)}">×</button>
+        <button class="carrito-item-quitar" data-id="${item.id}">×</button>
       </div>
     `).join("");
 
@@ -3676,7 +3674,7 @@
         lista.querySelectorAll(".qty-mas").forEach(b => {
           b.addEventListener("click", () => {
             agregarUnidad(
-              b.dataset.codigo,
+              b.dataset.id,
               b.dataset.nombre,
               parseInt(b.dataset.precio),
               b.dataset.marca
@@ -3688,19 +3686,18 @@
         // -
         lista.querySelectorAll(".qty-menos").forEach(b => {
           b.addEventListener("click", () => {
-            quitarUnidad(b.dataset.codigo);
+            quitarUnidad(b.dataset.id);
           });
         });
 
         // X
         lista.querySelectorAll(".carrito-item-quitar").forEach(b => {
           b.addEventListener("click", () => {
-            eliminarProducto(b.dataset.codigo);
+            eliminarProducto(b.dataset.id);
           });
         });
       }
     }
-
     // ── PANEL CARRITO ──
     const panel = document.getElementById("carrito-panel");
     const overlay = document.getElementById("overlay");
@@ -3962,10 +3959,10 @@
       sinResultados.classList.toggle("visible", todos.length === 0);
 
       grid.querySelectorAll(".qty-mas").forEach(b => {
-        b.addEventListener("click", () => agregarUnidad(b.dataset.codigo, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
+        b.addEventListener("click", () => agregarUnidad(b.dataset.id, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca));
       });
       grid.querySelectorAll(".qty-menos").forEach(b => {
-        b.addEventListener("click", () => quitarUnidad(b.dataset.codigo));
+        b.addEventListener("click", () => quitarUnidad(b.dataset.id));
       });
 
       document.getElementById("catalogo-contador").textContent =
