@@ -2647,6 +2647,32 @@
     .carrito-seguir-comprando:hover {
       color: #1a1a1a;
     }
+
+    @media (min-width: 900px) {
+      .carrito-panel {
+        left: auto;
+        right: 0;
+        top: 0;
+        width: 440px;
+        max-width: 440px;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 16px 0 0 16px;
+        transform: translateX(100%);
+      }
+
+      .carrito-panel.abierto {
+        transform: translateX(0);
+      }
+
+      .carrito-lista {
+        max-height: none;
+      }
+    }
+
+    .carrito-flotante.oculto-temporalmente {
+      display: none !important;
+    }
   </style>
 
   <!-- Google Analytics -->
@@ -3865,12 +3891,14 @@
       overlay.classList.add("visible");
       document.body.style.overflow = "hidden";
       document.querySelector(".wsp-flotante").style.display = "none";
+      document.getElementById("carrito-flotante").classList.add("oculto-temporalmente");
     }
     function cerrarCarrito() {
       panel.classList.remove("abierto");
       overlay.classList.remove("visible");
       document.body.style.overflow = "";
       document.querySelector(".wsp-flotante").style.display = "flex";
+      document.getElementById("carrito-flotante").classList.remove("oculto-temporalmente");
     }
 
     document.getElementById("carrito-btn-abrir").addEventListener("click", abrirCarrito);
