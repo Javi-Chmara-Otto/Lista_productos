@@ -3540,7 +3540,7 @@
       const marcaEsc = p.marca ? escapeHtml(p.marca) : "";
       const marcaHtml = p.marca ? `<div class="producto-card-marca">${escapeHtml(p.marca)}</div>` : "";
       const imgHtml = p.imagen
-        ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}" onerror="this.parentElement.innerHTML='<span class=\\'producto-card-emoji-fallback\\'>🌿</span>'">`
+        ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<span class=\\'producto-card-emoji-fallback\\'>🌿</span>'">`
         : `<span class="producto-card-emoji-fallback">🌿</span>`;
 
       return `
