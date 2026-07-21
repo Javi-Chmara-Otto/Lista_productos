@@ -4183,8 +4183,10 @@
       // Ocultar destacados y categorías mientras hay una búsqueda activa
       const seccionDestacados = document.getElementById("destacados");
       const seccionCategorias = document.getElementById("categorias-landing");
+      const seccionCombos = document.getElementById("combos-destacados"); // 👈 agregar esta línea
       if (seccionDestacados) seccionDestacados.style.display = hayBusqueda ? "none" : "block";
       if (seccionCategorias) seccionCategorias.style.display = hayBusqueda ? "none" : "block";
+      if (seccionCombos) seccionCombos.style.display = hayBusqueda ? "none" : "block"; // 👈 agregar esta línea
 
       // Sincronizar la búsqueda con el catálogo nuevo
       catalogoBusqueda = q;
