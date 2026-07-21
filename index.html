@@ -2674,6 +2674,104 @@
     .carrito-flotante.oculto-temporalmente {
       display: none !important;
     }
+
+    #combos-destacados {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 20px 8px;
+    }
+
+    .combos-header {
+      margin-bottom: 20px;
+    }
+
+    .combos-header h2 {
+      margin: 0 0 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #1a3a08;
+    }
+
+    .combos-header span {
+      font-size: 13px;
+      color: #8a8478;
+    }
+
+    .combos-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 700px) {
+      .combos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    .combo-card {
+      background: #fff;
+      border: 1.5px solid #edd9b0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 3px 14px rgba(196, 125, 58, 0.1);
+      position: relative;
+    }
+
+    .combo-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #c47d3a;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      z-index: 2;
+    }
+
+    .combo-card-img-wrap {
+      width: 100%;
+      height: 200px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 20px;
+    }
+
+    .combo-card-img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      cursor: pointer;
+      transition: transform 0.25s ease;
+    }
+
+    .combo-card-img-wrap img:hover {
+      transform: scale(1.05);
+    }
+
+    .combo-card-info {
+      padding: 14px;
+    }
+
+    .combo-card-nombre {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+
+    .combo-card-precio {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a3a08;
+      margin-bottom: 10px;
+    }
   </style>
 
   <!-- Google Analytics -->
@@ -2921,6 +3019,17 @@
       </div>
       <button class="destacados-flecha destacados-flecha-der" id="flecha-der">›</button>
     </div>
+  </section>
+
+  <!-- COMBOS -->
+  <section id="combos-destacados">
+    <div class="combos-header">
+      <div>
+        <h2>🎁 Packs Más Vale Natural</h2>
+        <span>Combos armados para vos, con descuento</span>
+      </div>
+    </div>
+    <div class="combos-grid" id="combos-grid"></div>
   </section>
 
   <!-- CATEGORÍAS -->
@@ -3374,6 +3483,7 @@
 
         renderFiltros();
         renderDestacados();
+        renderCombosDestacados();
         renderSecciones();
         renderCatalogoFiltroPanel();
         renderCatalogo();
@@ -3458,7 +3568,7 @@
       const linkVerTodas = document.getElementById("ver-todas-categorias");
       if (!grid) return;
 
-      const categorias = productosData.categorias;
+      const categorias = productosData.categorias.filter(c => c.id !== "combos");
       const hayMas = categorias.length > CATEGORIAS_VISIBLES_INICIAL;
       const aMostrar = categoriasExpandidas ? categorias : categorias.slice(0, CATEGORIAS_VISIBLES_INICIAL);
 
@@ -4264,7 +4374,7 @@
 
     // Delegación de eventos: funciona para imágenes que se generan dinámicamente
     document.addEventListener("click", (e) => {
-      const img = e.target.closest(".producto-card-img-wrap img, .card-destacado-img-wrap img");
+      const img = e.target.closest(".producto-card-img-wrap img, .card-destacado-img-wrap img, .combo-card-img-wrap img");
       if (img) {
         abrirLightbox(img.src, img.alt);
       }
@@ -4308,6 +4418,51 @@
     btnVolverArriba.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+
+    function renderCombosDestacados() {
+      const seccion = document.getElementById("combos-destacados");
+      const grid = document.getElementById("combos-grid");
+      if (!seccion || !grid) return;
+
+      const catCombos = productosData.categorias.find(c => c.id === "combos");
+      if (!catCombos || catCombos.productos.length === 0) {
+        seccion.style.display = "none";
+        return;
+      }
+
+      grid.innerHTML = catCombos.productos.map(p => {
+        const nombreEsc = escapeHtml(p.nombre);
+        const imgHtml = p.imagen
+          ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}">`
+          : `<span class="producto-card-emoji-fallback">🎁</span>`;
+        return `
+      <div class="combo-card producto-card">
+        <span class="combo-badge">Ahorrás comprando junto</span>
+        <div class="combo-card-img-wrap">${imgHtml}</div>
+        <div class="combo-card-info">
+          <div class="combo-card-nombre">${nombreEsc}</div>
+          <div class="combo-card-precio">${formatPeso(p.precio)}</div>
+          <div class="cantidad-control">
+            <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
+            <span class="qty-valor">0</span>
+            <button class="qty-btn qty-mas" data-id="${p.id}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="" data-imagen="${p.imagen ? escapeHtml(p.imagen) : ''}">
+              <span class="qty-mas-icon-inicial">🛒</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+      }).join("");
+
+      grid.querySelectorAll(".qty-mas").forEach(b => {
+        b.addEventListener("click", () => agregarUnidad(b.dataset.id, b.dataset.nombre, parseInt(b.dataset.precio), b.dataset.marca, b.dataset.imagen));
+      });
+      grid.querySelectorAll(".qty-menos").forEach(b => {
+        b.addEventListener("click", () => quitarUnidad(b.dataset.id));
+      });
+
+      actualizarSteppers();
+    }
 
   </script>
 </body>
