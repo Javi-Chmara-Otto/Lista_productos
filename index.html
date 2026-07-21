@@ -2719,22 +2719,19 @@
       position: relative;
     }
 
-    .combo-badge-circulo {
+    .combo-badge-banda {
       position: absolute;
       top: 12px;
       right: 12px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: #c0392b;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 800;
+      background: #1a3a08;
+      color: #d4eda8;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
       z-index: 2;
-      box-shadow: 0 3px 10px rgba(192, 57, 43, 0.4);
+      box-shadow: 0 3px 10px rgba(26, 58, 8, 0.3);
+      white-space: nowrap;
     }
 
     .combo-card-img-wrap {
@@ -4464,12 +4461,12 @@
           ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}">`
           : `<span class="producto-card-emoji-fallback">🎁</span>`;
 
-        let badgeTexto = "Ahorrás comprando junto";
         let precioOriginalHtml = "";
+        let badgeBandaHtml = "";
         if (p.precio_original && p.precio_original > p.precio) {
-          const porcentaje = Math.round((1 - p.precio / p.precio_original) * 100);
-          badgeTexto = `${porcentaje}% OFF comprando junto`;
+          const ahorro = p.precio_original - p.precio;
           precioOriginalHtml = `<span class="combo-card-precio-original">${formatPeso(p.precio_original)}</span>`;
+          badgeBandaHtml = `<span class="combo-badge-banda">🌿 Ahorrás ${formatPeso(ahorro)}</span>`;
         }
 
         const badgeCirculoHtml = p.precio_original && p.precio_original > p.precio
@@ -4478,7 +4475,7 @@
 
         return `
   <div class="combo-card producto-card">
-    ${badgeCirculoHtml}
+    ${badgeBandaHtml}
     <div class="combo-card-img-wrap">${imgHtml}</div>
       <div class="combo-card-info">
         <div class="combo-card-nombre">${nombreEsc}</div>
