@@ -4454,6 +4454,7 @@
         seccion.style.display = "none";
         return;
       }
+      catCombos.productos.sort((a, b) => a.precio - b.precio); // 👈 agregar esta línea
 
       grid.innerHTML = catCombos.productos.map(p => {
         const nombreEsc = escapeHtml(p.nombre);
