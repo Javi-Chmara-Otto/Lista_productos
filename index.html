@@ -2719,17 +2719,22 @@
       position: relative;
     }
 
-    .combo-badge {
+    .combo-badge-circulo {
       position: absolute;
       top: 12px;
-      left: 12px;
-      background: #c47d3a;
+      right: 12px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #c0392b;
       color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
       z-index: 2;
+      box-shadow: 0 3px 10px rgba(192, 57, 43, 0.4);
     }
 
     .combo-card-img-wrap {
@@ -2771,6 +2776,23 @@
       font-weight: 700;
       color: #1a3a08;
       margin-bottom: 10px;
+    }
+
+    .combo-card-precio-fila {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .combo-card-precio-original {
+      font-size: 13px;
+      color: #aaa;
+      text-decoration: line-through;
+    }
+
+    .combo-card-precio {
+      margin-bottom: 0;
     }
   </style>
 
@@ -3461,6 +3483,7 @@
             codigo: p.codigo,
             nombre: p.nombre,
             precio: p.precio,
+            precio_original: p.precio_original,
             marca: p.marca,
             imagen: p.imagen,
             destacado: p.destacado
@@ -3501,6 +3524,7 @@
       const filtros = document.getElementById("filtros");
       let html = '<button class="filtro-btn activo" data-cat="todos">Todos</button>';
       productosData.categorias.forEach(cat => {
+        if (cat.id === "combos") return; // 👈 agregar esta línea
         html += `<button class="filtro-btn" data-cat="${cat.id}">${cat.emoji} ${cat.nombre}</button>`;
       });
       filtros.innerHTML = html;
@@ -4209,6 +4233,7 @@
     function obtenerProductosPlanos() {
       const productos = [];
       productosData.categorias.forEach(cat => {
+        if (cat.id === "combos") return; // 👈 agregar esta línea
         cat.productos.forEach(p => {
           productos.push({ ...p, categoria_id: cat.id, categoria_nombre: cat.nombre, categoria_emoji: cat.emoji });
         });
@@ -4278,6 +4303,7 @@
       const panel = document.getElementById("catalogo-filtro-panel");
       let html = `<button class="catalogo-filtro-item ${catalogoCategoriaFiltro === 'todos' ? 'activo' : ''}" data-cat="todos">Todas las categorías</button>`;
       productosData.categorias.forEach(cat => {
+        if (cat.id === "combos") return; // 👈 agregar esta línea
         html += `<button class="catalogo-filtro-item ${catalogoCategoriaFiltro === cat.id ? 'activo' : ''}" data-cat="${cat.id}">${cat.emoji} ${escapeHtml(cat.nombre)}</button>`;
       });
       panel.innerHTML = html;
@@ -4435,13 +4461,29 @@
         const imgHtml = p.imagen
           ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}">`
           : `<span class="producto-card-emoji-fallback">🎁</span>`;
+
+        let badgeTexto = "Ahorrás comprando junto";
+        let precioOriginalHtml = "";
+        if (p.precio_original && p.precio_original > p.precio) {
+          const porcentaje = Math.round((1 - p.precio / p.precio_original) * 100);
+          badgeTexto = `${porcentaje}% OFF comprando junto`;
+          precioOriginalHtml = `<span class="combo-card-precio-original">${formatPeso(p.precio_original)}</span>`;
+        }
+
+        const badgeCirculoHtml = p.precio_original && p.precio_original > p.precio
+          ? `<span class="combo-badge-circulo">-${Math.round((1 - p.precio / p.precio_original) * 100)}%</span>`
+          : "";
+
         return `
-      <div class="combo-card producto-card">
-        <span class="combo-badge">Ahorrás comprando junto</span>
-        <div class="combo-card-img-wrap">${imgHtml}</div>
-        <div class="combo-card-info">
-          <div class="combo-card-nombre">${nombreEsc}</div>
-          <div class="combo-card-precio">${formatPeso(p.precio)}</div>
+  <div class="combo-card producto-card">
+    ${badgeCirculoHtml}
+    <div class="combo-card-img-wrap">${imgHtml}</div>
+      <div class="combo-card-info">
+        <div class="combo-card-nombre">${nombreEsc}</div>
+        <div class="combo-card-precio-fila">
+          ${precioOriginalHtml}
+          <span class="combo-card-precio">${formatPeso(p.precio)}</span>
+        </div>
           <div class="cantidad-control">
             <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
             <span class="qty-valor">0</span>
