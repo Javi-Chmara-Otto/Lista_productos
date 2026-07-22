@@ -116,7 +116,8 @@
 
     .hero-texto p {
       font-size: 14px;
-      color: #6b6558;
+      color: #2d5016;
+      font-weight: 500;
       margin-bottom: 20px;
     }
 
@@ -356,7 +357,7 @@
     }
 
     .buscador-icon {
-      color: #aaa;
+      color: #c47d3a;
       font-size: 15px;
       margin-right: 4px;
     }
@@ -3097,6 +3098,11 @@
       </div>
     </div>
 
+    <button class="btn-volver-categorias" id="btn-volver-categorias" style="display:none">
+      ← Volver a categorías
+    </button>
+    <div class="productos-grid" id="catalogo-grid"></div>
+
     <div class="productos-grid" id="catalogo-grid"></div>
 
     <div class="catalogo-sin-resultados" id="catalogo-sin-resultados">
@@ -3700,10 +3706,16 @@
       document.getElementById("catalogo-filtrar-btn").classList.toggle("activo", catId !== "todos");
       document.getElementById("catalogo-filtro-label").textContent =
         catId === "todos" ? "Filtrar" : (productosData.categorias.find(c => c.id === catId)?.nombre || "Filtrar");
+      document.getElementById("btn-volver-categorias").style.display = catId === "todos" ? "none" : "inline-flex"; // 👈 agregar esta línea
       renderCatalogoFiltroPanel();
       renderCatalogo();
       document.getElementById("catalogo").scrollIntoView({ behavior: "smooth", block: "start" });
     }
+
+    document.getElementById("btn-volver-categorias").addEventListener("click", () => {
+      seleccionarCategoriaCatalogo("todos");
+      document.getElementById("categorias-landing").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
 
 
     function productoHtml(p) {
