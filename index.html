@@ -575,8 +575,10 @@
     }
 
     .card-destacado .cantidad-control:hover {
-      background: #e8f5d8;
-      transition: background 0.2s ease;
+      background: #4a7d26;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(26, 58, 8, 0.25);
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
     }
 
     .card-destacado .cantidad-control:hover .qty-btn {
@@ -609,6 +611,9 @@
       justify-content: flex-start;
       width: 100%;
       margin-top: 0;
+      gap: 0;
+      background: #3d6b1f;
+      border-color: #1a3a08;
     }
 
     .card-destacado .qty-mas-icon-inicial,
@@ -659,12 +664,19 @@
 
     .card-destacado .cantidad-control {
       display: flex;
+      justify-content: flex-start;
       width: 100%;
       height: 34px;
-      border: 1.5px solid #e0dbd2;
+      margin-top: 0;
+      gap: 0;
+      border: 1.5px solid #3d6b1f;
       border-radius: 10px;
       overflow: hidden;
-      background: #fff;
+      background: #3d6b1f;
+    }
+
+    .card-destacado .cantidad-control.con-cantidad {
+      gap: 6px;
     }
 
     .card-destacado .cantidad-control .qty-btn {
@@ -672,7 +684,11 @@
       border-radius: 0;
       height: 100%;
       background: transparent;
-      color: #1a3a08;
+      color: #eef7dd;
+    }
+
+    .card-destacado .cantidad-control .qty-valor {
+      color: #eef7dd;
     }
 
     .card-destacado .qty-menos,
@@ -709,6 +725,10 @@
 
     .card-destacado .cantidad-control.con-cantidad .qty-mas {
       flex: 1 1 0%;
+    }
+
+    .card-destacado .cantidad-control.con-cantidad {
+      gap: 6px;
     }
 
     @keyframes rebote-cantidad {
@@ -1756,25 +1776,34 @@
       margin-bottom: 8px;
     }
 
+
     .producto-card .cantidad-control {
       display: flex;
+      justify-content: flex-start;
       width: 100%;
       height: 34px;
-      border: 1.5px solid #e0dbd2;
+      margin-top: auto;
+      gap: 0;
+      border: 1.5px solid #3d6b1f;
       border-radius: 10px;
       overflow: hidden;
-      background: #fff;
-      margin-top: auto;
+      background: #3d6b1f;
     }
 
-
+    .producto-card .cantidad-control.con-cantidad {
+      gap: 6px;
+    }
 
     .producto-card .cantidad-control .qty-btn {
       border: none;
       border-radius: 0;
       height: 100%;
       background: transparent;
-      color: #1a3a08;
+      color: #eef7dd;
+    }
+
+    .producto-card .cantidad-control .qty-valor {
+      color: #eef7dd;
     }
 
     .producto-card .qty-menos,
@@ -1830,7 +1859,10 @@
     }
 
     .producto-card .cantidad-control:hover {
-      background: #e8f5d8;
+      background: #4a7d26;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(26, 58, 8, 0.25);
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
     }
 
     .producto-card .cantidad-control:hover .qty-btn {
@@ -2724,14 +2756,14 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: #1a3a08;
-      color: #d4eda8;
+      background: #c47d3a;
+      color: #fff;
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 700;
       z-index: 2;
-      box-shadow: 0 3px 10px rgba(26, 58, 8, 0.3);
+      box-shadow: 0 3px 10px rgba(196, 125, 58, 0.35);
       white-space: nowrap;
     }
 
@@ -3691,7 +3723,7 @@
           <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
           <span class="qty-valor">0</span>
           <button class="qty-btn qty-mas" data-id="${p.id}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}" data-imagen="${p.imagen ? escapeHtml(p.imagen) : ''}">
-            <span class="qty-mas-icon-inicial">🛒</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
+            <span class="qty-mas-icon-inicial">+</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
           </button>
         </div>
       </div>
@@ -3755,7 +3787,7 @@
         <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
         <span class="qty-valor">0</span>
         <button class="qty-btn qty-mas" data-id="${p.id}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="${marcaEsc}" data-imagen="${p.imagen ? escapeHtml(p.imagen) : ''}">
-          <span class="qty-mas-icon-inicial">🛒</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
+          <span class="qty-mas-icon-inicial">+</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
         </button>
       </div>
     </div>
@@ -4479,7 +4511,7 @@
         if (p.precio_original && p.precio_original > p.precio) {
           const ahorro = p.precio_original - p.precio;
           precioOriginalHtml = `<span class="combo-card-precio-original">${formatPeso(p.precio_original)}</span>`;
-          badgeBandaHtml = `<span class="combo-badge-banda">🌿 Ahorrás ${formatPeso(ahorro)}</span>`;
+          badgeBandaHtml = `<span class="combo-badge-banda">Ahorrás ${formatPeso(ahorro)}</span>`;
         }
 
         const badgeCirculoHtml = p.precio_original && p.precio_original > p.precio
@@ -4500,7 +4532,7 @@
             <button class="qty-btn qty-menos" data-id="${p.id}">−</button>
             <span class="qty-valor">0</span>
             <button class="qty-btn qty-mas" data-id="${p.id}" data-nombre="${nombreEsc}" data-precio="${p.precio}" data-marca="" data-imagen="${p.imagen ? escapeHtml(p.imagen) : ''}">
-              <span class="qty-mas-icon-inicial">🛒</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
+              <span class="qty-mas-icon-inicial">+</span><span class="qty-mas-icon-activo">+</span><span class="qty-mas-label">Agregar</span>
             </button>
           </div>
         </div>
