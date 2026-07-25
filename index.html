@@ -3707,7 +3707,7 @@
     function productoCardHtml(p) {
       const nombreEsc = escapeHtml(p.nombre);
       const marcaEsc = p.marca ? escapeHtml(p.marca) : "";
-      const marcaHtml = p.marca ? `<div class="producto-card-marca">${escapeHtml(p.marca)}</div>` : "";
+      const marcaHtml = `<div class="producto-card-marca">${p.marca ? escapeHtml(p.marca) : "&nbsp;"}</div>`;
       const imgHtml = p.imagen
         ? `<img src="${escapeHtml(p.imagen)}" alt="${nombreEsc}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<span class=\\'producto-card-emoji-fallback\\'>🌿</span>'">`
         : `<span class="producto-card-emoji-fallback">🌿</span>`;
