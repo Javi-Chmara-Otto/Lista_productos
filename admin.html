@@ -1426,6 +1426,10 @@
         <label>Notas</label>
         <textarea id="modal-cli-notas" placeholder="Ej: Prefiere que la llamen antes de entregar"></textarea>
       </div>
+      <div class="checkbox-row" style="margin-top:8px">
+        <input type="checkbox" id="modal-cli-beneficio-usado">
+        <label for="modal-cli-beneficio-usado">Ya usó el descuento de bienvenida</label>
+      </div>
       <div class="modal-actions">
         <button class="btn" onclick="cerrarModalCliBtn()">Cancelar</button>
         <button class="btn btn-primary" onclick="guardarCliente()">Guardar</button>
@@ -2192,6 +2196,7 @@
       document.getElementById("modal-cli-dir").value = "";
       document.getElementById("modal-cli-notas").value = "";
       document.getElementById("modal-cli-overlay").classList.add("visible");
+      document.getElementById("modal-cli-beneficio-usado").checked = false;
     }
 
     function abrirModalClienteEditar(id) {
@@ -2204,6 +2209,7 @@
       document.getElementById("modal-cli-dir").value = c.direccion || "";
       document.getElementById("modal-cli-notas").value = c.notas || "";
       document.getElementById("modal-cli-overlay").classList.add("visible");
+      document.getElementById("modal-cli-beneficio-usado").checked = c.beneficio_bienvenida_usado || false;
     }
 
     // Cambiar para cerrar correctamente el modal de clientes
@@ -2224,6 +2230,7 @@
         telefono: document.getElementById("modal-cli-tel").value.trim() || null,
         direccion: document.getElementById("modal-cli-dir").value.trim() || null,
         notas: document.getElementById("modal-cli-notas").value.trim() || null,
+        beneficio_bienvenida_usado: document.getElementById("modal-cli-beneficio-usado").checked,
       };
       try {
         if (id) {
