@@ -1051,8 +1051,8 @@
           <option value="pendiente">Entrega pendiente</option>
           <option value="entregado">Entregado</option>
         </select>
-        <input type="date" id="filtro-desde" onchange="renderPedidos()">
-        <input type="date" id="filtro-hasta" onchange="renderPedidos()">
+        <input type="date" id="filtro-desde" onchange="filtroCicloInicio=null;filtroCicloFin=null;renderPedidos()">
+        <input type="date" id="filtro-hasta" onchange="filtroCicloInicio=null;filtroCicloFin=null;renderPedidos()">
         <button class="btn" onclick="filtrarSemanaActual()">Esta semana</button>
         <button class="btn" onclick="filtrarSemanaPasada()">Semana pasada</button>
         <button class="btn" onclick="limpiarFiltroFechas()">✕ Fechas</button>
@@ -1498,6 +1498,8 @@
     let pedidos = [];
     let clientes = [];
     let itemsPedidoActual = [];
+    let filtroCicloInicio = null;
+    let filtroCicloFin = null;
 
     // ── LOGIN ──
     function intentarLogin() {
@@ -1881,10 +1883,18 @@
         const matchQ = !q || normalizar(p.cliente_nombre).includes(q);
         const matchPago = !filtroPago || p.estado_pago === filtroPago;
         const matchEntrega = !filtroEntrega || p.estado_entrega === filtroEntrega;
-        const fechaPed = (p.fecha || p.created_at || "").slice(0, 10);
-        const matchDesde = !desde || fechaPed >= desde;
-        const matchHasta = !hasta || fechaPed <= hasta;
-        return matchQ && matchPago && matchEntrega && matchDesde && matchHasta;
+        let matchFecha;
+        if (filtroCicloInicio && filtroCicloFin) {
+          const timestamp = new Date(p.created_at || p.fecha);
+          matchFecha = timestamp >= filtroCicloInicio && timestamp < filtroCicloFin;
+        } else {
+          const fechaPed = (p.fecha || p.created_at || "").slice(0, 10);
+          const matchDesde = !desde || fechaPed >= desde;
+          const matchHasta = !hasta || fechaPed <= hasta;
+          matchFecha = matchDesde && matchHasta;
+        }
+
+        return matchQ && matchPago && matchEntrega && matchFecha;
       });
 
       const tbody = document.getElementById("tbody-ped");
@@ -2363,6 +2373,8 @@
 
     function filtrarSemanaActual() {
       const { inicio, fin } = getCicloActual();
+      filtroCicloInicio = inicio;
+      filtroCicloFin = fin;
       document.getElementById("filtro-desde").value = inicio.toISOString().slice(0, 10);
       const finMenos1 = new Date(fin);
       finMenos1.setDate(fin.getDate() - 1);
@@ -2375,13 +2387,18 @@
       const inicioAnterior = new Date(inicio);
       inicioAnterior.setDate(inicio.getDate() - 7);
       const finAnterior = new Date(inicio);
-      finAnterior.setDate(inicio.getDate() - 1);
+      filtroCicloInicio = inicioAnterior;
+      filtroCicloFin = finAnterior;
       document.getElementById("filtro-desde").value = inicioAnterior.toISOString().slice(0, 10);
-      document.getElementById("filtro-hasta").value = finAnterior.toISOString().slice(0, 10);
+      const finAnteriorMenos1 = new Date(finAnterior);
+      finAnteriorMenos1.setDate(finAnterior.getDate() - 1);
+      document.getElementById("filtro-hasta").value = finAnteriorMenos1.toISOString().slice(0, 10);
       renderPedidos();
     }
 
     function limpiarFiltroFechas() {
+      filtroCicloInicio = null;
+      filtroCicloFin = null;
       document.getElementById("filtro-desde").value = "";
       document.getElementById("filtro-hasta").value = "";
       renderPedidos();
