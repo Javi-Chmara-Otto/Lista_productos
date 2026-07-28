@@ -1827,11 +1827,10 @@
     }
 
     function renderStatsPedidos() {
-      const hoy = new Date().toISOString().slice(0, 10);
+      const { inicio, fin } = getCicloActual();
       const semana = pedidos.filter(p => {
-        const d = new Date(p.created_at);
-        const hace7 = new Date(); hace7.setDate(hace7.getDate() - 7);
-        return d >= hace7;
+        const timestamp = new Date(p.created_at || p.fecha);
+        return timestamp >= inicio && timestamp < fin;
       });
       const pendientesPago = pedidos.filter(p => p.estado_pago === "pendiente").length;
       const pendientesEntrega = pedidos.filter(p => p.estado_entrega === "pendiente").length;
