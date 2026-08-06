@@ -1807,12 +1807,18 @@
 
           head: [[cat.nombre.toUpperCase(), "PRECIO"]],
 
-          body: prodsCat.map(p => [
-            p.marca
-              ? `${p.nombre} (${p.marca})`
-              : p.nombre,
-            "$ " + p.precio.toLocaleString("es-AR")
-          ]),
+          body: prodsCat.map(p => {
+
+            const nombre = p.nombre.replace(/^[^\wÁÉÍÓÚáéíóúÑñ]+/, "");
+
+            return [
+              p.marca
+                ? `${nombre} (${p.marca})`
+                : nombre,
+              "$ " + p.precio.toLocaleString("es-AR")
+            ];
+
+          }),
 
           theme: "striped",
 
