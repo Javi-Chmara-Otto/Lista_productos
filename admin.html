@@ -1721,12 +1721,16 @@
       }
 
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a5"
+      });
       const fecha = new Date().toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" });
 
       // Encabezado
       doc.setFillColor(52, 76, 27); // #344C1B
-      doc.rect(0, 0, 210, 28, "F");
+      doc.rect(0, 0, 148, 18, "F");
 
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
@@ -1738,7 +1742,7 @@
       doc.text("Lista de precios", 14, 22);
 
       doc.setFontSize(10);
-      doc.text(`Actualizado: ${fecha}`, 190, 13, { align: "right" });
+      doc.text(`Actualizado: ${fecha}`, 138, 13, { align: "right" });
 
       let cursorY = 38;
 
@@ -1779,7 +1783,7 @@
           });
         if (prodsCat.length === 0) return;
 
-        if (cursorY > 260) {
+        if (cursorY > 175) {
 
           doc.addPage();
 
@@ -1823,8 +1827,8 @@
           theme: "striped",
 
           margin: {
-            left: 14,
-            right: 14
+            left: 10,
+            right: 10
           },
 
           headStyles: {
@@ -1837,7 +1841,7 @@
 
           styles: {
 
-            fontSize: 14,
+            fontSize: 12,
 
             cellPadding: 6,
 
@@ -1864,7 +1868,7 @@
               halign: "center",
               fontStyle: "bold",
               textColor: [52, 76, 27],
-              cellWidth: 30
+              cellWidth: 24
             }
           }
 
@@ -1881,7 +1885,7 @@
 
         doc.setDrawColor(220);
 
-        doc.line(14, 285, 196, 285);
+        doc.line(10, 198, 138, 198);
 
         doc.setFontSize(11); // antes 10
 
@@ -1890,7 +1894,7 @@
         doc.text(
           "Precios sujetos a modificación sin previo aviso.",
           14,
-          290
+          203
         );
 
         doc.text(
