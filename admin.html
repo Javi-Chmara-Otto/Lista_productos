@@ -1012,6 +1012,7 @@
         </select>
         <button class="btn btn-primary" onclick="abrirModalProductoNuevo()">+ Agregar producto</button>
         <button class="btn" onclick="abrirModalNuevaCategoria()">+ Nueva categoría</button>
+        <button class="btn btn-green" onclick="generarListaPDF()">📄 Generar lista PDF</button>
       </div>
       <div class="table-wrap">
         <table>
@@ -1465,6 +1466,8 @@
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script>
     const SUPABASE_URL = "https://eaxdcdsgurlgotlwcqvf.supabase.co";
     const SUPABASE_KEY = "sb_publishable_cojsw7ukcsKrdXG1oAvB7g_5xEO85wi";
@@ -1703,6 +1706,60 @@
     function catNombre(id) {
       const c = CATEGORIAS.find(x => x.id === id);
       return c ? c.emoji + " " + c.nombre : id;
+    }
+
+    // ── GENERAR LISTA DE PRECIOS EN PDF ──
+    function generarListaPDF() {
+      if (!window.jspdf) {
+        mostrarToast("No se pudo cargar el generador de PDF, revisá tu conexión", true);
+        return;
+      }
+      const activos = productos.filter(p => p.activo);
+      if (activos.length === 0) {
+        mostrarToast("No hay productos activos para incluir", true);
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const fecha = new Date().toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit", year: "numeric" });
+
+      doc.setFontSize(16);
+      doc.setTextColor(26, 58, 8);
+      doc.text("🌿 Más Vale Natural — Lista de Precios", 14, 18);
+      doc.setFontSize(10);
+      doc.setTextColor(120, 120, 120);
+      doc.text(`Actualizado al ${fecha}`, 14, 25);
+
+      let cursorY = 32;
+
+      CATEGORIAS.forEach(cat => {
+        const prodsCat = activos
+          .filter(p => p.categoria_id === cat.id)
+          .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+        if (prodsCat.length === 0) return;
+
+        if (cursorY > 270) {
+          doc.addPage();
+          cursorY = 20;
+        }
+
+        doc.autoTable({
+          startY: cursorY,
+          head: [[`${cat.emoji} ${cat.nombre}`, "Precio"]],
+          body: prodsCat.map(p => [p.nombre, `$ ${p.precio.toLocaleString("es-AR")}`]),
+          theme: "striped",
+          headStyles: { fillColor: [26, 92, 42], fontSize: 11 },
+          bodyStyles: { fontSize: 10 },
+          columnStyles: { 1: { halign: "right", cellWidth: 30 } },
+          margin: { left: 14, right: 14 },
+        });
+
+        cursorY = doc.lastAutoTable.finalY + 10;
+      });
+
+      doc.save(`lista-precios-mas-vale-natural-${new Date().toISOString().slice(0, 10)}.pdf`);
+      mostrarToast("PDF generado");
     }
 
     function abrirModalProductoNuevo() {
