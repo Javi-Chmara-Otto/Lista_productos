@@ -1732,6 +1732,8 @@
       doc.setFillColor(52, 76, 27); // #344C1B
       doc.rect(0, 0, 210, 22, "F");
 
+      doc.setTextColor(255, 255, 255);
+
       doc.setFontSize(18);
       doc.setFont("helvetica", "bold");
       doc.text("Más Vale Natural", 14, 13);
@@ -1855,13 +1857,20 @@
           },
 
           columnStyles: {
+
+            0: {
+              fontSize: 12
+            },
+
             1: {
-              cellWidth: 32,
+              fontSize: 10,
               halign: "right",
               fontStyle: "bold",
-              textColor: [52, 76, 27]
+              textColor: [52, 76, 27],
+              cellWidth: 32
             }
-          },
+
+          }
 
         });
 
