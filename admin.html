@@ -1738,7 +1738,7 @@
       doc.text("Lista de precios", 14, 22);
 
       doc.setFontSize(10);
-      doc.text(fecha, 175, 22);
+      doc.text(`Actualizado: ${fecha}`, 190, 13, { align: "right" });
 
       let cursorY = 38;
 
@@ -1802,6 +1802,8 @@
         doc.autoTable({
 
           startY: cursorY,
+
+          showHead: "firstPage",
 
           head: [[cat.nombre.toUpperCase(), "PRECIO"]],
 
