@@ -1775,13 +1775,10 @@
           head: [[cat.nombre.toUpperCase(), "PRECIO"]],
 
           body: prodsCat.map(p => [
-
             p.marca
-              ? `${p.nombre}\n${p.marca}`
+              ? `${p.nombre} (${p.marca})`
               : p.nombre,
-
             "$ " + p.precio.toLocaleString("es-AR")
-
           ]),
 
           theme: "striped",
