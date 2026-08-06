@@ -1743,127 +1743,171 @@
       let cursorY = 38;
 
       CATEGORIAS.forEach(cat => {
+        const gruposEspeciales = [
+          "Granola",
+          "Mermelada",
+          "Pasta",
+          "Aceite",
+          "Chocolate",
+          "Dulce"
+        ];
+
         const prodsCat = activos
           .filter(p => p.categoria_id === cat.id)
-          .sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
-        if (prodsCat.length === 0) return;
+          .sort((a, b) => {
 
-        if (cursorY > 260) {
+            const palabraA = a.nombre.split(" ")[0];
+            const palabraB = b.nombre.split(" ")[0];
 
-          doc.addPage();
+            const esGrupo =
+              gruposEspeciales.includes(palabraA) &&
+              gruposEspeciales.includes(palabraB) &&
+              palabraA === palabraB;
 
-          doc.setFillColor(52, 76, 27);
+            // Si pertenecen al mismo grupo (Granola, Mermelada, etc.)
+            if (esGrupo) {
 
-          doc.rect(0, 0, 210, 20, "F");
+              const marcaA = (a.marca || "").toLowerCase();
+              const marcaB = (b.marca || "").toLowerCase();
 
-          doc.setTextColor(255);
+              const cmpMarca = marcaA.localeCompare(marcaB, "es");
 
-          doc.setFontSize(14);
+              if (cmpMarca !== 0) return cmpMarca;
 
-          doc.setFont("helvetica", "bold");
-
-          doc.text("Más Vale Natural", 14, 13);
-
-          cursorY = 30;
-
-        }
-
-        doc.autoTable({
-
-          startY: cursorY,
-
-          head: [[cat.nombre.toUpperCase(), "PRECIO"]],
-
-          body: prodsCat.map(p => [
-            p.marca
-              ? `${p.nombre} (${p.marca})`
-              : p.nombre,
-            "$ " + p.precio.toLocaleString("es-AR")
-          ]),
-
-          theme: "striped",
-
-          margin: {
-            left: 14,
-            right: 14
-          },
-
-          headStyles: {
-            fillColor: [52, 76, 27],
-            textColor: 255,
-            fontStyle: "bold",
-            fontSize: 11,
-            halign: "left"
-          },
-
-          styles: {
-
-            fontSize: 10,
-
-            cellPadding: 5,
-
-            valign: "middle",
-
-            lineColor: [240, 240, 240],
-
-            lineWidth: 0.1,
-
-            fillColor: [255, 255, 255],
-
-            textColor: [45, 45, 45]
-
-          },
-
-          alternateRowStyles: {
-
-            fillColor: [248, 248, 248]
-
-          },
-
-          columnStyles: {
-            1: {
-              halign: "center",
-              fontStyle: "bold",
-              textColor: [52, 76, 27],
-              cellWidth: 30
             }
-          }
 
-        });
+            return a.nombre.localeCompare(b.nombre, "es");
 
-        cursorY = doc.lastAutoTable.finalY + 10;
+          });
+
+        const marcaA = (a.marca || "").toLowerCase();
+        const marcaB = (b.marca || "").toLowerCase();
+
+        const compMarca = marcaA.localeCompare(marcaB, "es");
+
+        if (compMarca !== 0) return compMarca;
+
+        return a.nombre.localeCompare(b.nombre, "es");
+
       });
+      if (prodsCat.length === 0) return;
 
-      const paginas = doc.internal.getNumberOfPages();
+      if (cursorY > 260) {
 
-      for (let i = 1; i <= paginas; i++) {
+        doc.addPage();
 
-        doc.setPage(i);
+        doc.setFillColor(52, 76, 27);
 
-        doc.setDrawColor(220);
+        doc.rect(0, 0, 210, 20, "F");
 
-        doc.line(14, 285, 196, 285);
+        doc.setTextColor(255);
 
-        doc.setFontSize(9);
+        doc.setFontSize(14);
 
-        doc.setTextColor(120);
+        doc.setFont("helvetica", "bold");
 
-        doc.text(
-          "Precios sujetos a modificación sin previo aviso.",
-          14,
-          290
-        );
+        doc.text("Más Vale Natural", 14, 13);
 
-        doc.text(
-          `Página ${i} de ${paginas}`,
-          170,
-          290
-        );
+        cursorY = 30;
 
       }
 
-      doc.save(`lista-precios-mas-vale-natural-${new Date().toISOString().slice(0, 10)}.pdf`);
-      mostrarToast("PDF generado");
+      doc.autoTable({
+
+        startY: cursorY,
+
+        head: [[cat.nombre.toUpperCase(), "PRECIO"]],
+
+        body: prodsCat.map(p => [
+          p.marca
+            ? `${p.nombre} (${p.marca})`
+            : p.nombre,
+          "$ " + p.precio.toLocaleString("es-AR")
+        ]),
+
+        theme: "striped",
+
+        margin: {
+          left: 14,
+          right: 14
+        },
+
+        headStyles: {
+          fillColor: [52, 76, 27],
+          textColor: 255,
+          fontStyle: "bold",
+          fontSize: 11,
+          halign: "left"
+        },
+
+        styles: {
+
+          fontSize: 10,
+
+          cellPadding: 5,
+
+          valign: "middle",
+
+          lineColor: [240, 240, 240],
+
+          lineWidth: 0.1,
+
+          fillColor: [255, 255, 255],
+
+          textColor: [45, 45, 45]
+
+        },
+
+        alternateRowStyles: {
+
+          fillColor: [248, 248, 248]
+
+        },
+
+        columnStyles: {
+          1: {
+            halign: "center",
+            fontStyle: "bold",
+            textColor: [52, 76, 27],
+            cellWidth: 30
+          }
+        }
+
+      });
+
+      cursorY = doc.lastAutoTable.finalY + 10;
+    });
+
+    const paginas = doc.internal.getNumberOfPages();
+
+    for (let i = 1; i <= paginas; i++) {
+
+      doc.setPage(i);
+
+      doc.setDrawColor(220);
+
+      doc.line(14, 285, 196, 285);
+
+      doc.setFontSize(9);
+
+      doc.setTextColor(120);
+
+      doc.text(
+        "Precios sujetos a modificación sin previo aviso.",
+        14,
+        290
+      );
+
+      doc.text(
+        `Página ${i} de ${paginas}`,
+        170,
+        290
+      );
+
+    }
+
+    doc.save(`lista-precios-mas-vale-natural-${new Date().toISOString().slice(0, 10)}.pdf`);
+    mostrarToast("PDF generado");
     }
 
     function abrirModalProductoNuevo() {
