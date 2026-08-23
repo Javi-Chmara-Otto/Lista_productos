@@ -2801,7 +2801,7 @@
       margin-bottom: 6px;
     }
 
-    .combo-card-precio { 
+    .combo-card-precio {
       font-size: 18px;
       font-weight: 700;
       color: #1a3a08;
@@ -3477,7 +3477,7 @@
     /* document.getElementById("footer-anio").textContent = d.getFullYear(); */
 
     // ── COSTO DE ENVÍO ──
-    const COSTO_ENVIO = 2500;
+    const COSTO_ENVIO = 3000;
     const ENVIO_GRATIS_DESDE = 40000;
 
     // ── CARRITO STATE ──
@@ -3998,7 +3998,7 @@
         nota.classList.add("gratis");
       } else {
         const faltante = ENVIO_GRATIS_DESDE - subtotal;
-        nota.textContent = `Envío $2.500. Te faltan ${formatPeso(faltante)} en compras para que el envío sea gratis (a partir de ${formatPeso(ENVIO_GRATIS_DESDE)}).`;
+        nota.textContent = `Envío $3.000. Te faltan ${formatPeso(faltante)} en compras para que el envío sea gratis (a partir de ${formatPeso(ENVIO_GRATIS_DESDE)}).`;
         nota.classList.remove("gratis");
       }
 
